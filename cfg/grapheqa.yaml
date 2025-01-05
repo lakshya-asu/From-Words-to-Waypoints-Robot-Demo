@@ -1,0 +1,106 @@
+# General
+seed: 42
+# exp_name: test_palnner
+# exp_name: test_view
+# exp_name: explore_eqa_${vlm.name}_no_regions_enrich_no_enrich_frontiers
+exp_name: explore_eqa_${vlm.name}_heirar_view
+# exp_name: explore_eqa_${vlm.name}_no_image
+output_path: /home/saumyas/catkin_ws_semnav/src/hydra/outputs/${exp_name}
+results_filename: ${vlm.name}_images_${vlm.use_image}
+gpu: 0 
+sim_gpu: 0
+
+data:
+  question_data_path: '/home/saumyas/catkin_ws_semnav/data/explore-eqa_semnav/data/questions.csv'
+  init_pose_data_path: '/home/saumyas/catkin_ws_semnav/data/explore-eqa_semnav/data/scene_init_poses.csv'
+  semantic_annot_data_path: '/home/saumyas/catkin_ws_semnav/data/hm3d-train-semantic-annots-v0.2'
+  scene_data_path: '/home/saumyas/catkin_ws_semnav/data/hm3d/train'
+  eqa_dataset_enrich_labels: '/home/saumyas/Projects/semnav/explore-eqa_semnav/data/eqa_dataset_enrich_labels.yaml'
+  openeqa_question_data_path: '/home/saumyas/catkin_ws_semnav/data/openEQA/open-eqa-v0.json'
+  openeqa_init_pose_data_path: '/home/saumyas/catkin_ws_semnav/data/openEQA/openeqa_init_poses.json'
+  use_semantic_data: True
+
+logging:
+  output_parent_dir: results
+  save_obs: true
+  save_freq: 10
+
+detection:
+  GroundedSAM2:
+    sam2_checkpoint: "/home/saumyas/Projects/semnav/Grounded-SAM-2/checkpoints/sam2.1_hiera_large.pt"
+    model_cfg: "configs/sam2.1/sam2.1_hiera_l.yaml"
+
+scene_graph_sim:
+  save_image: ${vlm.use_image}
+  frontier_obj_thresh: 2.0
+  enrich_rooms: True #check
+  enrich_frontiers: True #check
+  enrich_objects: False #check
+  include_regions: False
+  no_scene_graph: False # FOR BASELINE GraphEQA-Vis only use with run_vlm_planner_frontier_exploration_no_SG.py
+  key_frame_selection:
+    use_clip_for_images: False
+    use_siglip_for_images: True
+    topk: 2
+    visualize_best_image: False
+    choose_final_image: True
+  detection:
+    detection_model: GroundedSAM2
+    visualize_detections: True
+    return_mask: False
+    min_detection_confidence: 0.75
+  img_subsample_freq: 2
+  
+vlm:
+  name: "gpt-4o-2024-08-06" # 'gemini', 'gpt-4o-mini', 'gpt-4o-2024-08-06'
+  use_image: True
+  use_done_action: False
+  early_exit: True
+  add_history: True
+
+planner:
+  max_step_room_size_ratio: 3
+  break_at_done: False
+
+habitat:
+  scene_type: 'hm3d'
+  dataset_type: 'train'
+  sim_gpu: ${sim_gpu}
+  inflation_radius: 0.25
+  img_width: 640
+  img_height: 480
+  camera_height: 1.5
+  camera_tilt_deg: -30
+  agent_z_offset: 0.
+  hfov: 120
+  z_offset: 0
+  use_semantic_data: ${data.use_semantic_data}
+  
+hydra:
+  glog_level: 0
+  verbosity: 0
+  label_space: 'hm3d'
+  config_verbosity: 0
+
+frontier_mapping:
+  tsdf_grid_size: 0.1
+  init_clearance: 0.5
+  img_width: ${habitat.img_width}
+  img_height: ${habitat.img_height}
+  margin_w_ratio: 0.25
+  margin_h_ratio: 0.3 # 0.6
+  height_offset: 0.2 # 0.4
+  range_height: [-0.2, 0.2]
+  visual_prompt:
+    cluster_threshold: 1.0
+    num_clusters: 10
+    num_prompt_points: 3
+    num_max_unoccupied: 300
+    min_points_for_clustering: 3
+    point_min_dist: 1
+    point_max_dist: 10
+    cam_offset: 0.6
+    min_num_prompt_points: 2
+    circle_radius: 18
+    frontier_min_neighbors: 2
+    frontier_max_neighbors: 3
