@@ -1,9 +1,9 @@
 # Graph_EQA
 This repo provides code for GraphEQA, a novel approach for utilizing 3D scene graphs for embodied question answering (EQA), introduced in the paper [GraphEQA: Using 3D Semantic Scene Graphs for Real-time Embodied Question Answering](https://www.arxiv.org/abs/2412.14480).
 
-<!-- <div align="center">
-    <img src="doc/media/grapheqa_gif_onthewebsite.gif">
-</div> -->
+<div align="center">
+    <img src="doc/grapheqa.gif">
+</div>
 
 Please cite using the following if you find GraphEQA relevant or useful for your research.
 
