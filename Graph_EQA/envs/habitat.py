@@ -12,7 +12,7 @@ import matplotlib.pyplot as plt
 import habitat_sim
 import pickle
 from itertools import chain
-from hydra_python import RRLogger
+from Graph_EQA.logging.rr_logger import RRLogger
 
 
 def _get_trajectory(data, prev_dsg, seed, use_full_scene=False):

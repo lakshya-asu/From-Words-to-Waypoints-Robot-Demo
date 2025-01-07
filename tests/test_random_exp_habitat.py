@@ -3,21 +3,21 @@ from omegaconf import OmegaConf
 import click
 import os
 from pathlib import Path
+import sys
+import torch 
 
 import numpy as np
 import hydra_python as hydra
 from hydra_python.run import run_eqa
 from hydra_python._plugins import habitat
-from hydra_python import RRLogger
-from hydra_python.frontier_mapping_eqa.tsdf import TSDFPlanner
-from hydra_python.frontier_mapping_eqa.utils import *
-from hydra_python.frontier_mapping_eqa.geom import *
+
+from Graph_EQA.logging.rr_logger import RRLogger
+from Graph_EQA.occupancy_mapping.tsdf import TSDFPlanner
+from Graph_EQA.occupancy_mapping.utils import *
+from Graph_EQA.occupancy_mapping.geom import *
+from Graph_EQA.occupancy_mapping.utils import pos_habitat_to_normal
 
 from hydra_python.utils import load_eqa_data, initialize_hydra_pipeline, get_instruction_from_eqa_data
-from hydra_python.frontier_mapping_eqa.utils import pos_habitat_to_normal
-import sys
-import torch 
-
 from hydra_python.detection.detic_segmenter import DeticSegmenter
 
 def main(cfg):

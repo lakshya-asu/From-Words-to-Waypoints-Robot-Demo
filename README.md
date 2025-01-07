@@ -5,7 +5,7 @@ This repo provides code for GraphEQA, a novel approach for utilizing 3D scene gr
     <img src="doc/grapheqa.gif">
 </div>
 
-Please cite using the following if you find GraphEQA relevant or useful for your research.
+If you find GraphEQA relevant or useful for your research, please use the following citation:
 
 ```bibtex
 @misc{saxena2024grapheqausing3dsemantic,
@@ -30,6 +30,7 @@ UPDATE
 ## TODOs
 * Instructions needed for configuring paths for configs, questions, detection tools (see detic_segmenter.py)
 * Instructions needed for installing Detic
+* install_requires in setup.py needed
 
 ## GraphEQA Workspace Configuration
 Below are instructions for how to set up a workspace to run and contribute to GraphEQA on Ubuntu 20.04.
@@ -130,7 +131,7 @@ pip install -e .
 4) We need a few other things:
 
 ``` bash
-pip install rerun-sdk opencv-python openai omegaconf ipdb torch torchvision transformers scikit-image yacs gpustat
+pip install rerun-sdk opencv-python openai omegaconf ipdb torch torchvision transformers scikit-image yacs gpustat matplotlib networkx
 pip install -q -U google-generativeai
 ```
 
@@ -142,5 +143,29 @@ Google's Gemini will also need an API key, call it GOOGLE_API_KEY:
 
 `export GOOGLE_API_KEY=<YOUR_GOOGLE_KEY>`
 
-### Installing GraphEQA
+### Download the HM3D dataset
+The HM3D dataset along with semantic annotations can be downloaded [here](https://github.com/matterport/habitat-matterport-3dresearch), for example, `hm3d-train-habitat-v0.2.tar` and `hm3d-train-semantic-annots-v0.2.tar`. Update the `scene_data_path` and `semantic_annot_data_path` fields in `grapheqa.yaml` to correspond to the directories in which the above data was downloaded. See `grapheqa.yaml` as a guide.
+
+### Clone Explore-EQA dataset
 UPDATE
+* Where should user put explore-eqa_semnav? This should also be changed to explore-eqa_grapheqa.
+
+```bash
+git clone git@github.com:SaumyaSaxena/explore-eqa_semnav.git -b semnav
+```
+
+Update question_data_path, init_pose_data_path, and eqa_dataset_enrich_labels to correspond to the directory in which explore-eqa_semnav was cloned.
+
+### Installing GraphEQA
+You can now pip install GraphEQA.
+
+```bash
+git clone git@github.com:SaumyaSaxena/Graph_EQA.git
+cd Graph_EQA
+pip install -e .
+```
+## Running GraphEQA
+
+### Simulation
+
+### On Hello Robot's Stretch
