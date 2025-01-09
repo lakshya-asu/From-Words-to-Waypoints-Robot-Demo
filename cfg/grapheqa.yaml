@@ -1,11 +1,7 @@
 # General
 seed: 42
-# exp_name: test_palnner
-# exp_name: test_view
-# exp_name: explore_eqa_${vlm.name}_no_regions_enrich_no_enrich_frontiers
-exp_name: explore_eqa_${vlm.name}_heirar_view
-# exp_name: explore_eqa_${vlm.name}_no_image
-output_path: /home/saumyas/catkin_ws_semnav/src/hydra/outputs/${exp_name}
+exp_name: grapheqa_${vlm.name}
+output_path: /home/saumyas/Projects/semnav/graph_eqa/outputs/${exp_name}
 results_filename: ${vlm.name}_images_${vlm.use_image}
 gpu: 0 
 sim_gpu: 0
@@ -52,7 +48,7 @@ scene_graph_sim:
   img_subsample_freq: 2
   
 vlm:
-  name: "gpt-4o-2024-08-06" # 'gemini', 'gpt-4o-mini', 'gpt-4o-2024-08-06'
+  name: "gpt-4o-mini" # 'gemini', 'gpt-4o-mini', 'gpt-4o-2024-08-06'
   use_image: True
   use_done_action: False
   early_exit: True

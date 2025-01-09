@@ -3,11 +3,10 @@ import random
 import scipy.ndimage as ndimage
 import heapq
 import math
-
-
+from graph_eqa.envs.utils import pos_habitat_to_normal
 
 def get_scene_bnds(pathfinder, floor_height):
-    from .utils import pos_habitat_to_normal
+    
     # Get mesh boundaries - this is for the full scene
     scene_bnds = pathfinder.get_bounds()
     scene_lower_bnds_normal = pos_habitat_to_normal(scene_bnds[0])

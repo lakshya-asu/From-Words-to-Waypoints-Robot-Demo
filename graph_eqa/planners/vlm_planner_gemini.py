@@ -1,15 +1,12 @@
 import json
 from enum import Enum
-from typing import List, Tuple, Literal, Any, Union, Optional, Annotated
 import time
-import hydra_python as hydra
 import base64
 
 import google.generativeai as genai
 import os
 import mimetypes
-from hydra_python.utils import get_instruction_from_eqa_data, get_latest_image
-from pydantic import BaseModel
+from graph_eqa.utils.data_utils import get_latest_image
 
 genai.configure(api_key=os.environ["GOOGLE_API_KEY"])
 

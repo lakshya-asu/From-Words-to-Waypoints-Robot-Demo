@@ -38,7 +38,7 @@ Below are instructions for how to set up a workspace to run and contribute to Gr
 Owners and collaborators of this repo are not claiming to have developed anything original to Hydra or any other MIT Spark lab tools.
 
 ### Setting up Hydra on Ubuntu 20.04
-This set of instructions is only for local Ubuntu 20.04 installations. We unfortunately do not yet formally support other Ubuntu versions or Docker.
+This set of instructions is for Ubuntu 20.04.
 
 0) If you don't have ROS Noetic, install it: https://wiki.ros.org/ROS/Installation
 

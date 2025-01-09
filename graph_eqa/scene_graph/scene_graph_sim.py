@@ -6,9 +6,7 @@ from itertools import chain
 import torch
 import imageio, cv2
 from PIL import Image
-from hydra_python.utils import project_2d_to_3d
 import rerun as rr
-import click
 
 from enum import Enum
 from pydantic import BaseModel
@@ -42,7 +40,6 @@ class SceneGraphSim:
         self.sg_cfg = cfg.scene_graph_sim
         self.device = device
         self.enrich_rooms = self.sg_cfg.enrich_rooms
-        self.enrich_objects = self.sg_cfg.enrich_objects
         self.enrich_object_labels = enrich_object_labels
 
         self.save_image = self.sg_cfg.save_image
@@ -88,14 +85,6 @@ class SceneGraphSim:
             self.question_embed = self.question_embed_labels.copy() 
             self.question_embed['input_ids'] = ((self.question_embed_labels['input_ids']+self.question_embed_exist['input_ids'])/2.0).to(self.question_embed_labels['input_ids'].dtype)
 
-        if self.enrich_objects:
-            self.task_relevant_objects = []
-            detection_kwargs = cfg['detection'][self.sg_cfg.detection.detection_model]
-            if self.sg_cfg.detection.detection_model == 'GroundedSAM2':
-                from hydra_python.detection.grounded_sam2 import GroundedSAM2
-                self._detector = GroundedSAM2(detection_kwargs.sam2_checkpoint, detection_kwargs.model_cfg, device)
-            else:
-                raise NotImplementedError('Dectector not implemented.')
             
     def _load_scene_graph(self):
         with open(self._sg_path, "r") as f:
@@ -376,142 +365,6 @@ class SceneGraphSim:
             node_name = 'agent'
         return nodeid, node_type, node_name
     
-    def test_sg(self):
-        # ***********TEST NODES***********
-        ## ***Process pipeline.graph***
-
-        """
-        Layer 5: Building, Layer 4: Room, Layer 3: Places and frontiers, Layer 2: Objects and agents.
-        """
-        place_node_positions = []
-        active_frontier_place_node_positions = []
-        object_node_positions = []
-        room_node_positions = []
-        building_node_positions = []
-        n_object_nodes, n_place_nodes, n_frontier_nodes, n_agent_nodes, n_room_nodes, n_building_nodes = 0, 0, 0, 0, 0, 0
-        for node in self.pipeline.graph.nodes:
-            if 'p' in node.id.category.lower():
-                # print(f"layer: {node.layer}. Category: {node.id.category.lower()}{node.id.category_id}. Place: {node.attributes.active_frontier}")
-                place_node_positions.append(node.attributes.position)
-                n_place_nodes += 1
-            if 'f' in node.id.category.lower():
-                # print(f"layer: {node.layer}. Category: {node.id.category.lower()}{node.id.category_id}. Active Frontier: {node.attributes.active_frontier}")
-                active_frontier_place_node_positions.append(node.attributes.position)
-                n_frontier_nodes += 1
-            if 'o' in node.id.category.lower():
-                # print(f"layer: {node.layer}. Category: {node.id.category.lower()}{node.id.category_id}.")
-                object_node_positions.append(node.attributes.position)
-                n_object_nodes += 1
-            if 'r' in node.id.category.lower():
-                # print(f"layer: {node.layer}. Category: {node.id.category.lower()}{node.id.category_id}.")
-                room_node_positions.append(node.attributes.position)
-                n_room_nodes += 1
-            if 'b' in node.id.category.lower():
-                # print(f"layer: {node.layer}. Category: {node.id.category.lower()}{node.id.category_id}.")
-                building_node_positions.append(node.attributes.position)
-                n_building_nodes += 1
-        place_node_positions = np.array(place_node_positions)
-        active_frontier_place_node_positions = np.array(active_frontier_place_node_positions)
-        object_node_positions = np.array(object_node_positions)
-        room_node_positions = np.array(room_node_positions)
-        building_node_positions = np.array(building_node_positions)
-        
-        agent_node_positions = []
-        for layer in self.pipeline.graph.dynamic_layers:
-            for node in layer.nodes:
-                # print(f"layer: {node.layer}. Category: {node.id.category.lower()} {node.id.category_id}")
-                if 'a' in node.id.category.lower():
-                    n_agent_nodes += 1
-                    agent_node_positions.append(node.attributes.position)
-        agent_node_positions = np.array(agent_node_positions)
-        total_nodes = n_place_nodes+n_frontier_nodes+n_object_nodes+n_agent_nodes+n_room_nodes+n_building_nodes
-        print(f"Pipeline: Object nodes:{n_object_nodes}, Place nodes:{n_place_nodes}, Frontier nodes:{n_frontier_nodes}, Agent nodes:{n_agent_nodes}, Room nodes:{n_room_nodes}, Building nodes:{n_building_nodes}. Total: {total_nodes}")
-
-        ## ***Process json graph***
-        n_object_nodes, n_place_nodes, n_frontier_nodes, n_agent_nodes, n_room_nodes, n_building_nodes = 0, 0, 0, 0, 0, 0
-        for n in self.netx_sg.nodes:
-            node = self.netx_sg.nodes[n]
-            if 'place' in node['attributes']['type'].lower() and not node['attributes']['active_frontier']:
-                n_place_nodes += 1
-            if 'place' in node['attributes']['type'].lower() and node['attributes']['active_frontier']:
-                n_frontier_nodes += 1
-            if 'object' in node['attributes']['type'].lower():
-                n_object_nodes += 1
-            if 'agent' in node['attributes']['type'].lower():
-                n_agent_nodes += 1
-            if 'room' in node['attributes']['type'].lower():
-                n_room_nodes += 1
-            if 'semantic' in node['attributes']['type'].lower():
-                n_building_nodes += 1
-        total_nodes = n_place_nodes+n_frontier_nodes+n_object_nodes+n_agent_nodes+n_room_nodes+n_building_nodes
-        print(f"Json: Object nodes:{n_object_nodes}, Place nodes:{n_place_nodes}, Frontier nodes:{n_frontier_nodes}, Agent nodes:{n_agent_nodes}, Room nodes:{n_room_nodes}, Building nodes:{n_building_nodes}. Total: {total_nodes}")
-        print(f"Total json nodes: {len(self.netx_sg.nodes)}")
-
-        # ***********TEST EDGES***********
-        """ 
-            GRAPH.LAYERS.EDGES:
-            layer 3 edges: Place->Frontier, Place->Place # included in graph.edges
-            layer 4 edges: 
-            layer 5 egdes: 
-            layer 20 edges: 
-        """
-        for layer in self.pipeline.graph.layers:
-            n_edges = 0
-            for edge in layer.edges:
-                print(f"Layer:{layer.id}. Layer edge: {edge}")
-                n_edges+=1
-            print(f"Edges in layer {layer.id}: {n_edges}")
-
-        ## These are agent to agent edges (not needed)
-        """
-            GRAPH.DYNAMIC_LAYERS.EDGES:
-            layer 2 edges: Agent->Agent
-        """
-        for layer in self.pipeline.graph.dynamic_layers:
-            n_edges = 0
-            for edge in layer.edges:
-                print(f"Layer:{layer.id}. Dynamic layer edge: {edge}")
-                n_edges+=1
-            print(f"Edges in dynamic layer {layer.id}: {n_edges}")
-
-        """
-            GRAPH.EDGES:
-            Building->Room
-            Room->Place, Room->Room
-            Place->Object
-            Place->Frontier, Place->Place
-        """
-        n_edges, n_edges_interL, n_edges_dyn_interL = 0, 0, 0
-        for edge in self.pipeline.graph.edges:
-            print("Graph edge", edge)
-            n_edges+=1
-        print(f"Edges in graph: {n_edges}")
-
-        ## these are already included in graph.edges
-        """
-            GRAPH.INTERLAYER_EDGES:
-            Building->Room
-            Room->Place
-            Place->Object # Included in graph.edges
-        """
-        for edge in self.pipeline.graph.interlayer_edges:
-            print("interlayer edges", edge)
-            n_edges_interL+=1
-        print(f"Edges in interlayers: {n_edges_interL}")
-
-        """
-            GRAPH.DYNAMIC_INTERLAYER_EDGES:
-            Place->Agent
-        """
-        for edge in self.pipeline.graph.dynamic_interlayer_edges:
-            print("dynamic interlayer edges", edge)
-            n_edges_dyn_interL+=1
-        print(f"Edges in dynamic interlayers: {n_edges_dyn_interL}")
-
-        print(f"Total pipeline edges: {n_edges+n_edges_dyn_interL}")
-        print(f"self.pipeline.graph.num_edges(): {self.pipeline.graph.num_edges()}")
-        print(f"Total json edges: {len(self.netx_sg.edges)}")
-    
     def get_current_semantic_state_str(self):
         agent_pos = self.filtered_netx_graph.nodes[self.curr_agent_id]['position']
         agent_loc_str = f'The agent is currently at node {self.curr_agent_id} at position {agent_pos}'
@@ -529,8 +382,7 @@ class SceneGraphSim:
         return f'{agent_loc_str} {room_str}'
     
     def update(self, imgs_rgb=[], imgs_depth=None, intrinsics=None, extrinsics=None, frontier_nodes=[]):
-        # self._load_scene_graph()
-        # self.test_sg()
+
         if not self.no_scene_graph:
             self._build_sg_from_hydra_graph()
             self.update_frontier_nodes(frontier_nodes)
@@ -539,10 +391,6 @@ class SceneGraphSim:
 
         if self.enrich_rooms and not self.no_scene_graph:
             self.add_room_labels_to_sg()
-
-        if self.enrich_objects and not self.no_scene_graph:
-            results, masks_batch, rgb_images_list, depth_list, extrinsics_list = self.detect_task_relevant_objects(imgs_rgb, imgs_depth, extrinsics)
-            self.update_objects_in_sg(results, masks_batch, depth_list, extrinsics_list, intrinsics)
 
         if not self.include_regions:
             self.remove_region_nodes()
@@ -562,22 +410,6 @@ class SceneGraphSim:
             self._detector_path, 
             return_mask=self.sg_cfg.detection.return_mask,
             visualize=self.sg_cfg.detection.visualize_detections)
-
-    def update_objects_in_sg(self, results, masks_batch, depth_list, extrinsics_list, intrinsics):
-        for idx in range(len(results)):
-            depth_img = depth_list[idx]
-            extrinsics = extrinsics_list[idx]
-            result = results[idx]
-            for j in range(len(result["boxes"])):
-                if result["scores"].cpu().numpy()[j] > self.sg_cfg.detection.min_detection_confidence:
-                    points_3d = project_2d_to_3d((result["boxes"].cpu().numpy()[j]).astype(int), depth_img, intrinsics, extrinsics)
-                    centroid = np.sum(points_3d, axis=0)/4
-                    self.task_relevant_objects.append({'pos': centroid, 'label': result['labels'][j], 'confidence': result["scores"].cpu().numpy()[j]})
-                    print("=============found object")
-                    
-        # Remove points too close by
-        self.task_relevant_objects = self.remove_close_positions(self.task_relevant_objects, threshold=0.3)
-        rr.log(f"world/task_relevant_objects", rr.Points3D([x['pos'] for x in self.task_relevant_objects], colors=[255, 0, 0], radii=0.11))
 
     def save_best_image(self, imgs_rgb):
 
@@ -633,14 +465,12 @@ class SceneGraphSim:
                 
                 final_img = Image.fromarray(np.concatenate(rel_imgs, axis=1))
 
-                # final_img = Image.fromarray(np.concatenate([*sampled_images[top_k_indices], imgs_rgb[-1]], axis=1))
                 final_img.save(self.output_path / f"current_img_{img_idx}.png")
             print(f"===========time taken for CLIP/SigLIP emb: {time.time()-start}")
         
         # Do not use CLIP or SigClip but save the final image (indexed)
         if len(imgs_rgb)>0 and self.save_image and (not self.sg_cfg.key_frame_selection.use_clip_for_images) and (not self.sg_cfg.key_frame_selection.use_siglip_for_images):
             final_img = Image.fromarray(imgs_rgb[-1])
-            # final_img = Image.fromarray(np.concatenate([*sampled_images[top_k_indices], imgs_rgb[-1]], axis=1))
             final_img.save(self.output_path / f"current_img_{img_idx}.png")
 
     def remove_close_positions(self, data, threshold):
@@ -695,9 +525,3 @@ class SceneGraphSim:
                     'type': edge_type}
                 )])
             self.filtered_netx_graph.remove_nodes_from(place_ids)
-        
-        # data = json_graph.node_link_data(self.filtered_netx_graph)
-        # # Write the data to a JSON file
-        # with open("graph.json", "w") as f:
-        #     json.dump(data, f, indent=4)
-        # import ipdb; ipdb.set_trace()

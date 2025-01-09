@@ -1,11 +1,11 @@
 import json
 from enum import Enum
-from typing import List, Tuple, Literal, Any, Union, Optional, Annotated
+from typing import List, Union
 import time
 import base64
 
 from openai import OpenAI
-from hydra_python.utils import get_instruction_from_eqa_data, get_latest_image
+from graph_eqa.utils.data_utils import get_latest_image
 from pydantic import BaseModel
 
 # client = OpenAI(

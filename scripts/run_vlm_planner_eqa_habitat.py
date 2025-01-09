@@ -2,48 +2,28 @@ from tqdm import tqdm
 from omegaconf import OmegaConf
 import click
 import os, time
-import sys, json
 from pathlib import Path
-from copy import deepcopy
-
 import numpy as np
-import hydra_python as hydra
-from hydra_python.run import run_eqa
-from hydra_python._plugins import habitat
-from hydra_python.utils import load_eqa_data, initialize_hydra_pipeline, get_instruction_from_eqa_data, get_traj_len_from_poses
 import torch
 
-# Native imports
-from Graph_EQA.logging.rr_logger import RRLogger
-from Graph_EQA.occupancy_mapping.tsdf import TSDFPlanner
-from Graph_EQA.occupancy_mapping.utils import *
-from Graph_EQA.occupancy_mapping.geom import *
-from Graph_EQA.occupancy_mapping.utils import pos_habitat_to_normal
+from graph_eqa.logging.utils import should_skip_experiment, log_experiment_status
+from graph_eqa.envs.utils import pos_habitat_to_normal, pos_normal_to_habitat
+from graph_eqa.occupancy_mapping.geom import get_scene_bnds, get_cam_intr
+from graph_eqa.envs.habitat import run
+from graph_eqa.logging.rr_logger import RRLogger
+from graph_eqa.occupancy_mapping.tsdf import TSDFPlanner
+from graph_eqa.utils.data_utils import load_eqa_data, get_instruction_from_eqa_data, get_traj_len_from_poses
+from graph_eqa.utils.hydra_utils import initialize_hydra_pipeline
 
 
-def load_experiment_data(filename='experiment_results.json'):
-    if not os.path.exists(filename):
-        data={}
-        with open(filename, 'w') as file:
-            json.dump(data, file, indent=4)
-    
-    with open(filename, 'r') as file:
-        return json.load(file)
+from graph_eqa.scene_graph.scene_graph_sim import SceneGraphSim
+from graph_eqa.planners import VLMPLannerEQAGemini, VLMPLannerEQAGPT
 
-def save_experiment_data(data=None, filename='experiment_status.json'):
-    with open(filename, 'w') as file:
-        json.dump(data, file, indent=4)
+import habitat_sim
 
-def log_experiment_status(experiment_id, success, metrics=None, filename='experiment_status.json'):
-    data = load_experiment_data(filename)
-    data[experiment_id] = {"Success": success}
-    if metrics:
-        data[experiment_id]["metrics"] = metrics
-    save_experiment_data(data, filename)
+import hydra_python
+from hydra_python._plugins import habitat
 
-def should_skip_experiment(experiment_id, filename='experiment_status.json'):
-    data = load_experiment_data(filename)
-    return experiment_id in data
 
 def main(cfg):
     questions_data, init_pose_data = load_eqa_data(cfg.data)
@@ -63,12 +43,8 @@ def main(cfg):
         segmenter = None
 
     successes = 0
-    # TODO(blake): Fix IndexError: index 488 is out of bounds for axis 0 with size 457
     for question_ind in tqdm(range(len(questions_data))):
-        # if question_ind in [0, 3, 11, 64, 77, 78, 81, 89, 98]:
-        #     continue
-        if question_ind not in [78, 81, 89, 98]:
-            continue
+
         question_data = questions_data[question_ind]
         scene_floor = question_data["scene"] + "_" + question_data["floor"]
         answer = question_data["answer"]
@@ -81,7 +57,7 @@ def main(cfg):
             click.secho(f'Executing=========Index: {question_ind} Scene: {question_data["scene"]} Floor: {question_data["floor"]}=======',fg="green",)
 
         # Planner reset with the new quesion
-        question_path = hydra.resolve_output_path(output_path / experiment_id)
+        question_path = hydra_python.resolve_output_path(output_path / experiment_id)
         scene_name = f'{cfg.data.scene_data_path}/{question_data["scene"]}/{question_data["scene"][6:]}.basis.glb'
         
         vlm_question, clean_ques_ans, choices, vlm_pred_candidates = get_instruction_from_eqa_data(question_data)
@@ -118,7 +94,7 @@ def main(cfg):
         else:
             label = ' '
 
-        sg_sim = hydra.SceneGraphSim(
+        sg_sim = SceneGraphSim(
             cfg, 
             question_path, 
             pipeline, 
@@ -131,7 +107,7 @@ def main(cfg):
         # Get poses for hydra at init view
         poses = habitat_data.get_init_poses_eqa(init_pts, init_angle, cfg.habitat.camera_tilt_deg)
         # Get scene graph for init view
-        run_eqa(
+        run(
             pipeline,
             habitat_data,
             poses,
@@ -144,13 +120,13 @@ def main(cfg):
         )
 
         if 'gpt' in cfg.vlm.name.lower():
-            vlm_planner = hydra.VLMPLannerEQAGPT(
+            vlm_planner = VLMPLannerEQAGPT(
                 cfg.vlm,
                 sg_sim,
                 vlm_question, vlm_pred_candidates, choices, answer, 
                 question_path)
         elif 'gemini' in cfg.vlm.name.lower():
-            vlm_planner = hydra.VLMPLannerEQAGemini(
+            vlm_planner = VLMPLannerEQAGemini(
                 cfg.vlm,
                 sg_sim,
                 vlm_question, vlm_pred_candidates, choices, answer, 
@@ -211,7 +187,7 @@ def main(cfg):
                 poses = habitat_data.get_trajectory_from_path_habitat_frame2(target_pose, desired_path, current_heading, cfg.habitat.camera_tilt_deg)
                 if poses is not None:
                     click.secho(f"Executing trajectory at overall step {cnt_step} and vlm step {planning_steps}",fg="yellow",)
-                    run_eqa(
+                    run(
                         pipeline,
                         habitat_data,
                         poses,
@@ -251,7 +227,7 @@ if __name__ == "__main__":
     parser.add_argument("-cf", "--cfg_file", help="cfg file name", default="", type=str, required=True)
     args = parser.parse_args()
 
-    config_path = Path(__file__).resolve().parent / 'commands' / 'cfg' / f'{args.cfg_file}.yaml'
+    config_path = Path(__file__).resolve().parent.parent / 'cfg' / f'{args.cfg_file}.yaml'
     cfg = OmegaConf.load(config_path)
 
     OmegaConf.resolve(cfg)
