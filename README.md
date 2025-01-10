@@ -7,7 +7,6 @@ This repo provides code for GraphEQA, a novel approach for utilizing 3D scene gr
 
 * Website: https://saumyasaxena.github.io/grapheqa/
 * arXiv: https://www.arxiv.org/abs/2412.14480
-* Paper: https://saumyasaxena.github.io/grapheqa/grapheqa_2025.pdf
 
 If you find GraphEQA relevant or useful for your research, please use the following citation:
 
@@ -32,48 +31,53 @@ expressed in this material are those of the author(s) and do not necessarily
 reflect the views of the NSF.
 
 ## GraphEQA Workspace Configuration
-Below are instructions for how to set up a workspace to run and contribute to GraphEQA on Ubuntu 20.04.
+Below are instructions for how to set up a workspace to run GraphEQA.
 
 Owners and collaborators of this repo are not claiming to have developed anything original to Hydra or any other MIT Spark lab tools.
 
 ### Setting up Hydra on Ubuntu 20.04
 This set of instructions is only for local Ubuntu 20.04 installations.
 
-0) Install our fork of Hydra following the instructions at [this link](https://github.com/blakerbuchanan/Hydra). You will need to clone the `grapheqa` branch of this fork.
+0) Install our fork of Hydra following the instructions at [this link](https://github.com/blakerbuchanan/Hydra). Verify that you are on the `grapheqa` branch.
 
 1) If you do not have conda, install it. Then create a conda environment:
 
 ``` bash
-conda create -n "grapheqa" python=3.10`
-```
-
-Activate the workspace:
-
-``` bash
+conda create -n "grapheqa" python=3.10
 conda activate grapheqa
 ```
 
-2) Follow the instructions for [installing the Hydra Python bindings](https://github.com/MIT-SPARK/Hydra/blob/main/python/README.md) inside of the conda environment created above. Before installing, be sure to source `devel/setup.bash` in the above catkin workspace, otherwise the installation of the python bindings will fail.
+2) Follow the instructions for [installing the Hydra Python bindings](https://github.com/MIT-SPARK/Hydra/blob/main/python/README.md) inside of the conda environment created above. Before installing, be sure to source the hydra catkin workspace, otherwise the installation of the python bindings will fail.
 
-3) [Install Habitat Simulator](https://github.com/facebookresearch/habitat-sim#installation).
+3) [Install Habitat Simulator](https://github.com/facebookresearch/habitat-sim#installation) in the 'grapheqa' conda environment.
 
 ### Download the HM3D dataset
-The HM3D dataset along with semantic annotations can be downloaded [here](https://github.com/matterport/habitat-matterport-3dresearch), for example, `hm3d-train-habitat-v0.2.tar` and `hm3d-train-semantic-annots-v0.2.tar`. Update the `scene_data_path` and `semantic_annot_data_path` fields in `grapheqa.yaml` to correspond to the directories in which the above data was downloaded. See `grapheqa.yaml` as a guide.
+The HM3D dataset along with semantic annotations can be downloaded from [here](https://github.com/matterport/habitat-matterport-3dresearch). Follow the instructions [here](https://github.com/facebookresearch/habitat-sim/blob/main/DATASETS.md#habitat-matterport-3d-research-dataset-hm3d) to download together the train/val scenes, semantic annotations and configs. The data folder should look as follows:
 
-### Get relevant Explore EQA files
+```graphql
+hm3d/train
+├─ hm3d-train-semantic-annots-v0.2
+|    ├─ ...
+├─ 00366-fxbzYAGkrtm
+|    ├─ fxbzYAGkrtm.basis.glb
+|    ├─ fxbzYAGkrtm.basis.navmesh
+|    ├─ fxbzYAGkrtm.semantic.glb
+|    ├─ fxbzYAGkrtm.semantic.txt
+├─ ...
+```
+
+### Download Explore-EQA dataset
 Navigate to [this repo](https://github.com/SaumyaSaxena/explore-eqa_semnav/tree/master/data) and download `questions.csv` and `scene_init_poses.csv` into a directory in your workspace.  
 
-Update `question_data_path` and `init_pose_data_path` in the `grapheqa_habitat.yaml` to correspond to the directory in which you downloaded the above two files.
-
 ### Install the Stretch AI package from Hello Robot
-Follow the install instructions at our fork of `stretch_ai` [found here](https://github.com/blakerbuchanan/stretch_ai) to install the packages necessary to run GraphEQA on Hello Robot's Stretch platform.
+If running GraphEQA on Stretch RE2 platform, follow the install instructions at our fork of `stretch_ai` [found here](https://github.com/blakerbuchanan/stretch_ai).
 
 ### Installing GraphEQA
-Clone and install GraphEQA:
+Clone and install GraphEQA in the 'grapheqa' conda environment:
 
 ```bash
-git clone git@github.com:SaumyaSaxena/Graph_EQA.git
-cd Graph_EQA
+git clone git@github.com:SaumyaSaxena/graph_eqa.git
+cd graph_eqa
 pip install -e .
 ```
 
@@ -81,22 +85,29 @@ The OpenAI API requires an API key. Add the following line to your .bashrc:
 
 `export OPENAI_API_KEY=<YOUR_OPENAI_KEY>`
 
-Google's Gemini will also need an API key, call it GOOGLE_API_KEY:
+If using Google's Gemini, add the following line to your .bashrc:
 
 `export GOOGLE_API_KEY=<YOUR_GOOGLE_KEY>`
 
-## Running GraphEQA with habitat
+## Running GraphEQA with Habitat
+
+### Config updates
+
+Update paths to Explore-EQA data: Change `question_data_path` and `init_pose_data_path` fields in `grapheqa_habitat.yaml` to correspond to the locations where you downloaded the `questions.csv` and `scene_init_poses.csv` files from the [Explore-EQA dataset](#download-explore-eqa-dataset).
+
+Update paths to HM3D data: Change `scene_data_path` and `semantic_annot_data_path` fields in `grapheqa_habitat.yaml` to correspond to the directories where you downloaded the [HM3D data](#download-the-hm3d-dataset).
+
+### Run script
 To run GraphEQA with Habitat Sim, run:
 ```bash
 python scripts/run_vlm_planner_eqa_habitat.py -cf grapheqa_habitat
 ```
-This will run GraphEQA on the hm3d dataset, with results available in the `outputs` directory.
+Results will be saved in the `graph_eqa/outputs` directory.
 
-## On Hello Robot's Stretch
+## Running GraphEQA with Habitat Hello Robot's Stretch RE2
 To run GraphEQA on Hello Robot's Stretch platform, you will need to run the server on the Stretch robot following the instructions at [this fork](https://github.com/blakerbuchanan/stretch_ai). Once you have successfully launched the server, open a terminal on your computer (client side) and run:
 
 ```bash
+cd graph_eqa
 python scripts/run_vlm_planner_eqa_stretch.py -cf grapheqa_stretch
 ```
-
-This will run GraphEQA on Hello Robot's Stretch.
