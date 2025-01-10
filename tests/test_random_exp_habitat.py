@@ -148,7 +148,7 @@ def main(cfg):
                 click.secho(f"Cannot find navigable path: {i}",fg="red",)
                 continue
 
-            poses = habitat_data.get_trajectory_from_path_habitat_frame2(target_pose, desired_path, current_heading, cfg.habitat.camera_tilt_deg)
+            poses = habitat_data.get_trajectory_from_path_habitat_frame(target_pose, desired_path, current_heading, cfg.habitat.camera_tilt_deg)
             click.secho(f"Executing trajectory: {i}",fg="yellow",)
             run_eqa(
                 pipeline,

@@ -1,7 +1,7 @@
 # General
 seed: 42
 exp_name: grapheqa_${vlm.name}
-output_path: /home/saumyas/Projects/semnav/graph_eqa/outputs/${exp_name}
+output_path: outputs/${exp_name}
 results_filename: ${vlm.name}_images_${vlm.use_image}
 gpu: 0 
 sim_gpu: 0
@@ -11,9 +11,7 @@ data:
   init_pose_data_path: '/home/saumyas/catkin_ws_semnav/data/explore-eqa_semnav/data/scene_init_poses.csv'
   semantic_annot_data_path: '/home/saumyas/catkin_ws_semnav/data/hm3d-train-semantic-annots-v0.2'
   scene_data_path: '/home/saumyas/catkin_ws_semnav/data/hm3d/train'
-  eqa_dataset_enrich_labels: '/home/saumyas/Projects/semnav/explore-eqa_semnav/data/eqa_dataset_enrich_labels.yaml'
-  openeqa_question_data_path: '/home/saumyas/catkin_ws_semnav/data/openEQA/open-eqa-v0.json'
-  openeqa_init_pose_data_path: '/home/saumyas/catkin_ws_semnav/data/openEQA/openeqa_init_poses.json'
+  explore_eqa_dataset_enrich_labels: 'cfg/explore_eqa_dataset_enrich_labels.yaml'
   use_semantic_data: True
 
 logging:
@@ -21,17 +19,12 @@ logging:
   save_obs: true
   save_freq: 10
 
-detection:
-  GroundedSAM2:
-    sam2_checkpoint: "/home/saumyas/Projects/semnav/Grounded-SAM-2/checkpoints/sam2.1_hiera_large.pt"
-    model_cfg: "configs/sam2.1/sam2.1_hiera_l.yaml"
-
 scene_graph_sim:
   save_image: ${vlm.use_image}
   frontier_obj_thresh: 2.0
-  enrich_rooms: True #check
-  enrich_frontiers: True #check
-  enrich_objects: False #check
+  enrich_rooms: True
+  enrich_frontiers: True
+  enrich_objects: False
   include_regions: False
   no_scene_graph: False # FOR BASELINE GraphEQA-Vis only use with run_vlm_planner_frontier_exploration_no_SG.py
   key_frame_selection:
@@ -40,11 +33,6 @@ scene_graph_sim:
     topk: 2
     visualize_best_image: False
     choose_final_image: True
-  detection:
-    detection_model: GroundedSAM2
-    visualize_detections: True
-    return_mask: False
-    min_detection_confidence: 0.75
   img_subsample_freq: 2
   
 vlm:

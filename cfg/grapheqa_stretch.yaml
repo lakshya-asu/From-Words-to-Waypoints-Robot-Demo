@@ -1,0 +1,47 @@
+# General
+seed: 42
+question: 10
+exp_name: stretch_${vlm.name}_question_${question}
+output_path: outputs/${exp_name}
+results_filename: ${exp_name}_results
+gpu: 0 
+sim_gpu: 0
+
+data:
+  question_data_path: "cfg/real_world_questions.yaml"
+
+logging:
+  output_parent_dir: results
+  save_obs: true
+  save_freq: 10
+
+scene_graph_sim:
+  save_image: ${vlm.use_image}
+  frontier_obj_thresh: 2.0
+  enrich_rooms: True
+  enrich_objects: False
+  key_frame_selection:
+    use_clip_for_images: False
+    use_siglip_for_images: True
+    topk: 2
+    visualize_best_image: False
+    choose_final_image: True
+  img_subsample_freq: 1
+  
+vlm:
+  name: "gpt-4o-2024-08-06" # 'gemini', 'gpt-4o-mini', 
+  use_image: True
+  use_done_action: False
+  add_history: True
+  early_exit: True
+
+planner:
+  max_step_room_size_ratio: 3
+  break_at_done: False
+  max_planning_steps: 30
+  
+hydra:
+  glog_level: 0
+  verbosity: 0
+  label_space: 'myhome'
+  config_verbosity: 0

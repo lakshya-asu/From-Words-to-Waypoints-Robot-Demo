@@ -18,23 +18,20 @@ from graph_eqa.utils.hydra_utils import initialize_hydra_pipeline
 
 from graph_eqa.scene_graph.scene_graph_sim import SceneGraphSim
 from graph_eqa.planners import VLMPLannerEQAGemini, VLMPLannerEQAGPT
+from graph_eqa.envs.habitat_interface import HabitatInterface
 
 import habitat_sim
-
 import hydra_python
-from hydra_python._plugins import habitat
-
 
 def main(cfg):
     questions_data, init_pose_data = load_eqa_data(cfg.data)
 
-    output_path = cfg.output_path
-    os.makedirs(cfg.output_path, exist_ok=True)
-    output_path = Path(cfg.output_path)
+    output_path = Path(__file__).resolve().parent.parent / cfg.output_path
+    os.makedirs(str(output_path), exist_ok=True)
     results_filename = output_path / f'{cfg.results_filename}.json'
     device = f"cuda:{cfg.gpu}" if torch.cuda.is_available() else "cpu"
 
-    eqa_enrich_labels = OmegaConf.load(cfg.data.eqa_dataset_enrich_labels)
+    eqa_enrich_labels = OmegaConf.load(Path(__file__).resolve().parent.parent / cfg.data.explore_eqa_dataset_enrich_labels)
 
     if not cfg.data.use_semantic_data:
         from hydra_python.detection.detic_segmenter import DeticSegmenter
@@ -61,7 +58,7 @@ def main(cfg):
         scene_name = f'{cfg.data.scene_data_path}/{question_data["scene"]}/{question_data["scene"][6:]}.basis.glb'
         
         vlm_question, clean_ques_ans, choices, vlm_pred_candidates = get_instruction_from_eqa_data(question_data)
-        habitat_data = habitat.HabitatInterface(
+        habitat_data = HabitatInterface(
             scene_name, 
             cfg=cfg.habitat,
             device=device,)
@@ -184,7 +181,7 @@ def main(cfg):
                     click.secho(f"Cannot find navigable path at {cnt_step}. Continuing..",fg="red",)
                     continue
 
-                poses = habitat_data.get_trajectory_from_path_habitat_frame2(target_pose, desired_path, current_heading, cfg.habitat.camera_tilt_deg)
+                poses = habitat_data.get_trajectory_from_path_habitat_frame(target_pose, desired_path, current_heading, cfg.habitat.camera_tilt_deg)
                 if poses is not None:
                     click.secho(f"Executing trajectory at overall step {cnt_step} and vlm step {planning_steps}",fg="yellow",)
                     run(

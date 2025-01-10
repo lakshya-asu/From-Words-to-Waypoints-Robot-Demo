@@ -397,19 +397,6 @@ class SceneGraphSim:
 
     def get_position_from_id(self, nodeid):
         return np.array(self.filtered_netx_graph.nodes[nodeid]['position'])
-    
-    def detect_task_relevant_objects(self, imgs_rgb, imgs_depth, extrinsics):
-        subsampled_imgs = imgs_rgb[::self.sg_cfg.img_subsample_freq]
-        subsampled_depth = imgs_depth[::self.sg_cfg.img_subsample_freq]
-        subsampled_extrinsics = extrinsics[::self.sg_cfg.img_subsample_freq]
-        return self._detector.predict(
-            subsampled_imgs, 
-            subsampled_depth,
-            subsampled_extrinsics,
-            [self.enrich_object_labels]*len(subsampled_imgs), 
-            self._detector_path, 
-            return_mask=self.sg_cfg.detection.return_mask,
-            visualize=self.sg_cfg.detection.visualize_detections)
 
     def save_best_image(self, imgs_rgb):
 

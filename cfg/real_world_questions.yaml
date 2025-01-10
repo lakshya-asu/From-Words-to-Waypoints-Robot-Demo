@@ -1,0 +1,104 @@
+Question0:
+  question: "Where is the trashcan?"
+  choices:
+    A: 'Next to the sink'
+    B: 'Next to the refrigerator'
+  answer: A
+  enrich_labels: "sink. refrigerator. trashcan"
+
+Question1:
+  question: "Are there dishes next to the sink?"
+  choices:
+    A: "Yes"
+    B: "No"
+  answer: A
+  enrich_labels: "dishes. sink. faucet."
+
+Question2:
+  question: "Is there a kettle on the stove"
+  choices:
+    A: "Yes"
+    B: "No"
+  answer: A
+  enrich_labels: "kettle. stove."
+
+Question3:
+  question: "What is the color of the water bottle on the living room table?"
+  choices:
+    A: "Green"
+    B: "Yellow"
+    C: "Red"
+  answer: A
+  enrich_labels: "bottle. table."
+
+Question4:
+  question: "Where is blue water bottle?"
+  choices:
+    A: "On the table"
+    B: "On the chair"
+    C: "On the floor"
+  answer: A
+  enrich_labels: "blue water bottle. table. chair"
+
+Question5:
+  question: "Is there a blue pan on the stove?"
+  choices:
+    A: "Yes"
+    B: "No"
+  answer: A
+  enrich_labels: "pan. stove."
+
+Question6:
+  question: "How many paintings are there on the wall behind the living room table?"
+  choices:
+    A: "1"
+    B: "2"
+    C: "3"
+    D: "4"
+  answer: D
+  enrich_labels: "wall. paintings. pictures"
+
+Question7:
+  question: "How many white cushions are there on the grey couch?"
+  choices:
+    A: "1"
+    B: "2"
+    C: "3"
+    D: "4"
+  answer: B
+  enrich_labels: "couch. cushion."
+
+Question8:
+  question: "Is the front door, next to the staircase, open?"
+  choices:
+    A: "Yes"
+    B: "No"
+  answer: B
+  enrich_labels: "door. staircase."
+
+Question9:
+  question: "How many middle fingers do you see the woman holding up?"
+  choices:
+    A: "1"
+    B: "2"
+  answer: B
+  enrich_labels: "human"
+
+Question10:
+  question: "where is my handbag?"
+  choices:
+    A: "On the coat rack"
+    B: "On the floor"
+    C: "On the couch"
+  answer: A
+  enrich_labels: "coat rack. handbag. couch. floor."
+
+Question11:
+  question: "What is the color of the mat in front of the kitchen sink?"
+  choices:
+    A: "White"
+    B: "Black"
+    C: "Red"
+    D: "Green"
+  answer: A
+  enrich_labels: "mat. sink."

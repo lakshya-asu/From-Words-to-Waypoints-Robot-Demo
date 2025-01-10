@@ -1,7 +1,6 @@
 import rerun as rr
 import rerun.blueprint as rrb
 import numpy as np
-from hydra_python.voxel_mapping.utils.voxel import occupancy_map_to_3d_points
 
 class RRLogger:
     def __init__(self, output_path):
@@ -232,103 +231,6 @@ class RRLogger:
         rr.log(f"world/tsdf_unoccupied", rr.Points3D(unoccupied_reachable_normal, colors=[255, 0, 0], radii=0.06))
         rr.log(f"world/tsdf_frontiers", rr.Points3D(frontiers_normal, colors=[255, 255, 255], radii=0.08))
         rr.log(f"world/tsdf_explored", rr.Points3D(frontiers_unoccupied, colors=[200, 180, 150], radii=0.08))
-
-    def log_voxel_map(
-        self,
-        space,
-        debug: bool = False,
-        explored_radius=0.01,
-        obstacle_radius=0.05,
-    ):
-        """Log voxel map and send it to Rerun visualizer
-        Args:
-            space (SparseVoxelMapNavigationSpace): Voxel map object
-        """
-
-        points, _, _, rgb = space.voxel_map.voxel_pcd.get_pointcloud()
-        if rgb is None:
-            return
-
-        rr.log(
-            "world/voxel/point_cloud",
-            rr.Points3D(positions=points, radii=np.ones(rgb.shape[0]) * 0.01, colors=np.int64(rgb)),
-        )
-
-        grid_origin = space.voxel_map.grid_origin
-        obstacles, explored = space.voxel_map.get_2d_map()
-        frontier, outside_frontier, traversible = space.get_frontier()
-
-        # self.log_2d_frontier_data(obstacles.detach().cpu().numpy()*255, explored.detach().cpu().numpy()*255, obstacles.detach().cpu().numpy()*255)
-
-        # Get obstacles and explored points
-        grid_resolution = space.voxel_map.grid_resolution
-        obs_points = np.array(occupancy_map_to_3d_points(obstacles, grid_origin, grid_resolution))
-        obs_points_sample_idx = np.random.choice(obs_points.shape[0], size=50, replace=False)
-        obs_points_sample = obs_points[obs_points_sample_idx]
-
-        # Get explored points
-        explored_points = np.array(occupancy_map_to_3d_points(explored, grid_origin, grid_resolution))
-        explored_points_sample_idx = np.random.choice(explored_points.shape[0], size=50, replace=False)
-        explored_points_sample = explored_points[explored_points_sample_idx]
-
-        frontier_points = np.array(occupancy_map_to_3d_points(frontier, grid_origin, grid_resolution))
-        frontier_points_sample_idx = np.random.choice(frontier_points.shape[0], size=100, replace=False)
-        frontier_points_sample = frontier_points[frontier_points_sample_idx]
-
-        # frontier_points_sample = frontier_points.copy()
-
-        outside_frontier_points = np.array(occupancy_map_to_3d_points(outside_frontier, grid_origin, grid_resolution))
-        outside_frontier_points_sample_idx = np.random.choice(outside_frontier_points.shape[0], size=20, replace=False)
-        outside_frontier_points_sample = outside_frontier_points[outside_frontier_points_sample_idx]
-        outside_frontier_points_sample = outside_frontier_points.copy()
-
-        traversible_points = np.array(occupancy_map_to_3d_points(traversible, grid_origin, grid_resolution))
-        traversible_points_sample_idx = np.random.choice(traversible_points.shape[0], size=100, replace=False)
-        traversible_points_sample = traversible_points[traversible_points_sample_idx]
-        # traversible_points_sample = traversible_points.copy()
-
-        # TODO(blake): subsample all of these
-        # Log points
-        rr.log(
-            "world/voxel/obstacles",
-            rr.Points3D(
-                positions=obs_points,
-                radii=np.ones(points.shape[0]) * obstacle_radius,
-                colors=[255, 0, 0],
-            ),
-        )
-        rr.log(
-            "world/voxel/explored",
-            rr.Points3D(
-                positions=explored_points,
-                radii=np.ones(points.shape[0]) * 0.04,
-                colors=[0, 255, 255],
-            ),
-        )
-        rr.log(
-            "world/voxel/frontier",
-            rr.Points3D(
-                positions=frontier_points,
-                radii=np.ones(points.shape[0]) * obstacle_radius,
-                colors=[255, 255, 0],
-            ),
-        )
-        rr.log(
-            "world/voxel/outside_frontier",
-            rr.Points3D(
-                positions=outside_frontier_points,
-                radii=np.ones(points.shape[0]) * 0.04,
-                colors=[255, 255, 255],
-            ),
-        )
-        rr.log(
-            "world/voxel/traversible",
-            rr.Points3D(
-                positions=traversible_points,
-                radii=np.ones(points.shape[0]) * 0.04,
-                colors=[0, 0, 255],
-            ),
-        )
     
     def log_hydra_graph(
             self, 
