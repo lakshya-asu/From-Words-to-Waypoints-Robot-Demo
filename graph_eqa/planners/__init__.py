@@ -1,2 +1,3 @@
-from .vlm_planner_gemini import VLMPLannerEQAGemini
-from .vlm_planner_gpt import VLMPLannerEQAGPT
+from .vlm_planner_gemini import VLMPlannerEQAGemini
+from .vlm_planner_gpt import VLMPlannerEQAGPT
+from .vlm_planner_claude import VLMPlannerEQAClaude

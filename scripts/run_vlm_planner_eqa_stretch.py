@@ -9,7 +9,7 @@ from graph_eqa.utils.hydra_utils import initialize_hydra_pipeline_stretch
 from graph_eqa.stretch_ai_agent.robot_hydra_agent import RobotHydraAgent
 from graph_eqa.stretch_ai_agent.utils import load_stretch_questions_data
 from graph_eqa.scene_graph.scene_graph_sim import SceneGraphSim
-from graph_eqa.planners import VLMPLannerEQAGemini, VLMPLannerEQAGPT
+from graph_eqa.planners import VLMPlannerEQAGemini, VLMPlannerEQAGPT
 
 from stretch.agent.zmq_client import HomeRobotZmqClient
 from stretch.core import get_parameters
@@ -103,13 +103,13 @@ def main(stretch_parameter_file, cfg):
     # click.secho(f'Location: Bosch Pittsburgh lab',fg="green",)
 
     if 'gpt' in cfg.vlm.name.lower():
-        vlm_planner = VLMPLannerEQAGPT(
+        vlm_planner = VLMPlannerEQAGPT(
             cfg.vlm,
             sg_sim,
             vlm_question, vlm_pred_candidates, choices, answer, 
             output_path)
     elif 'gemini' in cfg.vlm.name.lower():
-        vlm_planner = VLMPLannerEQAGemini(
+        vlm_planner = VLMPlannerEQAGemini(
             cfg.vlm,
             sg_sim,
             vlm_question, vlm_pred_candidates, choices, answer, 

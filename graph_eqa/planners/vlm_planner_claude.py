@@ -1,25 +1,31 @@
 import json
 from enum import Enum
-from typing import List, Union
 import time
 import base64
 
-from openai import OpenAI
+import anthropic
+import os
+from typing import List, Union
+import mimetypes
 from graph_eqa.utils.data_utils import get_latest_image
 from pydantic import BaseModel
 
-# client = OpenAI(
-#     organization='org-9eg1dYLvm9Vnx13YZieDfE9n',
-#     project='proj_rZU06lthKefMBx9rE3YGD2Um',
-# )
-client = OpenAI()
+'''
+Structured output resources for Claude API:
+1. https://murraycole.com/posts/claude-tool-use-pydantic
+2. https://github.com/anthropics/anthropic-cookbook/blob/main/tool_use/tool_use_with_pydantic.ipynb
+'''
+
+client = anthropic.Anthropic(
+    api_key=os.environ["ANTHROPIC_API_KEY"],  # This is the default and can be omitted
+)
+
 
 def encode_image(image_path):
   with open(image_path, "rb") as image_file:
     return base64.b64encode(image_file.read()).decode('utf-8')
 
 def create_planner_response(frontier_node_list, room_node_list, region_node_list, object_node_list, Answer_options, use_image=True):
-
     class Goto_frontier_node_step(BaseModel):
         explanation_frontier: str
         frontier_id: frontier_node_list
@@ -71,9 +77,8 @@ def create_planner_response(frontier_node_list, room_node_list, region_node_list
             return PlannerResponseNoFrontiersNoImage
         else:
             return PlannerResponseNoImage
-    
 
-class VLMPlannerEQAGPT:
+class VLMPlannerEQAClaude:
     def __init__(self, cfg, sg_sim, question, pred_candidates, choices, answer, output_path):
         
         self._question, self.choices, self.vlm_pred_candidates = question, choices, pred_candidates
@@ -90,23 +95,24 @@ class VLMPlannerEQAGPT:
 
         self._outputs_to_save = [f'Question: {self._question}. \n Answer: {self._answer} \n']
         self.sg_sim = sg_sim
+        #self.temp = cfg.temp
 
     @property
     def t(self):
         return self._t
     
     def get_actions(self): 
-        object_node_list = Enum('object_node_list', {id: name for id, name in zip(self.sg_sim.object_node_ids, self.sg_sim.object_node_names)}, type=str)
+        object_node_list = Enum('object_node_list', {id: id for id, name in zip(self.sg_sim.object_node_ids, self.sg_sim.object_node_names)}, type=str)
+        
         if len(self.sg_sim.frontier_node_ids)> 0:
             frontier_node_list = Enum('frontier_node_list', {ac: ac for ac in self.sg_sim.frontier_node_ids}, type=str)
         else:
-            # frontier_node_list = Enum('frontier_node_list', {'frontier_0': 'Do not choose this option. No more frontiers left.'}, type=str)
-            frontier_node_list = None
-        
+            frontier_node_list = Enum('frontier_node_list', {'frontier_0': 'Do not choose this option. No more frontiers left.'}, type=str)
         room_node_list = Enum('room_node_list', {id: name for id, name in zip(self.sg_sim.room_node_ids, self.sg_sim.room_node_names)}, type=str)
         region_node_list = Enum('region_node_list', {ac: ac for ac in self.sg_sim.region_node_ids}, type=str)
-        Answer_options = Enum('Answer_options', {token: choice for token, choice in zip(self.vlm_pred_candidates, self.choices)}, type=str)
+        Answer_options = Enum('Answer_options', {token: token for token, choice in zip(self.vlm_pred_candidates, self.choices)}, type=str)
         return frontier_node_list, room_node_list, region_node_list, object_node_list, Answer_options
+    
     
     @property
     def agent_role_prompt(self):
@@ -149,7 +155,7 @@ class VLMPlannerEQAGPT:
             Describe the CURRENT IMAGE. Pay special attention to features that can help answer the question or select future actions.
             Describe the SCENE GRAPH. Pay special attention to features that can help answer the question or select future actions.
             '''
-        prompt += "You should go near the blue couch before answering the question with confidence. You should see a full image of the couch before answering with confidence"
+        
         prompt_no_image = f'''You are an excellent hierarchical graph planning agent. 
             Your goal is to navigate an unseen environment to confidently answer a multiple-choice question about the environment.
             As you explore the environment, your sensors are building a scene graph representation (in json format) and you have access to that scene graph.  
@@ -184,121 +190,172 @@ class VLMPlannerEQAGPT:
         # TODO(saumya): Include history
         prompt = f"At t = {self.t}: \n \
             CURRENT AGENT STATE: {agent_state}. \n \
-            SCENE GRAPH: {scene_graph}. \n  "
-        
+            SCENE GRAPH: {scene_graph}. \n "
+
         if self._add_history:
             prompt += f"HISTORY: {self._history}"
 
         return prompt
 
-    def update_history(self, agent_state, step, answer, target_pose):
-        if step.__class__.__name__ == 'Goto_object_node_step':
-            action = f"Goto object_id:{step.object_id.name} object name: {step.object_id.value}"
+    def update_history(self, agent_state, step, answer):
+        if (step['step_type'] == 'Goto_object_node_step'):
+            action = f"Goto object_id: {step['choice']} object name: N/A"
+        elif step['step_type'] == 'Goto_frontier_node_step':
+            action = f"Goto frontier_id: {step['choice']}"
         else:
-            action = f"Goto frontier_id:{step.frontier_id.name} frontier name: {step.frontier_id.value}"
-
+            # Need to add actual choice answer here rather than just the letter
+            action = f"Answer: {step['choice']}, Desc. N/A.  Confident: {step['is_confident']}, Confidence level:{step['confidence_level']}"
+        
         last_step = f'''
             [Agent state(t={self.t}): {agent_state}, 
-            Action(t={self.t}): {action}, 
-            Answer(t={self.t}): {answer.answer.name} {answer.answer.value}
-            Confidence(t={self.t}):  Confident: {answer.is_confident}, Confidence level:{answer.confidence_level}  \n
+            Action(t={self.t}): {action},
+            Answer(t={self.t}): {answer['answer']}
+            Confidence(t={self.t}):  Confident: {answer['is_confident']}, Confidence level:{answer['confidence_level']}  \n
         '''
         self._history += last_step
-
-    def get_gpt_output(self, current_state_prompt):
-        
+    
+    def get_claude_output(self, current_state_prompt):
         messages=[
-            {"role": "system", "content": f"AGENT ROLE: {self.agent_role_prompt}"},
-            {"role": "system", "content": f"QUESTION: {self._question}"},
+            {"role": "user", "content": f"AGENT ROLE: {self.agent_role_prompt}"},
+            {"role": "user", "content": f"QUESTION: {self._question}"},
             {"role": "user", "content": f"CURRENT STATE: {current_state_prompt}."},
-            # {"role": "user", "content": f"EXAMPLE PLAN: {self._example_plan}"} # TODO(saumya)
         ]
 
         if self._use_image:
+            image_path = get_latest_image(self._output_path)
+            base64_image = encode_image(image_path) 
+            mime_type = mimetypes.guess_type(image_path)[0]
 
-            base64_image = encode_image(get_latest_image(self._output_path))
-            messages.append(
-                { 
+            image_message = {
                     "role": "user",
                     "content": [
                         {
-                        "type": "text",
-                        "text": "CURRENT IMAGE: This image represents the current view of the agent. Use this as additional information to answer the question."
+                            "type": "image",
+                            "source": {
+                                "type": "base64",
+                                "media_type": mime_type,
+                                "data": base64_image,
+                            },
                         },
                         {
-                            "type": "image_url",
-                            "image_url": {"url": f"data:image/jpeg;base64,{base64_image}"}
+                            "type": "text",
+                            "text": "Describe this image."
                         }
-                    ]
-                })
+                    ],
+                }
+            
+            messages.append(image_message)
 
         frontier_node_list, room_node_list, region_node_list, object_node_list, Answer_options = self.get_actions()
 
+        tools = [
+            {
+                "name": "planner_response",
+                "description": "The Claude VLM Planner response.",
+                "input_schema": create_planner_response(
+                        frontier_node_list, 
+                        room_node_list, 
+                        region_node_list, 
+                        object_node_list, 
+                        Answer_options).model_json_schema()
+            }
+        ]
+        
         succ=False
         while not succ:
             try:
                 start = time.time()
-                completion = client.beta.chat.completions.parse(
+                # TODO write Claude's response here
+                response = client.messages.create(
                     model=self._vlm_type,
+                    max_tokens=4096,
                     messages=messages,
-                    response_format=create_planner_response(frontier_node_list, room_node_list, region_node_list, object_node_list, Answer_options, use_image=self._use_image),
+                    tools=tools,
+                    tool_choice={"type": "tool", "name": "planner_response"}
                 )
-                plan = completion.choices[0].message
-                if not (plan.refusal): # If the model refuses to respond, you will get a refusal message
+
+                print(f"Time taken for planning next step: {time.time()-start}s")
+                # Make sure Claude responds with an input and that it is using the tools we provided
+                if (response.content[0].input and response.content[0].type == 'tool_use'): 
                     succ=True
             except Exception as e:
-                print(f"An error occurred: {e}. Sleeping for 60s")
-                import ipdb; ipdb.set_trace()
-                time.sleep(1)
+                print(f"An error occurred: {e}. Sleeping for 45s")
+                time.sleep(45)
+        
+        
+        response_dict = response.content[0].input
+        
+        if len(response_dict['steps']) > 0 and 'scene_graph_description' in response_dict.keys() and 'answer' in response_dict.keys():
+            step_out = response_dict["steps"][0]
+            sg_desc = response_dict["scene_graph_description"]
+            if self._use_image:
+                img_desc = response_dict["image_description"]
+            else:
+                img_desc = ' '
 
-        plan = completion.choices[0].message
+            answer = response_dict['answer']
 
-        if len(plan.parsed.steps) > 0:
-            step = plan.parsed.steps[0]
+            if step_out:
+                step = {}
+                if 'frontier_id' in step_out.keys():
+                    step_type = 'Goto_frontier_node_step'
+                elif 'object_id' in step_out.keys():
+                    step_type = 'Goto_object_node_step'
+                step['step_type'] = step_type
+                if (step_type == 'Goto_object_node_step'):
+                    step['choice'] = step_out['object_id']
+                    #step['value']= step_out['object_name']
+                    step['explanation'] = step_out['explanation_obj']
+                    step['room'] = step_out['room_id']
+                    step['explanation_room'] = step_out['explanation_room']
+                elif (step_type == 'Goto_frontier_node_step'):
+                    step['choice'] = step_out['frontier_id']
+                    step['explanation'] = step_out['explanation_frontier']
+            else:
+                step = None
+
+            return step, answer, img_desc, sg_desc
         else:
             step = None
+            answer = None
+            img_desc = 'No image description available.'
+            sg_desc = 'No scene graph description available.'
+         
+        return step, answer, img_desc, sg_desc
+    
 
-        if self._use_image:
-            img_desc = plan.parsed.image_description
-        else:
-            img_desc = ' '
-        
-        return step, plan.parsed.answer, img_desc, plan.parsed.scene_graph_description
-
-    def get_next_action(self):
-        # self.sg_sim.update()
-        
+    def get_next_action(self):        
         agent_state = self.sg_sim.get_current_semantic_state_str()
         current_state_prompt = self.get_current_state_prompt(self.sg_sim.scene_graph_str, agent_state)
 
         sg_desc=''
-        step, answer, img_desc, sg_desc = self.get_gpt_output(current_state_prompt)
+        step, answer, img_desc, sg_desc = self.get_claude_output(current_state_prompt)
 
+        print(f'At t={self._t}: \n Step: {step}, \n Answer: {answer}')
         # Saving outputs to file
         self._outputs_to_save.append(f'At t={self._t}: \n \
                                         Agent state: {agent_state} \n \
-                                        LLM output: {step}. \n \
-                                        Answer: {answer} \n \
+                                        VLM step: {step} \n \
                                         Image desc: {img_desc} \n \
-                                        Scene graph desc: {sg_desc} \n \n')
+                                        Scene graph desc: {sg_desc}')
         self.full_plan = ' '.join(self._outputs_to_save)
         with open(self._output_path / "llm_outputs.json", "w") as text_file:
             text_file.write(self.full_plan)
 
-        print(f'At t={self._t}: \n {step} \n {answer}')
-
-        if step is None:
-            return None, None, answer.is_confident, answer.confidence_level, answer.answer.name
-
-        if step.__class__.__name__ == 'Goto_object_node_step':
-            target_pose = self.sg_sim.get_position_from_id(step.object_id.name)
-            target_id = step.object_id.name
-        else:
-            target_pose = self.sg_sim.get_position_from_id(step.frontier_id.name)
-            target_id = step.frontier_id.name
+        if step is None or step['choice'] == 'Do not choose this option. No more frontiers left.':
+            return None, None, False, 0., " "
+        
+        if answer is None:
+            return None, None, False, 0., " "
 
         if self._add_history:
-            self.update_history(agent_state, step, answer, target_pose)
+            self.update_history(agent_state, step, answer)
 
         self._t += 1
-        return target_pose, target_id, answer.is_confident, answer.confidence_level, answer.answer.name
+
+        # if step['step_type'] == 'answer':
+        #     return None, None, step['is_confident'], step['confidence_level'], step['choice']
+        # else:
+        target_pose = self.sg_sim.get_position_from_id(step['choice'])
+        target_id = step['choice']
+        return target_pose, target_id, answer['is_confident'], answer['confidence_level'], answer['answer']

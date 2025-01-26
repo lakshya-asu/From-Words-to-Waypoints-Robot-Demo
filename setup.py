@@ -14,6 +14,7 @@ setup(
         "yacs",
         "networkx",
         "SentencePiece"
+        "anthropic"
     ],
     include_package_data=True,
 )
