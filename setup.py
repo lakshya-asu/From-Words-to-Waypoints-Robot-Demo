@@ -13,7 +13,7 @@ setup(
         "scikit-image",
         "yacs",
         "networkx",
-        "SentencePiece"
+        "SentencePiece",
         "anthropic"
     ],
     include_package_data=True,
