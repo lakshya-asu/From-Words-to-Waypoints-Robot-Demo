@@ -149,7 +149,7 @@ class VLMPlannerEQAGPT:
             Describe the CURRENT IMAGE. Pay special attention to features that can help answer the question or select future actions.
             Describe the SCENE GRAPH. Pay special attention to features that can help answer the question or select future actions.
             '''
-        prompt += "You should go near the blue couch before answering the question with confidence. You should see a full image of the couch before answering with confidence"
+
         prompt_no_image = f'''You are an excellent hierarchical graph planning agent. 
             Your goal is to navigate an unseen environment to confidently answer a multiple-choice question about the environment.
             As you explore the environment, your sensors are building a scene graph representation (in json format) and you have access to that scene graph.  
