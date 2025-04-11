@@ -199,12 +199,12 @@ class VLMPlannerEQAClaude:
 
     def update_history(self, agent_state, step, answer):
         if (step['step_type'] == 'Goto_object_node_step'):
-            action = f"Goto object_id: {step['choice']} object name: N/A"
+            action = f"Goto object_id: {step['choice']}"
         elif step['step_type'] == 'Goto_frontier_node_step':
             action = f"Goto frontier_id: {step['choice']}"
         else:
             # Need to add actual choice answer here rather than just the letter
-            action = f"Answer: {step['choice']}, Desc. N/A.  Confident: {step['is_confident']}, Confidence level:{step['confidence_level']}"
+            action = f"Answer: {step['choice']}, Confident: {step['is_confident']}, Confidence level:{step['confidence_level']}"
         
         last_step = f'''
             [Agent state(t={self.t}): {agent_state}, 
@@ -238,8 +238,8 @@ class VLMPlannerEQAClaude:
                             },
                         },
                         {
-                            "type": "text",
-                            "text": "Describe this image."
+                        "type": "text",
+                        "text": "CURRENT IMAGE: This image represents the current view of the agent. Use this as additional information to answer the question."
                         }
                     ],
                 }
@@ -268,6 +268,7 @@ class VLMPlannerEQAClaude:
                 # TODO write Claude's response here
                 response = client.messages.create(
                     model=self._vlm_type,
+                    temperature=0.4,
                     max_tokens=4096,
                     messages=messages,
                     tools=tools,

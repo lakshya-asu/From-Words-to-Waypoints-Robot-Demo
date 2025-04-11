@@ -36,7 +36,7 @@ scene_graph_sim:
   img_subsample_freq: 2
   
 vlm:
-  name: "claude-3-5-sonnet-20241022" # 'gemini', 'gpt-4o-mini', 'gpt-4o-2024-08-06', 'claude-3-5-sonnet-20241022'
+  name: "gpt-4o-2024-08-06" # 'gemini', 'gpt-4o-mini', 'gpt-4o-2024-08-06', 'claude-3-5-sonnet-20241022'
   use_image: True
   use_done_action: False
   early_exit: True
