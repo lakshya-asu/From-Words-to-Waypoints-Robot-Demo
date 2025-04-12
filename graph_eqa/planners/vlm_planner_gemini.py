@@ -11,7 +11,7 @@ from graph_eqa.utils.data_utils import get_latest_image
 genai.configure(api_key=os.environ["GOOGLE_API_KEY"])
 
 # Choose a Gemini model.
-gemini_model = genai.GenerativeModel(model_name="gemini-1.5-pro-latest")
+gemini_model = genai.GenerativeModel(model_name="models/gemini-2.5-pro-preview-03-25")
 
 def encode_image(image_path):
   with open(image_path, "rb") as image_file:
@@ -402,7 +402,7 @@ class VLMPlannerEQAGemini:
             text_file.write(self.full_plan)
 
         if step is None or step['choice'] == 'Do not choose this option. No more frontiers left.':
-            return None, None, False, 0., " "
+            return None, None, answer['is_confident'], answer['confidence_level'], answer['answer']
         
 
         if self._add_history:
@@ -410,9 +410,6 @@ class VLMPlannerEQAGemini:
 
         self._t += 1
 
-        # if step['step_type'] == 'answer':
-        #     return None, None, step['is_confident'], step['confidence_level'], step['choice']
-        # else:
         target_pose = self.sg_sim.get_position_from_id(step['choice'])
         target_id = step['choice']
         return target_pose, target_id, answer['is_confident'], answer['confidence_level'], answer['answer']
