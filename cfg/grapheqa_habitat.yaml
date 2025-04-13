@@ -7,10 +7,10 @@ gpu: 0
 sim_gpu: 0
 
 data:
-  question_data_path: '/home/saumyas/catkin_ws_semnav/data/explore-eqa_semnav/data/questions.csv'
-  init_pose_data_path: '/home/saumyas/catkin_ws_semnav/data/explore-eqa_semnav/data/scene_init_poses.csv'
-  semantic_annot_data_path: '/home/saumyas/catkin_ws_semnav/data/hm3d-train-semantic-annots-v0.2'
-  scene_data_path: '/home/saumyas/catkin_ws_semnav/data/hm3d/train'
+  question_data_path: '/workspace/data/explore-eqa_semnav/data/questions.csv'
+  init_pose_data_path: '/workspace/data/explore-eqa_semnav/data/scene_init_poses.csv'
+  semantic_annot_data_path: '/workspace/data/hm3d-train-semantic-annots-v0.2'
+  scene_data_path: '/workspace/data/hm3d/train'
   explore_eqa_dataset_enrich_labels: 'cfg/explore_eqa_dataset_enrich_labels.yaml'
   use_semantic_data: True
 

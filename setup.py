@@ -14,7 +14,8 @@ setup(
         "yacs",
         "networkx",
         "SentencePiece",
-        "anthropic"
+        "anthropic",
+        "google-generativeai"
     ],
     include_package_data=True,
 )

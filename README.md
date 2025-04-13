@@ -31,9 +31,69 @@ expressed in this material are those of the author(s) and do not necessarily
 reflect the views of the NSF.
 
 ## GraphEQA Workspace Configuration
-Below are instructions for how to set up a workspace to run GraphEQA.
+Below are instructions for how to set up a workspace to run GraphEQA. We provide instructions for both Docker and a local setup if you happen to be running Ubuntu 20.04.
 
 Owners and collaborators of this repo are not claiming to have developed anything original to Hydra or any other MIT Spark lab tools.
+
+### Docker setup
+#### Prerequisites
+1. Install docker.
+
+2. Run `git clone https://github.com/SaumyaSaxena/graph_eqa.git`. GraphEQA is also pip installable should you prefer installing it in a Python environment (see below).
+
+#### Set up Docker workspace for running GraphEQA for Habitat-Sim
+There are two Docker images for GraphEQA to support simulation-based experiments in Habitat-Sim and embodied experiments on the Hello Robot Stretch platform.
+
+Run the following script to build the docker image locally.
+
+```bash
+./docker/docker_build_with_habitat.sh
+```
+
+If you have a reasonably fast internet connection, it may be faster for you to just pull the image directly from Docker hub.
+
+```bash
+docker pull blakerbuchanan/grapheqa_for_habitat:0.0.1
+```
+
+The following script will run a container:
+
+```bash
+./docker/docker_run_habitat.sh
+```
+
+If the docker container is already running and you want to execute the container in another terminal instance, do:
+
+``` bash
+docker exec -it grapheqa-for-habitat bash
+```
+
+You will need to download the HM3D dataset and set up `grapheqa_habitat.yaml` to point to the directories local to your system that contain the HM3D dataset, Explore-EQA dataset, etc.
+
+#### Set up Docker workspace for running GraphEQA on Hello Robot's Stretch
+Run the following script to build the docker image locally.
+
+```bash
+./docker/docker_build.sh
+```
+
+If you have a reasonably fast internet connection, it may be faster for you to just pull the image directly from Docker hub.
+
+```bash
+docker pull blakerbuchanan/grapheqa_for_stretch:0.0.1
+```
+
+The following script will run a container 
+
+```bash
+./docker/docker_run.sh
+```
+
+If the docker container is already running and you want to execute the container in another terminal instance, do:
+
+``` bash
+docker exec -it grapheqa-for-stretch bash
+```
 
 ### Setting up Hydra on Ubuntu 20.04
 This set of instructions is only for local Ubuntu 20.04 installations.
@@ -88,6 +148,10 @@ The OpenAI API requires an API key. Add the following line to your .bashrc:
 If using Google's Gemini, add the following line to your .bashrc:
 
 `export GOOGLE_API_KEY=<YOUR_GOOGLE_KEY>`
+
+If using Anthropic's Claude, add the following line to your .bashrc:
+
+`export ANTHROPIC_API_KEY=<YOUR_GOOGLE_KEY>`
 
 ## Running GraphEQA with Habitat
 
