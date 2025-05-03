@@ -6,12 +6,11 @@ import base64
 
 from openai import OpenAI
 from graph_eqa.utils.data_utils import get_latest_image
-from pydantic import BaseModel
+from pydantic import BaseModel, ValidationError
 
-from transformers import AutoProcessor, AutoModelForVision2Seq
+from together import Together
 
-processor = AutoProcessor.from_pretrained("meta-llama/Llama-4-Scout-17B-16E-Instruct")
-model = AutoModelForVision2Seq.from_pretrained("meta-llama/Llama-4-Scout-17B-16E-Instruct")
+client = Together()
 
 def encode_image(image_path):
   with open(image_path, "rb") as image_file:
@@ -96,14 +95,17 @@ class VLMPlannerEQALlama4:
         return self._t
 
     def get_actions(self):
-        object_node_list = Enum('object_node_list', {id: name for id, name in zip(self.sg_sim.object_node_ids, self.sg_sim.object_node_names)}, type=str)
+        #object_node_list = Enum('object_node_list', {id: name for id, name in zip(self.sg_sim.object_node_ids, self.sg_sim.object_node_names)}, type=str)
+        object_node_list = Enum('object_node_list', {name: id for id, name in zip(self.sg_sim.object_node_ids, self.sg_sim.object_node_names)}, type=str)
+
         if len(self.sg_sim.frontier_node_ids)> 0:
             frontier_node_list = Enum('frontier_node_list', {ac: ac for ac in self.sg_sim.frontier_node_ids}, type=str)
         else:
-            # frontier_node_list = Enum('frontier_node_list', {'frontier_0': 'Do not choose this option. No more frontiers left.'}, type=str)
-            frontier_node_list = None
+            frontier_node_list = Enum('frontier_node_list', {'frontier_0': 'Do not choose this option. No more frontiers left.'}, type=str)
+            #frontier_node_list = None
 
-        room_node_list = Enum('room_node_list', {id: name for id, name in zip(self.sg_sim.room_node_ids, self.sg_sim.room_node_names)}, type=str)
+        #room_node_list = Enum('room_node_list', {id: name for id, name in zip(self.sg_sim.room_node_ids, self.sg_sim.room_node_names)}, type=str)
+        room_node_list = Enum('room_node_list', {name: id for id, name in zip(self.sg_sim.room_node_ids, self.sg_sim.room_node_names)}, type=str)
         region_node_list = Enum('region_node_list', {ac: ac for ac in self.sg_sim.region_node_ids}, type=str)
         Answer_options = Enum('Answer_options', {token: choice for token, choice in zip(self.vlm_pred_candidates, self.choices)}, type=str)
         return frontier_node_list, room_node_list, region_node_list, object_node_list, Answer_options
@@ -148,6 +150,7 @@ class VLMPlannerEQALlama4:
             Avoid taking the same actions you have taken before.
             Describe the CURRENT IMAGE. Pay special attention to features that can help answer the question or select future actions.
             Describe the SCENE GRAPH. Pay special attention to features that can help answer the question or select future actions.
+            For particularly obvious or challenging questions, consider finding a balance between answering too early and incorrectly, and taking more steps in the environment to verify your answer.
             '''
 
         prompt_no_image = f'''You are an excellent hierarchical graph planning agent.
@@ -180,115 +183,151 @@ class VLMPlannerEQALlama4:
         else:
             return prompt_no_image
 
-    def get_instruction_set(self, enum_vals):
-      instructions = f'''
-      The output must strictly follow this structure:
-      ```json
-      {{
-        "steps": [
-          {{
-            "explanation_frontier": "...",
-            "frontier_id": one of {enum_vals["frontier"]}
-          }},
-          {{
-            "explanation_room": "...",
-            "explanation_obj": "...",
-            "room_id": one of {enum_vals["room"]},
-            "object_id": one of {enum_vals["object"]}
-          }}
-        ],
-        "answer": {{
-          "explanation_ans": "...",
-          "answer": one of {enum_vals["answer"]},
-          "explanation_conf": "...",
-          "confidence_level": float,
-          "is_confident": bool
-        }},
-        "scene_graph_description": "...",
-        "image_description": "..."
-      }}
-      '''
+    def get_instruction_set(self, frontier_node_list, room_node_list, object_node_list, Answer_options):
 
+      instructions = f'''
+        Your answer should strictly follow the below JSON format. Note that you should
+        choose only one of the two types of available steps each query. The options are 
+        "Goto_frontier_node_step" and "Goto_object_node_step".
+        Before you populate any of the sections below, be sure to NOT wrap any particular word or phrase
+        in double quotes. This will cause JSON parsing to not work correctly, and this is needed of the 
+        JSON string output. You must provide content for each entry in the JSON below; leave nothing empty or blank.
+
+        {{
+        "steps": [
+            {{
+            {{"type": "Goto_frontier_node_step"}},
+            {{"explanation_frontier": "a string explaning your choice of frontier if you "}},
+            {{"frontier_id": "select one from: {', '.join(member.value for member in frontier_node_list)}"}}
+            }},
+            {{
+            {{"type": "Goto_object_node_step"}},
+            {{"explanation_room": "Explain very briefly reasoning for selecting this room."}},
+            {{"explanation_obj": "Explain very briefly reasoning for selecting this object in the selected room."}},
+            {{"room_id": "select one from: {', '.join(member.name for member in room_node_list)}"}},
+            {{"room_name": "Refer to the the scene graph to output the room_name corresponding to the selected room_id."}},
+            {{"object_id": "Only select objects within the room chosen. Select one from: {', '.join(member.name for member in object_node_list)}. Object IDs will always look like 'object_<NUM>' where NUM is the object number."}},
+            {{"object_name": "Refer to the the scene graph to output the object_name corresponding to the selected object_id. This will always be a descriptor."}}
+            }}
+        ]
+        }},
+        {{
+        "answer": {{
+            {{"explanation_ans": "Select the correct answer from the options."}},
+            {{"answer": "select one from: {', '.join(member.value for member in Answer_options)}"}},
+            {{"value": "select one from: {', '.join(member.name for member in Answer_options)}"}},
+            {{"explanation_conf": "Explain the reasoning behind the confidence level of your answer."}},
+            {{"confidence_level": "Choose a number ranging from '0.0' to '1.0'. You must return a number in this range."}},
+            {{"is_confident": "Select the string 'true' or 'false'."}}
+        }}
+        }},
+        {{"image_description": "Describe the CURRENT IMAGE. Pay special attention to features that can help answer the question or select future actions."}},
+        {{"scene_graph_description": "Describe the SCENE GRAPH. Pay special attention to features that can help answer the question or select future actions."}},
+        {{"question_type": "Use this to describe the type of question you are being asked. Can be one of 'Identification', 'Counting', 'Existence', 'State', 'Location'."}}
+        '''
+      
       return instructions
 
     def get_current_state_prompt(self, scene_graph, agent_state):
         # TODO(saumya): Include history
         prompt = f"At t = {self.t}: \n \
             CURRENT AGENT STATE: {agent_state}. \n \
-            SCENE GRAPH: {scene_graph}. \n  "
+            SCENE GRAPH: {scene_graph}. \n"
 
         if self._add_history:
             prompt += f"HISTORY: {self._history}"
 
         return prompt
 
-    def update_history(self, agent_state, step, answer, target_pose):
-        if step.__class__.__name__ == 'Goto_object_node_step':
-            action = f"Goto object_id:{step.object_id.name} object name: {step.object_id.value}"
+    def update_history(self, agent_state, step, answer, target_pose, question_type):
+        if step['type'] == 'Goto_object_node_step':
+            action = f"Goto object_id:{step['object_id']} object name: {step['object_name']}"
+        elif step['type'] == 'Goto_frontier_node_step':
+            action = f"Goto frontier_id: {step['frontier_id']}"
         else:
-            action = f"Goto frontier_id:{step.frontier_id.name} frontier name: {step.frontier_id.value}"
-
+            action = f"Answer: {answer['value']}: {answer['answer']}.  Confident: {answer['is_confident']}, Confidence level:{float(answer['confidence_level'])}"
+        
         last_step = f'''
-            [Agent state(t={self.t}): {agent_state},
+            The following information should serve only as HISTORY:
+            Agent state(t={self.t}): {agent_state},
             Action(t={self.t}): {action},
-            Answer(t={self.t}): {answer.answer.name} {answer.answer.value}
-            Confidence(t={self.t}):  Confident: {answer.is_confident}, Confidence level:{answer.confidence_level}  \n
+            Answer(t={self.t}): {answer['answer']} {answer['value']},
+            Question Type: {question_type}
         '''
         self._history += last_step
 
     def get_llama4_output(self, current_state_prompt):
-        prompt = "AGENT ROLE: " + self.agent_role_prompt
-        prompt += "QUESTION: " + self._question
-        prompt += "CURRENT STATE: " + current_state_prompt
+
+        frontier_node_list, room_node_list, region_node_list, object_node_list, Answer_options = self.get_actions()
+        
+        output_instructions = self.get_instruction_set(frontier_node_list, room_node_list, object_node_list, Answer_options)
+
+        messages=[
+            {"role": "system", "content": f"AGENT ROLE: {self.agent_role_prompt}"},
+            {"role": "system", "content": f"QUESTION: {self._question}"},
+            {"role": "user", "content": f"CURRENT STATE: {current_state_prompt}."},
+            {"role": "user", "content": f"INSTRUCTIONS: {output_instructions}"}
+        ]
 
         if self._use_image:
             base64_image = encode_image(get_latest_image(self._output_path))
-
-        frontier_node_list, room_node_list, region_node_list, object_node_list, Answer_options = self.get_actions()
-
-        enum_vals={
-          "frontier": list(frontier_enum.__members__.keys()) if frontier_enum else [],
-          "room": list(room_enum.__members__.keys()),
-          "object": list(object_enum.__members__.keys()),
-          "answer": list(answer_enum.__members__.keys()),
-        }
-        prompt += get_instruction_set(enum_vals)
-
-        inputs = processor(text=prompt, images=base64_image, return_tensors="pt").to(model.device)
-
-        output = model.generate(**inputs, max_new_tokens=1024)
-        decoded = processor.decode(output[0], skip_special_tokens=True)
-
-        # Extract JSON
-        import re, json
-        json_text = re.search(r'\{.*\}', decoded, re.DOTALL).group(0)
-        parsed = json.loads(json_text)
-
-        # Validate with Pydantic
-        schema = create_planner_response(frontier_node_list, room_node_list, region_node_list, object_node_list, Answer_options)
+            messages.append(
+                { 
+                    "role": "user",
+                    "content": [
+                        {
+                        "type": "text",
+                        "text": "CURRENT IMAGE: This image represents the current view of the agent. Use this as additional information to answer the question."
+                        },
+                        {
+                            "type": "image_url",
+                            "image_url": {"url": f"data:image/jpeg;base64,{base64_image}"}
+                        }
+                    ]
+                })
 
         succ=False
         while not succ:
             try:
-                validated = schema(**parsed)
+                start = time.time()
+                completion = client.chat.completions.create(
+                    model="meta-llama/" + self._vlm_type,
+                    messages=messages
+                )
+                plan = completion.choices[0].message.content
+
+                try:
+                    json_text = re.search(r'\{.*\}', plan, re.DOTALL).group(0)
+                    parsed = json.loads(json_text)
+                    break
+                except Exception as e:
+                    print(f"Parsing error: {e}! Retrying...")
+                    time.sleep(1)
+
+                # Validate with Pydantic
+                # schema = create_planner_response(frontier_node_list, room_node_list, region_node_list, object_node_list, Answer_options)
+
+                # try:
+                #     validated = schema(**parsed)
+                #     print("Valid plan parsed")
+                #     break
+                # except ValidationError as e:
+                #     print("Validation failed:", e)
             except Exception as e:
-                print(f"An error occurred: {e}. Validation failed.")
+                print(f"An error occurred: {e}. Sleeping for 60s")
+                time.sleep(60)
 
-        import ipdb; ipdb.set_trace()
-        # TODO(blake): Pick up development here...
-        plan = completion.choices[0].message
-
-        if len(plan.parsed.steps) > 0:
-            step = plan.parsed.steps[0]
+        if len(parsed['steps']) > 0:
+            step = parsed['steps'][0]
         else:
             step = None
 
         if self._use_image:
-            img_desc = plan.parsed.image_description
+            img_desc = parsed['image_description']
         else:
             img_desc = ' '
 
-        return step, plan.parsed.answer, img_desc, plan.parsed.scene_graph_description
+        return step, parsed['answer'], img_desc, parsed['scene_graph_description'], parsed['question_type']
 
     def get_next_action(self):
         # self.sg_sim.update()
@@ -297,7 +336,12 @@ class VLMPlannerEQALlama4:
         current_state_prompt = self.get_current_state_prompt(self.sg_sim.scene_graph_str, agent_state)
 
         sg_desc=''
-        step, answer, img_desc, sg_desc = self.get_llama4_output(current_state_prompt)
+        step, answer, img_desc, sg_desc, question_type = self.get_llama4_output(current_state_prompt)
+
+        if answer['is_confident'].lower() == 'false':
+            is_confident = False
+        else:
+            is_confident = True
 
         # Saving outputs to file
         self._outputs_to_save.append(f'At t={self._t}: \n \
@@ -313,17 +357,17 @@ class VLMPlannerEQALlama4:
         print(f'At t={self._t}: \n {step} \n {answer}')
 
         if step is None:
-            return None, None, answer.is_confident, answer.confidence_level, answer.answer.name
+            return None, None, is_confident, float(answer['confidence_level']), answer['value']
 
-        if step.__class__.__name__ == 'Goto_object_node_step':
-            target_pose = self.sg_sim.get_position_from_id(step.object_id.name)
-            target_id = step.object_id.name
+        if step['type']== 'Goto_object_node_step':
+            target_pose = self.sg_sim.get_position_from_id(step['object_id'])
+            target_id = step['object_id']
         else:
-            target_pose = self.sg_sim.get_position_from_id(step.frontier_id.name)
-            target_id = step.frontier_id.name
+            target_pose = self.sg_sim.get_position_from_id(step['frontier_id'])
+            target_id = step['frontier_id']
 
         if self._add_history:
-            self.update_history(agent_state, step, answer, target_pose)
+            self.update_history(agent_state, step, answer, target_pose, question_type)
 
         self._t += 1
-        return target_pose, target_id, answer.is_confident, answer.confidence_level, answer.answer.name
+        return target_pose, target_id, is_confident, float(answer['confidence_level']), answer['value']

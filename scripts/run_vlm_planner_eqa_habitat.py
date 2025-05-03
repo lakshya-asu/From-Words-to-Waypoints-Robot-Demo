@@ -17,7 +17,7 @@ from graph_eqa.utils.hydra_utils import initialize_hydra_pipeline
 
 
 from graph_eqa.scene_graph.scene_graph_sim import SceneGraphSim
-from graph_eqa.planners import VLMPlannerEQAGemini, VLMPlannerEQAGPT, VLMPlannerEQAClaude
+from graph_eqa.planners import VLMPlannerEQAGemini, VLMPlannerEQAGPT, VLMPlannerEQAClaude, VLMPlannerEQALlama4
 from graph_eqa.envs.habitat_interface import HabitatInterface
 
 import habitat_sim
@@ -47,12 +47,7 @@ def main(cfg):
         answer = question_data["answer"]
         experiment_id = f'{question_ind}_{question_data["scene"]}_{question_data["floor"]}'
 
-        experiments_to_skip = [0, 77, 78, 81, 89]
-        if question_ind in experiments_to_skip and 'gemini' in cfg.vlm.name.lower():
-            continue
 
-        if question_ind in experiments_to_skip and 'claude' in cfg.vlm.name.lower():
-            continue
 
         if should_skip_experiment(experiment_id, filename=results_filename):
             click.secho(f'Skipping==Index: {question_ind} Scene: {question_data["scene"]} Floor: {question_data["floor"]}=======',fg="yellow",)
@@ -141,6 +136,12 @@ def main(cfg):
                 sg_sim,
                 vlm_question, vlm_pred_candidates, choices, answer, 
                 question_path)
+        elif 'llama' in cfg.vlm.name.lower():
+            vlm_planner = VLMPlannerEQALlama4(
+                cfg.vlm,
+                sg_sim,
+                vlm_question, vlm_pred_candidates, choices, answer, 
+                question_path)
         else:
             raise NotImplementedError('VLM planner not implemented.')
         
@@ -157,7 +158,8 @@ def main(cfg):
             click.secho(f"VLM planning time for overall step {cnt_step} and vlm step {planning_steps} is {time.time()-start}",fg="green",)
             
             # TODO: Vary this from 0.5 to 0.9
-            if is_confident or (confidence_level>0.85):
+            if is_confident or (confidence_level>0.9):
+
                 succ = (answer == answer_output)
                 if succ:
                     successes += 1

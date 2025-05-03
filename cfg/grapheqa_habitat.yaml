@@ -1,7 +1,7 @@
 # General
 seed: 42
 exp_name: grapheqa_${vlm.name}
-output_path: outputs/${exp_name}
+output_path: outputs/${exp_name}_test_new_json
 results_filename: ${vlm.name}_images_${vlm.use_image}
 gpu: 0 
 sim_gpu: 0
@@ -36,7 +36,7 @@ scene_graph_sim:
   img_subsample_freq: 2
   
 vlm:
-  name: "gpt-4o-2024-08-06" # 'gemini', 'gpt-4o-mini', 'gpt-4o-2024-08-06', 'claude-3-5-sonnet-20241022'
+  name: "Llama-4-Maverick-17B-128E-Instruct-FP8" # 'gemini', 'gpt-4o-mini', 'gpt-4o-2024-08-06', 'claude-3-5-sonnet-20241022', 'claude-3-7-sonnet-latest', 'Llama-4-Maverick-17B-128E-Instruct-FP8'
   use_image: True
   use_done_action: False
   early_exit: True
