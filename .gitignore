@@ -47,3 +47,5 @@ ipython_config.py
 outputs
 media
 wandb
+
+STARTUP.md

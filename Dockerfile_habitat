@@ -2,48 +2,58 @@
 #FROM nvidia/cuda:12.4.0-devel-ubuntu20.04
 FROM ubuntu:20.04 as base
 
-# Set environment variables to avoid interactive prompts during package installations
+# Set environment variables to avoid interactive prompts
 ENV DEBIAN_FRONTEND=noninteractive
 ENV LANG=en_US.UTF-8
 ENV LC_ALL=en_US.UTF-8
 
 SHELL ["/bin/bash", "-c"]
 
-# Update and install essential dependencies
-RUN apt-get update && apt-get install -y \
+# ==> CONSOLIDATED SETUP AND INSTALLATION <==
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    # Basic utilities
     locales \
     curl \
     gnupg2 \
     lsb-release \
     git \
     build-essential \
+    wget \
+    software-properties-common \
+    # Libraries for PCL, Boost, Eigen
     libpcl-dev \
     libboost-all-dev \
     libeigen3-dev \
+    # Python dependencies
     python3-dev \
+    python3-pip \
+    python-is-python3 \
     && locale-gen en_US.UTF-8 \
+    # --- Add all repositories ---
+    && curl -sSL https://raw.githubusercontent.com/ros/rosdistro/master/ros.asc | apt-key add - \
+    && sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list' \
+    && add-apt-repository universe \
+    && wget -O - https://apt.kitware.com/keys/kitware-archive-latest.asc 2>/dev/null | gpg --dearmor - | tee /etc/apt/trusted.gpg.d/kitware.gpg >/dev/null \
+    && apt-add-repository "deb https://apt.kitware.com/ubuntu/ $(lsb_release -cs) main" \
+    # --- Run a single, final update AFTER adding all sources ---
+    && apt-get update \
+    # --- Install all remaining packages ---
+    && apt-get install -y --no-install-recommends \
+    ros-noetic-desktop-full \
+    ros-noetic-gtsam \
+    python3-rosdep \
+    python3-catkin-tools \
+    python3-vcstool \
+    cmake \
+    libgoogle-glog-dev \
+    libzmqpp-dev \
+    nlohmann-json3-dev \
+    # --- Cleanup ---
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-# Add ROS Noetic repository
-RUN curl -sSL https://raw.githubusercontent.com/ros/rosdistro/master/ros.asc | apt-key add - && \
-    sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list'
-
-# Install ROS Noetic Desktop Full
-RUN apt-get update && apt-get install -y \
-    ros-noetic-desktop-full ros-noetic-gtsam \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/*
-
-RUN sh \
-    -c 'echo "deb http://packages.ros.org/ros/ubuntu `lsb_release -sc` main" \
-        > /etc/apt/sources.list.d/ros-latest.list'
-
-RUN apt-get update && apt-get install wget
-
-RUN wget http://packages.ros.org/ros.key -O - | apt-key add -
-
-RUN apt install -y python3-rosdep python3-catkin-tools python3-vcstool
+# Verify CMake version
+RUN cmake --version
 
 # Initialize rosdep
 RUN rosdep init && rosdep update
@@ -56,9 +66,9 @@ RUN echo "source /opt/ros/noetic/setup.bash" >> ~/.bashrc
 RUN mkdir -p catkin_ws/src \
     && cd catkin_ws \
 	&& catkin init \
-	&& catkin config -DCMAKE_BUILD_TYPE=Release \
+	&& catkin config -DCMAKE_BUILD_TYPE=Release -DCMAKE_POLICY_VERSION_MINIMUM=3.5 \
 	&& cd src \
-	&& git clone -b grapheqa https://github.com/blakerbuchanan/Hydra ./hydra \
+	&& git clone -b grapheqa https://github.com/TechTinkerPradhan/Hydra ./hydra \
 	&& sed -i -E 's|git@github\.com:(.*)\.git|https://github.com/\1.git|g' hydra/install/hydra.rosinstall \
 	&& vcs import . < hydra/install/hydra.rosinstall
 
@@ -83,7 +93,7 @@ RUN bash Miniforge3-$(uname)-$(uname -m).sh -b
 # Add mamba to the path
 ENV PATH /root/miniforge3/bin:$PATH
 RUN mamba create -n "grapheqa" python=3.10 -y \
-    && mamba init
+    && conda init bash
 
 WORKDIR /catkin_ws
 RUN source activate grapheqa \

@@ -7,10 +7,10 @@ gpu: 0
 sim_gpu: 0
 
 data:
-  question_data_path: '/workspace/data/explore-eqa_semnav/data/questions.csv'
-  init_pose_data_path: '/workspace/data/explore-eqa_semnav/data/scene_init_poses.csv'
-  semantic_annot_data_path: '/workspace/data/hm3d-train-semantic-annots-v0.2'
-  scene_data_path: '/workspace/data/hm3d/train'
+  question_data_path: '/datasets/explore-eqa/questions.csv'
+  init_pose_data_path: '/datasets/explore-eqa/scene_init_poses.csv'
+  semantic_annot_data_path: '/datasets/hm3d/train'
+  scene_data_path: '/datasets/hm3d/train'
   explore_eqa_dataset_enrich_labels: 'cfg/explore_eqa_dataset_enrich_labels.yaml'
   use_semantic_data: True
 
@@ -36,7 +36,7 @@ scene_graph_sim:
   img_subsample_freq: 2
   
 vlm:
-  name: "Llama-4-Maverick-17B-128E-Instruct-FP8" # 'gemini', 'gpt-4o-mini', 'gpt-4o-2024-08-06', 'claude-3-5-sonnet-20241022', 'claude-3-7-sonnet-latest', 'Llama-4-Maverick-17B-128E-Instruct-FP8'
+  name: "gemini" # 'gemini', 'gpt-4o-mini', 'gpt-4o-2024-08-06', 'claude-3-5-sonnet-20241022', 'claude-3-7-sonnet-latest', 'Llama-4-Maverick-17B-128E-Instruct-FP8'
   use_image: True
   use_done_action: False
   early_exit: True

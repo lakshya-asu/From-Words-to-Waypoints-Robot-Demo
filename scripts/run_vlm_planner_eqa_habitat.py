@@ -17,12 +17,26 @@ from graph_eqa.utils.hydra_utils import initialize_hydra_pipeline
 
 
 from graph_eqa.scene_graph.scene_graph_sim import SceneGraphSim
-from graph_eqa.planners import VLMPlannerEQAGemini, VLMPlannerEQAGPT, VLMPlannerEQAClaude, VLMPlannerEQALlama4
+from graph_eqa.planners import VLMPlannerEQAGemini, VLMPlannerEQAGPT #VLMPlannerEQAClaude, VLMPlannerEQALlama4
 from graph_eqa.envs.habitat_interface import HabitatInterface
 
 import habitat_sim
 import hydra_python
+import json
 
+# Put the semantic index JSON where the container can read it (e.g. /datasets)
+# If your file lives elsewhere, change this path.
+SEM_LIST = "/datasets/hm3d/train/train-semantic-annots-files.json"
+
+with open(SEM_LIST) as f:
+    _semantic_ok = set()
+    for p in json.load(f):
+        # entries look like .../train/00006-<SCENE>/<SCENE>.semantic.glb
+        base = os.path.basename(p).split(".")[0]  # -> <SCENE> (e.g., HkseAnWCgqk)
+        _semantic_ok.add(base)
+
+def scene_has_semantics(scene_id: str) -> bool:
+    return scene_id in _semantic_ok
 def main(cfg):
     questions_data, init_pose_data = load_eqa_data(cfg.data)
 
@@ -58,7 +72,11 @@ def main(cfg):
         # Planner reset with the new quesion
         question_path = hydra_python.resolve_output_path(output_path / experiment_id)
         scene_name = f'{cfg.data.scene_data_path}/{question_data["scene"]}/{question_data["scene"][6:]}.basis.glb'
-        
+        scene_id = question_data["scene"][6:]
+        if cfg.data.use_semantic_data and not scene_has_semantics(scene_id):
+            click.secho(f"[skip] {question_data['scene']} has no semantics; skipping.", fg="yellow")
+            continue    
+
         vlm_question, clean_ques_ans, choices, vlm_pred_candidates = get_instruction_from_eqa_data(question_data)
         habitat_data = HabitatInterface(
             scene_name, 
