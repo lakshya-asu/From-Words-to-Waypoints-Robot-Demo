@@ -1,0 +1,1852 @@
+[
+    {
+        "scene_dir": "00149-UuwwmrTsfBN",
+        "scene_id": "UuwwmrTsfBN",
+        "scene": "00149-UuwwmrTsfBN",
+        "question": "What object is approximately 1.2 meters in front of the toilet?",
+        "initial_pose": {
+            "position": [
+                -0.8943350315093994,
+                0.05869650840759277,
+                -13.265779495239258
+            ],
+            "rotation": [
+                0.0,
+                0.9896101420589771,
+                0.0,
+                0.14377679483842684
+            ]
+        },
+        "reference_object": {
+            "id": "toilet_56",
+            "name": "toilet",
+            "position": [
+                2.27400541305542,
+                1.944801926612854,
+                -2.592158079147339
+            ]
+        },
+        "ground_truth_target": {
+            "id": "tray_286",
+            "name": "tray",
+            "position": [
+                2.507030963897705,
+                2.0258407592773438,
+                -3.7495956420898438
+            ]
+        }
+    },
+    {
+        "scene_dir": "00149-UuwwmrTsfBN",
+        "scene_id": "UuwwmrTsfBN",
+        "scene": "00149-UuwwmrTsfBN",
+        "question": "What object is approximately 2.1 meters in front of the toilet?",
+        "initial_pose": {
+            "position": [
+                -1.8098530769348145,
+                3.2586965560913086,
+                -8.674814224243164
+            ],
+            "rotation": [
+                -0.0,
+                -0.9793413298723495,
+                -0.0,
+                0.20221414293727813
+            ]
+        },
+        "reference_object": {
+            "id": "toilet_411",
+            "name": "toilet",
+            "position": [
+                -2.649660110473633,
+                1.9650599956512451,
+                -6.7278852462768555
+            ]
+        },
+        "ground_truth_target": {
+            "id": "toilet brush_412",
+            "name": "toilet brush",
+            "position": [
+                -2.7003097534179688,
+                1.7320479154586792,
+                -6.7244720458984375
+            ]
+        }
+    },
+    {
+        "scene_dir": "00149-UuwwmrTsfBN",
+        "scene_id": "UuwwmrTsfBN",
+        "scene": "00149-UuwwmrTsfBN",
+        "question": "What object is approximately 1.4 meters to the left of the armchair?",
+        "initial_pose": {
+            "position": [
+                0.6613874435424805,
+                -2.9413034915924072,
+                -4.140047550201416
+            ],
+            "rotation": [
+                -0.0,
+                -0.8429206234432899,
+                -0.0,
+                0.5380379378575227
+            ]
+        },
+        "reference_object": {
+            "id": "armchair_1178",
+            "name": "armchair",
+            "position": [
+                -1.5059504508972168,
+                -1.4911630153656006,
+                -3.134018898010254
+            ]
+        },
+        "ground_truth_target": {
+            "id": "speaker_1134",
+            "name": "speaker",
+            "position": [
+                -2.7545371055603027,
+                -1.2160224914550781,
+                -3.1458661556243896
+            ]
+        }
+    },
+    {
+        "scene_dir": "00149-UuwwmrTsfBN",
+        "scene_id": "UuwwmrTsfBN",
+        "scene": "00149-UuwwmrTsfBN",
+        "question": "What object is approximately 2.6 meters to the right of the armchair?",
+        "initial_pose": {
+            "position": [
+                -3.609437942504883,
+                3.858696460723877,
+                -8.120124816894531
+            ],
+            "rotation": [
+                0.0,
+                0.9234864925344514,
+                0.0,
+                0.38363093997541015
+            ]
+        },
+        "reference_object": {
+            "id": "armchair_1083",
+            "name": "armchair",
+            "position": [
+                -1.8693490028381348,
+                -1.484804391860962,
+                -6.3871612548828125
+            ]
+        },
+        "ground_truth_target": {
+            "id": "box_1043",
+            "name": "box",
+            "position": [
+                0.7948974967002869,
+                -1.488032341003418,
+                -6.483406066894531
+            ]
+        }
+    },
+    {
+        "scene_dir": "00149-UuwwmrTsfBN",
+        "scene_id": "UuwwmrTsfBN",
+        "scene": "00149-UuwwmrTsfBN",
+        "question": "What object is approximately 2.4 meters behind the bed?",
+        "initial_pose": {
+            "position": [
+                -0.9924306869506836,
+                0.02297167107462883,
+                -5.423406600952148
+            ],
+            "rotation": [
+                0.0,
+                0.9327545530803555,
+                0.0,
+                0.3605120576456025
+            ]
+        },
+        "reference_object": {
+            "id": "bed_20",
+            "name": "bed",
+            "position": [
+                2.8133130073547363,
+                2.1676807403564453,
+                -1.235562801361084
+            ]
+        },
+        "ground_truth_target": {
+            "id": "window_15",
+            "name": "window",
+            "position": [
+                2.405670166015625,
+                2.6924102306365967,
+                0.2133912444114685
+            ]
+        }
+    },
+    {
+        "scene_dir": "00023-zepmXAdrpjR",
+        "scene_id": "zepmXAdrpjR",
+        "scene": "00023-zepmXAdrpjR",
+        "question": "What object is approximately 1.3 meters to the right of the bed?",
+        "initial_pose": {
+            "position": [
+                6.995118618011475,
+                0.12750515341758728,
+                1.648119330406189
+            ],
+            "rotation": [
+                -0.0,
+                -0.9953949977629808,
+                -0.0,
+                0.09585822045310231
+            ]
+        },
+        "reference_object": {
+            "id": "bed_171",
+            "name": "bed",
+            "position": [
+                6.477433204650879,
+                -0.1653965711593628,
+                4.3110222816467285
+            ]
+        },
+        "ground_truth_target": {
+            "id": "stand_174",
+            "name": "stand",
+            "position": [
+                6.482113838195801,
+                0.02974354475736618,
+                4.498133182525635
+            ]
+        }
+    },
+    {
+        "scene_dir": "00023-zepmXAdrpjR",
+        "scene_id": "zepmXAdrpjR",
+        "scene": "00023-zepmXAdrpjR",
+        "question": "What object is approximately 1.2 meters in front of the bed?",
+        "initial_pose": {
+            "position": [
+                8.494437217712402,
+                0.12750515341758728,
+                6.60094690322876
+            ],
+            "rotation": [
+                -0.0,
+                -0.35326373775448433,
+                -0.0,
+                0.9355237739297334
+            ]
+        },
+        "reference_object": {
+            "id": "bed_171",
+            "name": "bed",
+            "position": [
+                6.477433204650879,
+                -0.1653965711593628,
+                4.3110222816467285
+            ]
+        },
+        "ground_truth_target": {
+            "id": "pillow_167",
+            "name": "pillow",
+            "position": [
+                6.382106304168701,
+                0.1435239464044571,
+                3.710174560546875
+            ]
+        }
+    },
+    {
+        "scene_dir": "00023-zepmXAdrpjR",
+        "scene_id": "zepmXAdrpjR",
+        "scene": "00023-zepmXAdrpjR",
+        "question": "What object is approximately 2.7 meters to the right of the armchair?",
+        "initial_pose": {
+            "position": [
+                0.7518721222877502,
+                -0.2724948525428772,
+                9.173717498779297
+            ],
+            "rotation": [
+                0.0,
+                0.2343380820719208,
+                0.0,
+                0.9721551642052074
+            ]
+        },
+        "reference_object": {
+            "id": "armchair_21",
+            "name": "armchair",
+            "position": [
+                4.853407382965088,
+                0.41207021474838257,
+                1.1604140996932983
+            ]
+        },
+        "ground_truth_target": {
+            "id": "wall_164",
+            "name": "wall",
+            "position": [
+                6.472105979919434,
+                1.4619884490966797,
+                2.204655408859253
+            ]
+        }
+    },
+    {
+        "scene_dir": "00023-zepmXAdrpjR",
+        "scene_id": "zepmXAdrpjR",
+        "scene": "00023-zepmXAdrpjR",
+        "question": "What object is approximately 2.5 meters in front of the bed?",
+        "initial_pose": {
+            "position": [
+                1.0295331478118896,
+                0.12750515341758728,
+                3.908268451690674
+            ],
+            "rotation": [
+                0.0,
+                0.6855567522134752,
+                0.0,
+                0.7280191889603679
+            ]
+        },
+        "reference_object": {
+            "id": "bed_147",
+            "name": "bed",
+            "position": [
+                3.962106227874756,
+                0.39503931999206543,
+                3.7319259643554688
+            ]
+        },
+        "ground_truth_target": {
+            "id": "toilet_93",
+            "name": "toilet",
+            "position": [
+                4.042110443115234,
+                0.38988322019577026,
+                1.374654769897461
+            ]
+        }
+    },
+    {
+        "scene_dir": "00023-zepmXAdrpjR",
+        "scene_id": "zepmXAdrpjR",
+        "scene": "00023-zepmXAdrpjR",
+        "question": "What object is approximately 1.2 meters to the left of the armchair?",
+        "initial_pose": {
+            "position": [
+                1.578294038772583,
+                -0.07249486446380615,
+                7.265365123748779
+            ],
+            "rotation": [
+                0.0,
+                0.2437178532692325,
+                0.0,
+                0.9698461774930274
+            ]
+        },
+        "reference_object": {
+            "id": "armchair_21",
+            "name": "armchair",
+            "position": [
+                4.853407382965088,
+                0.41207021474838257,
+                1.1604140996932983
+            ]
+        },
+        "ground_truth_target": {
+            "id": "trash can_91",
+            "name": "trash can",
+            "position": [
+                3.7830424308776855,
+                0.1998416781425476,
+                1.3146476745605469
+            ]
+        }
+    },
+    {
+        "scene_dir": "00330-WhNyDTnd9g5",
+        "scene_id": "WhNyDTnd9g5",
+        "scene": "00330-WhNyDTnd9g5",
+        "question": "What object is approximately 2.2 meters to the right of the bed?",
+        "initial_pose": {
+            "position": [
+                -1.7466925382614136,
+                2.7934396266937256,
+                -0.1298585683107376
+            ],
+            "rotation": [
+                -0.0,
+                -0.7755808611312253,
+                -0.0,
+                0.6312482299752983
+            ]
+        },
+        "reference_object": {
+            "id": "bed_197",
+            "name": "bed",
+            "position": [
+                -3.8317813873291016,
+                2.25081729888916,
+                0.30252909660339355
+            ]
+        },
+        "ground_truth_target": {
+            "id": "door frame_157",
+            "name": "door frame",
+            "position": [
+                -1.3943214416503906,
+                2.4182722568511963,
+                0.3522087335586548
+            ]
+        }
+    },
+    {
+        "scene_dir": "00330-WhNyDTnd9g5",
+        "scene_id": "WhNyDTnd9g5",
+        "scene": "00330-WhNyDTnd9g5",
+        "question": "What object is approximately 1.1 meters in front of the armchair?",
+        "initial_pose": {
+            "position": [
+                0.18954400718212128,
+                2.7934396266937256,
+                -3.7378082275390625
+            ],
+            "rotation": [
+                -0.0,
+                -0.92374681686917,
+                -0.0,
+                0.3830036792565784
+            ]
+        },
+        "reference_object": {
+            "id": "armchair_394",
+            "name": "armchair",
+            "position": [
+                -1.068745493888855,
+                0.5016025900840759,
+                -2.481262683868408
+            ]
+        },
+        "ground_truth_target": {
+            "id": "pillow_392",
+            "name": "pillow",
+            "position": [
+                -1.048363447189331,
+                0.4463486671447754,
+                -3.329254150390625
+            ]
+        }
+    },
+    {
+        "scene_dir": "00330-WhNyDTnd9g5",
+        "scene_id": "WhNyDTnd9g5",
+        "scene": "00330-WhNyDTnd9g5",
+        "question": "What object is approximately 3.0 meters to the right of the desk?",
+        "initial_pose": {
+            "position": [
+                -4.278080940246582,
+                -2.606560230255127,
+                -0.22650563716888428
+            ],
+            "rotation": [
+                0.0,
+                0.18475025174616397,
+                0.0,
+                0.9827855027826413
+            ]
+        },
+        "reference_object": {
+            "id": "desk_194",
+            "name": "desk",
+            "position": [
+                -3.84085750579834,
+                1.75826096534729,
+                -1.3483223915100098
+            ]
+        },
+        "ground_truth_target": {
+            "id": "wall_407",
+            "name": "wall",
+            "position": [
+                -0.954398512840271,
+                1.2033799886703491,
+                -1.1493446826934814
+            ]
+        }
+    },
+    {
+        "scene_dir": "00330-WhNyDTnd9g5",
+        "scene_id": "WhNyDTnd9g5",
+        "scene": "00330-WhNyDTnd9g5",
+        "question": "What object is approximately 2.7 meters behind the tv stand?",
+        "initial_pose": {
+            "position": [
+                -2.6646780967712402,
+                2.7934396266937256,
+                0.2037954181432724
+            ],
+            "rotation": [
+                0.0,
+                0.45256504046188634,
+                0.0,
+                0.891731396863277
+            ]
+        },
+        "reference_object": {
+            "id": "tv stand_415",
+            "name": "tv stand",
+            "position": [
+                1.138405442237854,
+                0.10077393054962158,
+                -2.5779342651367188
+            ]
+        },
+        "ground_truth_target": {
+            "id": "ceiling lamp_61",
+            "name": "ceiling lamp",
+            "position": [
+                0.5756164789199829,
+                -0.2132195234298706,
+                -0.10740898549556732
+            ]
+        }
+    },
+    {
+        "scene_dir": "00330-WhNyDTnd9g5",
+        "scene_id": "WhNyDTnd9g5",
+        "scene": "00330-WhNyDTnd9g5",
+        "question": "What object is approximately 1.9 meters to the right of the toilet?",
+        "initial_pose": {
+            "position": [
+                -3.8287110328674316,
+                -2.606560230255127,
+                3.1046035289764404
+            ],
+            "rotation": [
+                0.0,
+                0.6400353369673657,
+                0.0,
+                0.7683454740109235
+            ]
+        },
+        "reference_object": {
+            "id": "toilet_277",
+            "name": "toilet",
+            "position": [
+                0.08474999666213989,
+                -0.6847113370895386,
+                2.385565757751465
+            ]
+        },
+        "ground_truth_target": {
+            "id": "floor_143",
+            "name": "floor",
+            "position": [
+                1.4320659637451172,
+                -0.010726183652877808,
+                1.5003654956817627
+            ]
+        }
+    },
+    {
+        "scene_dir": "00299-bdp1XNEdvmW",
+        "scene_id": "bdp1XNEdvmW",
+        "scene": "00299-bdp1XNEdvmW",
+        "question": "What object is approximately 1.7 meters behind the bed?",
+        "initial_pose": {
+            "position": [
+                2.891348361968994,
+                0.19179342687129974,
+                7.252792835235596
+            ],
+            "rotation": [
+                0.0,
+                0.03804276572506186,
+                0.0,
+                0.999276111981062
+            ]
+        },
+        "reference_object": {
+            "id": "bed_311",
+            "name": "bed",
+            "position": [
+                3.3833093643188477,
+                0.749449610710144,
+                0.8009440898895264
+            ]
+        },
+        "ground_truth_target": {
+            "id": "picture_279",
+            "name": "picture",
+            "position": [
+                3.513324499130249,
+                0.7744988203048706,
+                1.9710195064544678
+            ]
+        }
+    },
+    {
+        "scene_dir": "00299-bdp1XNEdvmW",
+        "scene_id": "bdp1XNEdvmW",
+        "scene": "00299-bdp1XNEdvmW",
+        "question": "What object is approximately 2.4 meters to the right of the desk?",
+        "initial_pose": {
+            "position": [
+                6.066964149475098,
+                0.19179342687129974,
+                2.831676483154297
+            ],
+            "rotation": [
+                -0.0,
+                -0.5823829701576705,
+                -0.0,
+                0.812914556438947
+            ]
+        },
+        "reference_object": {
+            "id": "desk_273",
+            "name": "desk",
+            "position": [
+                3.5255260467529297,
+                0.3903454840183258,
+                1.9683136940002441
+            ]
+        },
+        "ground_truth_target": {
+            "id": "lamp_278",
+            "name": "lamp",
+            "position": [
+                3.5332319736480713,
+                0.4944472312927246,
+                1.9670137166976929
+            ]
+        }
+    },
+    {
+        "scene_dir": "00299-bdp1XNEdvmW",
+        "scene_id": "bdp1XNEdvmW",
+        "scene": "00299-bdp1XNEdvmW",
+        "question": "What object is approximately 2.1 meters behind the dining table?",
+        "initial_pose": {
+            "position": [
+                2.8595073223114014,
+                0.19179342687129974,
+                4.778125286102295
+            ],
+            "rotation": [
+                0.0,
+                0.021384892530413216,
+                0.0,
+                0.9997713170377828
+            ]
+        },
+        "reference_object": {
+            "id": "dining table_91",
+            "name": "dining table",
+            "position": [
+                3.183309555053711,
+                0.33463889360427856,
+                -2.7874979972839355
+            ]
+        },
+        "ground_truth_target": {
+            "id": "air conditioner_513",
+            "name": "air conditioner",
+            "position": [
+                3.52543306350708,
+                0.10088734328746796,
+                -0.9249951839447021
+            ]
+        }
+    },
+    {
+        "scene_dir": "00299-bdp1XNEdvmW",
+        "scene_id": "bdp1XNEdvmW",
+        "scene": "00299-bdp1XNEdvmW",
+        "question": "What object is approximately 1.9 meters behind the desk?",
+        "initial_pose": {
+            "position": [
+                4.099875450134277,
+                -0.008206576108932495,
+                -4.470681667327881
+            ],
+            "rotation": [
+                -0.0,
+                -0.9990108571243467,
+                -0.0,
+                0.04446692419853439
+            ]
+        },
+        "reference_object": {
+            "id": "desk_273",
+            "name": "desk",
+            "position": [
+                3.5255260467529297,
+                0.3903454840183258,
+                1.9683136940002441
+            ]
+        },
+        "ground_truth_target": {
+            "id": "lamp_363",
+            "name": "lamp",
+            "position": [
+                3.303311586380005,
+                0.4161645174026489,
+                3.831294059753418
+            ]
+        }
+    },
+    {
+        "scene_dir": "00299-bdp1XNEdvmW",
+        "scene_id": "bdp1XNEdvmW",
+        "scene": "00299-bdp1XNEdvmW",
+        "question": "What object is approximately 2.4 meters behind the bed?",
+        "initial_pose": {
+            "position": [
+                6.355507850646973,
+                0.0608949214220047,
+                -2.6220579147338867
+            ],
+            "rotation": [
+                -0.0,
+                -0.9391141129604103,
+                -0.0,
+                0.3436054173591881
+            ]
+        },
+        "reference_object": {
+            "id": "bed_309",
+            "name": "bed",
+            "position": [
+                3.455162525177002,
+                0.3844480812549591,
+                0.8108416199684143
+            ]
+        },
+        "ground_truth_target": {
+            "id": "lamp_363",
+            "name": "lamp",
+            "position": [
+                3.303311586380005,
+                0.4161645174026489,
+                3.831294059753418
+            ]
+        }
+    },
+    {
+        "scene_dir": "00263-GGBvSFddQgs",
+        "scene_id": "GGBvSFddQgs",
+        "scene": "00263-GGBvSFddQgs",
+        "question": "What object is approximately 1.5 meters in front of the bed?",
+        "initial_pose": {
+            "position": [
+                9.003061294555664,
+                2.8289172649383545,
+                7.018871784210205
+            ],
+            "rotation": [
+                -0.0,
+                -0.44109244491851884,
+                -0.0,
+                0.8974616732963049
+            ]
+        },
+        "reference_object": {
+            "id": "bed_765",
+            "name": "bed",
+            "position": [
+                6.600965976715088,
+                1.689469814300537,
+                5.165481090545654
+            ]
+        },
+        "ground_truth_target": {
+            "id": "soap dispenser_725",
+            "name": "soap dispenser",
+            "position": [
+                6.598584175109863,
+                1.8860456943511963,
+                3.9836177825927734
+            ]
+        }
+    },
+    {
+        "scene_dir": "00263-GGBvSFddQgs",
+        "scene_id": "GGBvSFddQgs",
+        "scene": "00263-GGBvSFddQgs",
+        "question": "What object is approximately 1.8 meters to the right of the oven?",
+        "initial_pose": {
+            "position": [
+                5.465272426605225,
+                2.8289172649383545,
+                4.199635028839111
+            ],
+            "rotation": [
+                -0.0,
+                -0.4278378729853675,
+                -0.0,
+                0.9038554942242463
+            ]
+        },
+        "reference_object": {
+            "id": "oven_69",
+            "name": "oven",
+            "position": [
+                2.145965099334717,
+                -1.4777555465698242,
+                1.4790236949920654
+            ]
+        },
+        "ground_truth_target": {
+            "id": "toilet cleaner_181",
+            "name": "toilet cleaner",
+            "position": [
+                3.8359694480895996,
+                -1.3515748977661133,
+                1.5201597213745117
+            ]
+        }
+    },
+    {
+        "scene_dir": "00263-GGBvSFddQgs",
+        "scene_id": "GGBvSFddQgs",
+        "scene": "00263-GGBvSFddQgs",
+        "question": "What object is approximately 2.8 meters behind the bed?",
+        "initial_pose": {
+            "position": [
+                2.7804043292999268,
+                0.02891707420349121,
+                10.331700325012207
+            ],
+            "rotation": [
+                -0.0,
+                -0.05032266348479861,
+                -0.0,
+                0.9987330121407801
+            ]
+        },
+        "reference_object": {
+            "id": "bed_100",
+            "name": "bed",
+            "position": [
+                2.2878715991973877,
+                -1.4721461534500122,
+                5.456562519073486
+            ]
+        },
+        "ground_truth_target": {
+            "id": "wall_87",
+            "name": "wall",
+            "position": [
+                2.276524066925049,
+                -1.331305980682373,
+                5.476618766784668
+            ]
+        }
+    },
+    {
+        "scene_dir": "00263-GGBvSFddQgs",
+        "scene_id": "GGBvSFddQgs",
+        "scene": "00263-GGBvSFddQgs",
+        "question": "What object is approximately 1.4 meters to the right of the bed?",
+        "initial_pose": {
+            "position": [
+                6.171037197113037,
+                2.8289172649383545,
+                9.836976051330566
+            ],
+            "rotation": [
+                -0.0,
+                -0.24757085794040068,
+                -0.0,
+                0.9688697901672102
+            ]
+        },
+        "reference_object": {
+            "id": "bed_616",
+            "name": "bed",
+            "position": [
+                2.5959653854370117,
+                1.6453511714935303,
+                3.298205852508545
+            ]
+        },
+        "ground_truth_target": {
+            "id": "floor_585",
+            "name": "floor",
+            "position": [
+                3.595977544784546,
+                1.4186949729919434,
+                3.303649425506592
+            ]
+        }
+    },
+    {
+        "scene_dir": "00263-GGBvSFddQgs",
+        "scene_id": "GGBvSFddQgs",
+        "scene": "00263-GGBvSFddQgs",
+        "question": "What object is approximately 2.8 meters to the left of the bed?",
+        "initial_pose": {
+            "position": [
+                2.8725104331970215,
+                0.02891707420349121,
+                7.770423889160156
+            ],
+            "rotation": [
+                -0.0,
+                -0.03193090033644998,
+                -0.0,
+                0.9994900787920327
+            ]
+        },
+        "reference_object": {
+            "id": "bed_568",
+            "name": "bed",
+            "position": [
+                2.658608913421631,
+                1.626277208328247,
+                4.426104545593262
+            ]
+        },
+        "ground_truth_target": {
+            "id": "wall_550",
+            "name": "wall",
+            "position": [
+                1.1458303928375244,
+                1.7366771697998047,
+                4.145277976989746
+            ]
+        }
+    },
+    {
+        "scene_dir": "00173-qZ4B7U6XE5Y",
+        "scene_id": "qZ4B7U6XE5Y",
+        "scene": "00173-qZ4B7U6XE5Y",
+        "question": "What object is approximately 1.5 meters behind the desk?",
+        "initial_pose": {
+            "position": [
+                -5.3955979347229,
+                0.19201411306858063,
+                2.838348865509033
+            ],
+            "rotation": [
+                0.0,
+                0.6298342978481988,
+                0.0,
+                0.7767295264466688
+            ]
+        },
+        "reference_object": {
+            "id": "desk_176",
+            "name": "desk",
+            "position": [
+                0.13617050647735596,
+                0.43200674653053284,
+                1.6701817512512207
+            ]
+        },
+        "ground_truth_target": {
+            "id": "toy_171",
+            "name": "toy",
+            "position": [
+                -0.10757449269294739,
+                0.5390414595603943,
+                3.3053948879241943
+            ]
+        }
+    },
+    {
+        "scene_dir": "00173-qZ4B7U6XE5Y",
+        "scene_id": "qZ4B7U6XE5Y",
+        "scene": "00173-qZ4B7U6XE5Y",
+        "question": "What object is approximately 2.5 meters to the right of the armchair?",
+        "initial_pose": {
+            "position": [
+                -1.290152907371521,
+                0.1653902530670166,
+                4.697634696960449
+            ],
+            "rotation": [
+                0.0,
+                0.1385865040231183,
+                0.0,
+                0.9903503324090168
+            ]
+        },
+        "reference_object": {
+            "id": "armchair_118",
+            "name": "armchair",
+            "position": [
+                0.166717529296875,
+                0.5271425843238831,
+                -0.4058871269226074
+            ]
+        },
+        "ground_truth_target": {
+            "id": "picture_110",
+            "name": "picture",
+            "position": [
+                0.37533998489379883,
+                1.0337566137313843,
+                -0.38774573802948
+            ]
+        }
+    },
+    {
+        "scene_dir": "00173-qZ4B7U6XE5Y",
+        "scene_id": "qZ4B7U6XE5Y",
+        "scene": "00173-qZ4B7U6XE5Y",
+        "question": "What object is approximately 1.7 meters to the left of the bed?",
+        "initial_pose": {
+            "position": [
+                -0.5917333960533142,
+                -2.234609842300415,
+                4.693461894989014
+            ],
+            "rotation": [
+                0.0,
+                0.19369153319450524,
+                0.0,
+                0.9810624801554496
+            ]
+        },
+        "reference_object": {
+            "id": "bed_168",
+            "name": "bed",
+            "position": [
+                -0.16228997707366943,
+                0.5759055018424988,
+                3.6482725143432617
+            ]
+        },
+        "ground_truth_target": {
+            "id": "door_707",
+            "name": "door",
+            "position": [
+                -1.629596471786499,
+                0.843807578086853,
+                3.7817773818969727
+            ]
+        }
+    },
+    {
+        "scene_dir": "00173-qZ4B7U6XE5Y",
+        "scene_id": "qZ4B7U6XE5Y",
+        "scene": "00173-qZ4B7U6XE5Y",
+        "question": "What object is approximately 1.2 meters to the left of the toilet?",
+        "initial_pose": {
+            "position": [
+                -0.542325496673584,
+                -2.234609842300415,
+                5.451735019683838
+            ],
+            "rotation": [
+                -0.0,
+                -0.13768522894092353,
+                -0.0,
+                0.9904760359198427
+            ]
+        },
+        "reference_object": {
+            "id": "toilet_86",
+            "name": "toilet",
+            "position": [
+                -1.6285464763641357,
+                1.730037808418274,
+                1.6202194690704346
+            ]
+        },
+        "ground_truth_target": {
+            "id": "chest of drawers_45",
+            "name": "chest of drawers",
+            "position": [
+                -2.809351921081543,
+                1.9637694358825684,
+                1.8753271102905273
+            ]
+        }
+    },
+    {
+        "scene_dir": "00173-qZ4B7U6XE5Y",
+        "scene_id": "qZ4B7U6XE5Y",
+        "scene": "00173-qZ4B7U6XE5Y",
+        "question": "What object is approximately 1.3 meters in front of the bed?",
+        "initial_pose": {
+            "position": [
+                0.394814670085907,
+                0.1653902530670166,
+                4.228020668029785
+            ],
+            "rotation": [
+                -0.0,
+                -0.2912760150743395,
+                -0.0,
+                0.9566390557793536
+            ]
+        },
+        "reference_object": {
+            "id": "bed_24",
+            "name": "bed",
+            "position": [
+                -2.391366481781006,
+                1.8508527278900146,
+                0.07685315608978271
+            ]
+        },
+        "ground_truth_target": {
+            "id": "alarm clock_34",
+            "name": "alarm clock",
+            "position": [
+                -2.5181045532226562,
+                1.7496411800384521,
+                -0.5013787150382996
+            ]
+        }
+    },
+    {
+        "scene_dir": "00141-iigzG1rtanx",
+        "scene_id": "iigzG1rtanx",
+        "scene": "00141-iigzG1rtanx",
+        "question": "What object is approximately 2.2 meters to the left of the bed?",
+        "initial_pose": {
+            "position": [
+                4.247232913970947,
+                -1.9041552543640137,
+                2.751737594604492
+            ],
+            "rotation": [
+                -0.0,
+                -0.5688684713190894,
+                -0.0,
+                0.8224285150328158
+            ]
+        },
+        "reference_object": {
+            "id": "bed_219",
+            "name": "bed",
+            "position": [
+                -2.60322642326355,
+                1.5108566284179688,
+                0.1690002679824829
+            ]
+        },
+        "ground_truth_target": {
+            "id": "bath towel_336",
+            "name": "bath towel",
+            "position": [
+                -4.88945198059082,
+                1.1195166110992432,
+                -0.13181614875793457
+            ]
+        }
+    },
+    {
+        "scene_dir": "00141-iigzG1rtanx",
+        "scene_id": "iigzG1rtanx",
+        "scene": "00141-iigzG1rtanx",
+        "question": "What object is approximately 2.2 meters to the left of the toilet?",
+        "initial_pose": {
+            "position": [
+                -4.8689470291137695,
+                -4.1547698974609375,
+                6.704151630401611
+            ],
+            "rotation": [
+                0.0,
+                0.0034987345202800767,
+                0.0,
+                0.9999938794096475
+            ]
+        },
+        "reference_object": {
+            "id": "toilet_324",
+            "name": "toilet",
+            "position": [
+                -4.829089164733887,
+                1.147587776184082,
+                1.0082160234451294
+            ]
+        },
+        "ground_truth_target": {
+            "id": "window_333",
+            "name": "window",
+            "position": [
+                -5.01032018661499,
+                1.7809808254241943,
+                0.8195949196815491
+            ]
+        }
+    },
+    {
+        "scene_dir": "00141-iigzG1rtanx",
+        "scene_id": "iigzG1rtanx",
+        "scene": "00141-iigzG1rtanx",
+        "question": "What object is approximately 2.9 meters to the right of the desk?",
+        "initial_pose": {
+            "position": [
+                -2.389638900756836,
+                -4.1547698974609375,
+                0.381411075592041
+            ],
+            "rotation": [
+                -0.0,
+                -0.9536887306722424,
+                -0.0,
+                0.30079528751090345
+            ]
+        },
+        "reference_object": {
+            "id": "desk_409",
+            "name": "desk",
+            "position": [
+                -4.985644340515137,
+                -0.7691516876220703,
+                4.0874104499816895
+            ]
+        },
+        "ground_truth_target": {
+            "id": "window_365",
+            "name": "window",
+            "position": [
+                -1.8291120529174805,
+                -0.41087859869003296,
+                4.042895793914795
+            ]
+        }
+    },
+    {
+        "scene_dir": "00141-iigzG1rtanx",
+        "scene_id": "iigzG1rtanx",
+        "scene": "00141-iigzG1rtanx",
+        "question": "What object is approximately 2.4 meters in front of the bed?",
+        "initial_pose": {
+            "position": [
+                -8.24991512298584,
+                4.245230674743652,
+                2.706838607788086
+            ],
+            "rotation": [
+                0.0,
+                0.5886800842286041,
+                0.0,
+                0.8083661042081142
+            ]
+        },
+        "reference_object": {
+            "id": "bed_166",
+            "name": "bed",
+            "position": [
+                0.41841399669647217,
+                1.7254012823104858,
+                -0.08847928047180176
+            ]
+        },
+        "ground_truth_target": {
+            "id": "window frame_164",
+            "name": "window frame",
+            "position": [
+                0.4320319890975952,
+                1.880658745765686,
+                -0.5615823268890381
+            ]
+        }
+    },
+    {
+        "scene_dir": "00141-iigzG1rtanx",
+        "scene_id": "iigzG1rtanx",
+        "scene": "00141-iigzG1rtanx",
+        "question": "What object is approximately 2.5 meters to the right of the kitchen island?",
+        "initial_pose": {
+            "position": [
+                -2.557382583618164,
+                4.245230674743652,
+                3.192277669906616
+            ],
+            "rotation": [
+                0.0,
+                0.24904346310526415,
+                0.0,
+                0.9684923094607086
+            ]
+        },
+        "reference_object": {
+            "id": "kitchen island_467",
+            "name": "kitchen island",
+            "position": [
+                -1.2072755098342896,
+                -0.7727750539779663,
+                0.7406836152076721
+            ]
+        },
+        "ground_truth_target": {
+            "id": "oven and stove_496",
+            "name": "oven and stove",
+            "position": [
+                0.777288019657135,
+                -0.7639236450195312,
+                0.40639662742614746
+            ]
+        }
+    },
+    {
+        "scene_dir": "00744-1S7LAXRdDqK",
+        "scene_id": "1S7LAXRdDqK",
+        "scene": "00744-1S7LAXRdDqK",
+        "question": "What object is approximately 1.6 meters in front of the armchair?",
+        "initial_pose": {
+            "position": [
+                -8.226380348205566,
+                0.19159936904907227,
+                -3.739335298538208
+            ],
+            "rotation": [
+                0.0,
+                0.8724422749781164,
+                0.0,
+                0.4887171746838949
+            ]
+        },
+        "reference_object": {
+            "id": "armchair_377",
+            "name": "armchair",
+            "position": [
+                -2.565551996231079,
+                -1.3195916414260864,
+                -0.2720867991447449
+            ]
+        },
+        "ground_truth_target": {
+            "id": "armchair_373",
+            "name": "armchair",
+            "position": [
+                -2.5986289978027344,
+                -1.3110713958740234,
+                -1.8432496786117554
+            ]
+        }
+    },
+    {
+        "scene_dir": "00744-1S7LAXRdDqK",
+        "scene_id": "1S7LAXRdDqK",
+        "scene": "00744-1S7LAXRdDqK",
+        "question": "What object is approximately 1.0 meters to the left of the desk?",
+        "initial_pose": {
+            "position": [
+                -4.8570780754089355,
+                -2.608400583267212,
+                -2.2061543464660645
+            ],
+            "rotation": [
+                0.0,
+                0.8941697810282387,
+                0.0,
+                0.4477280454650027
+            ]
+        },
+        "reference_object": {
+            "id": "desk_266",
+            "name": "desk",
+            "position": [
+                -1.5574383735656738,
+                0.41703560948371887,
+                0.2626490294933319
+            ]
+        },
+        "ground_truth_target": {
+            "id": "faucet_298",
+            "name": "faucet",
+            "position": [
+                -2.5863561630249023,
+                0.3128625154495239,
+                0.12683548033237457
+            ]
+        }
+    },
+    {
+        "scene_dir": "00744-1S7LAXRdDqK",
+        "scene_id": "1S7LAXRdDqK",
+        "scene": "00744-1S7LAXRdDqK",
+        "question": "What object is approximately 2.0 meters behind the armchair?",
+        "initial_pose": {
+            "position": [
+                -0.660342812538147,
+                -2.608400583267212,
+                -2.5662708282470703
+            ],
+            "rotation": [
+                -0.0,
+                -0.8214308138494805,
+                -0.0,
+                0.5703081781445714
+            ]
+        },
+        "reference_object": {
+            "id": "armchair_373",
+            "name": "armchair",
+            "position": [
+                -2.5986289978027344,
+                -1.3110713958740234,
+                -1.8432496786117554
+            ]
+        },
+        "ground_truth_target": {
+            "id": "pillow_378",
+            "name": "pillow",
+            "position": [
+                -2.4564480781555176,
+                -1.1740986108779907,
+                -0.027856260538101196
+            ]
+        }
+    },
+    {
+        "scene_dir": "00744-1S7LAXRdDqK",
+        "scene_id": "1S7LAXRdDqK",
+        "scene": "00744-1S7LAXRdDqK",
+        "question": "What object is approximately 2.7 meters to the right of the bed?",
+        "initial_pose": {
+            "position": [
+                -7.50289249420166,
+                -2.608400583267212,
+                -3.0489585399627686
+            ],
+            "rotation": [
+                0.0,
+                0.6820070646421581,
+                0.0,
+                0.7313455843704719
+            ]
+        },
+        "reference_object": {
+            "id": "bed_219",
+            "name": "bed",
+            "position": [
+                -0.14639699459075928,
+                0.7701379060745239,
+                -3.563199043273926
+            ]
+        },
+        "ground_truth_target": {
+            "id": "lamp_209",
+            "name": "lamp",
+            "position": [
+                0.4894310235977173,
+                0.6828500628471375,
+                -3.8335394859313965
+            ]
+        }
+    },
+    {
+        "scene_dir": "00744-1S7LAXRdDqK",
+        "scene_id": "1S7LAXRdDqK",
+        "scene": "00744-1S7LAXRdDqK",
+        "question": "What object is approximately 1.3 meters behind the desk?",
+        "initial_pose": {
+            "position": [
+                -7.930390357971191,
+                -2.5954716205596924,
+                -1.3551745414733887
+            ],
+            "rotation": [
+                0.0,
+                0.4358732515321681,
+                0.0,
+                0.9000080602965594
+            ]
+        },
+        "reference_object": {
+            "id": "desk_542",
+            "name": "desk",
+            "position": [
+                -5.427428722381592,
+                -1.4042003154754639,
+                -3.3331894874572754
+            ]
+        },
+        "ground_truth_target": {
+            "id": "cabinet_534",
+            "name": "cabinet",
+            "position": [
+                -5.4038238525390625,
+                -1.3396813869476318,
+                -2.0821075439453125
+            ]
+        }
+    },
+    {
+        "scene_dir": "00105-xWvSkKiWQpC",
+        "scene_id": "xWvSkKiWQpC",
+        "scene": "00105-xWvSkKiWQpC",
+        "question": "What object is approximately 2.2 meters in front of the desk?",
+        "initial_pose": {
+            "position": [
+                -8.138511657714844,
+                0.061960820108652115,
+                2.91091251373291
+            ],
+            "rotation": [
+                0.0,
+                0.27619258862598045,
+                0.0,
+                0.9611023119252601
+            ]
+        },
+        "reference_object": {
+            "id": "desk_319",
+            "name": "desk",
+            "position": [
+                -4.513531684875488,
+                0.7761359810829163,
+                -2.875382661819458
+            ]
+        },
+        "ground_truth_target": {
+            "id": "unknown_314",
+            "name": "unknown",
+            "position": [
+                -4.611907005310059,
+                0.8781827688217163,
+                -2.86429762840271
+            ]
+        }
+    },
+    {
+        "scene_dir": "00105-xWvSkKiWQpC",
+        "scene_id": "xWvSkKiWQpC",
+        "scene": "00105-xWvSkKiWQpC",
+        "question": "What object is approximately 1.2 meters in front of the desk?",
+        "initial_pose": {
+            "position": [
+                1.6497302055358887,
+                0.016809388995170593,
+                3.0253190994262695
+            ],
+            "rotation": [
+                -0.0,
+                -0.7471594044779326,
+                -0.0,
+                0.6646448858602473
+            ]
+        },
+        "reference_object": {
+            "id": "desk_651",
+            "name": "desk",
+            "position": [
+                -4.014192581176758,
+                0.40744340419769287,
+                3.689657211303711
+            ]
+        },
+        "ground_truth_target": {
+            "id": "table_515",
+            "name": "table",
+            "position": [
+                -3.959458351135254,
+                0.36366283893585205,
+                2.769268751144409
+            ]
+        }
+    },
+    {
+        "scene_dir": "00105-xWvSkKiWQpC",
+        "scene_id": "xWvSkKiWQpC",
+        "scene": "00105-xWvSkKiWQpC",
+        "question": "What object is approximately 1.5 meters to the right of the desk?",
+        "initial_pose": {
+            "position": [
+                -9.935835838317871,
+                0.016809388995170593,
+                0.4379431903362274
+            ],
+            "rotation": [
+                0.0,
+                0.8920318559782365,
+                0.0,
+                0.45197253005024834
+            ]
+        },
+        "reference_object": {
+            "id": "desk_579",
+            "name": "desk",
+            "position": [
+                -1.3649530410766602,
+                0.37488383054733276,
+                6.7245330810546875
+            ]
+        },
+        "ground_truth_target": {
+            "id": "bin_580",
+            "name": "bin",
+            "position": [
+                -0.9380124807357788,
+                0.18850132822990417,
+                6.727865219116211
+            ]
+        }
+    },
+    {
+        "scene_dir": "00105-xWvSkKiWQpC",
+        "scene_id": "xWvSkKiWQpC",
+        "scene": "00105-xWvSkKiWQpC",
+        "question": "What object is approximately 1.2 meters in front of the toilet?",
+        "initial_pose": {
+            "position": [
+                -11.441253662109375,
+                0.016809388995170593,
+                3.9618234634399414
+            ],
+            "rotation": [
+                0.0,
+                0.35459081356051686,
+                0.0,
+                0.9350215799319772
+            ]
+        },
+        "reference_object": {
+            "id": "toilet_386",
+            "name": "toilet",
+            "position": [
+                -6.867195129394531,
+                0.4061213433742523,
+                -1.2015341520309448
+            ]
+        },
+        "ground_truth_target": {
+            "id": "bin_372",
+            "name": "bin",
+            "position": [
+                -6.86799430847168,
+                0.4283861219882965,
+                -1.9602980613708496
+            ]
+        }
+    },
+    {
+        "scene_dir": "00105-xWvSkKiWQpC",
+        "scene_id": "xWvSkKiWQpC",
+        "scene": "00105-xWvSkKiWQpC",
+        "question": "What object is approximately 3.0 meters in front of the desk?",
+        "initial_pose": {
+            "position": [
+                -11.72955322265625,
+                0.016809388995170593,
+                -3.1486997604370117
+            ],
+            "rotation": [
+                0.0,
+                0.9119467063887358,
+                0.0,
+                0.4103086700360314
+            ]
+        },
+        "reference_object": {
+            "id": "desk_651",
+            "name": "desk",
+            "position": [
+                -4.014192581176758,
+                0.40744340419769287,
+                3.689657211303711
+            ]
+        },
+        "ground_truth_target": {
+            "id": "magazine_182",
+            "name": "magazine",
+            "position": [
+                -3.6091485023498535,
+                0.309501588344574,
+                0.5974094867706299
+            ]
+        }
+    },
+    {
+        "scene_dir": "00569-YJDUB7hWg9h",
+        "scene_id": "YJDUB7hWg9h",
+        "scene": "00569-YJDUB7hWg9h",
+        "question": "What object is approximately 1.3 meters behind the bed?",
+        "initial_pose": {
+            "position": [
+                -10.294378280639648,
+                0.010577410459518433,
+                2.3580193519592285
+            ],
+            "rotation": [
+                0.0,
+                0.6814831367971875,
+                0.0,
+                0.7318338160136261
+            ]
+        },
+        "reference_object": {
+            "id": "bed_216",
+            "name": "bed",
+            "position": [
+                2.0826914310455322,
+                0.9993507266044617,
+                1.4750111103057861
+            ]
+        },
+        "ground_truth_target": {
+            "id": "window_228",
+            "name": "window",
+            "position": [
+                1.6527659893035889,
+                1.025256872177124,
+                2.098031520843506
+            ]
+        }
+    },
+    {
+        "scene_dir": "00569-YJDUB7hWg9h",
+        "scene_id": "YJDUB7hWg9h",
+        "scene": "00569-YJDUB7hWg9h",
+        "question": "What object is approximately 1.5 meters behind the bed?",
+        "initial_pose": {
+            "position": [
+                -3.4131994247436523,
+                0.010577410459518433,
+                -4.104783058166504
+            ],
+            "rotation": [
+                -0.0,
+                -0.991120871360858,
+                -0.0,
+                0.1329639738910261
+            ]
+        },
+        "reference_object": {
+            "id": "bed_159",
+            "name": "bed",
+            "position": [
+                -5.073523998260498,
+                0.6578189730644226,
+                1.9719226360321045
+            ]
+        },
+        "ground_truth_target": {
+            "id": "cabinet_162",
+            "name": "cabinet",
+            "position": [
+                -5.477313041687012,
+                0.3929755389690399,
+                2.0500283241271973
+            ]
+        }
+    },
+    {
+        "scene_dir": "00569-YJDUB7hWg9h",
+        "scene_id": "YJDUB7hWg9h",
+        "scene": "00569-YJDUB7hWg9h",
+        "question": "What object is approximately 2.9 meters to the left of the toilet?",
+        "initial_pose": {
+            "position": [
+                -5.136830806732178,
+                0.010577410459518433,
+                2.5241470336914062
+            ],
+            "rotation": [
+                0.0,
+                0.5931810576372298,
+                0.0,
+                0.8050690857686547
+            ]
+        },
+        "reference_object": {
+            "id": "toilet_270",
+            "name": "toilet",
+            "position": [
+                -3.1309654712677,
+                0.348223477602005,
+                1.9019287824630737
+            ]
+        },
+        "ground_truth_target": {
+            "id": "cabinet_162",
+            "name": "cabinet",
+            "position": [
+                -5.477313041687012,
+                0.3929755389690399,
+                2.0500283241271973
+            ]
+        }
+    },
+    {
+        "scene_dir": "00569-YJDUB7hWg9h",
+        "scene_id": "YJDUB7hWg9h",
+        "scene": "00569-YJDUB7hWg9h",
+        "question": "What object is approximately 2.4 meters behind the bed?",
+        "initial_pose": {
+            "position": [
+                -6.996790885925293,
+                0.21057741343975067,
+                0.19025450944900513
+            ],
+            "rotation": [
+                0.0,
+                0.7550183308323063,
+                0.0,
+                0.6557036831581763
+            ]
+        },
+        "reference_object": {
+            "id": "bed_216",
+            "name": "bed",
+            "position": [
+                2.0826914310455322,
+                0.9993507266044617,
+                1.4750111103057861
+            ]
+        },
+        "ground_truth_target": {
+            "id": "window_228",
+            "name": "window",
+            "position": [
+                1.6527659893035889,
+                1.025256872177124,
+                2.098031520843506
+            ]
+        }
+    },
+    {
+        "scene_dir": "00569-YJDUB7hWg9h",
+        "scene_id": "YJDUB7hWg9h",
+        "scene": "00569-YJDUB7hWg9h",
+        "question": "What object is approximately 1.9 meters to the right of the bed?",
+        "initial_pose": {
+            "position": [
+                -6.638678550720215,
+                0.08581166714429855,
+                -4.276665687561035
+            ],
+            "rotation": [
+                0.0,
+                0.992479862158696,
+                0.0,
+                0.12240801938376321
+            ]
+        },
+        "reference_object": {
+            "id": "bed_159",
+            "name": "bed",
+            "position": [
+                -5.073523998260498,
+                0.6578189730644226,
+                1.9719226360321045
+            ]
+        },
+        "ground_truth_target": {
+            "id": "toilet_270",
+            "name": "toilet",
+            "position": [
+                -3.1309654712677,
+                0.348223477602005,
+                1.9019287824630737
+            ]
+        }
+    }
+]
