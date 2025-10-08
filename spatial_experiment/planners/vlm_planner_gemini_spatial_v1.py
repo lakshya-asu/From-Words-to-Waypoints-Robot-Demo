@@ -37,27 +37,18 @@ def _safe_latest_image(output_path: Path) -> Optional[str]:
         return None
 
 
-def _safe_float(x: Any, default: float = 0.0) -> float:
-    try:
-        return float(x)
-    except Exception:
-        return default
-
-
-def _basename(s: str) -> str:
-    return str(s).split("_")[0].strip().lower()
+def _base_name(s: str) -> str:
+    return s.split("_")[0].strip().lower()
 
 
 # ---------- Structured output schema ----------
-def _planner_schema(
-    frontier_ids: List[str],
-    room_ids: List[str],
-    object_ids: List[str],
-    declared_names: List[str],
-) -> genai.protos.Schema:
+def _planner_schema(frontier_ids: List[str],
+                    room_ids: List[str],
+                    object_ids: List[str],
+                    object_names: List[str]) -> genai.protos.Schema:
     """
     - For navigation: model chooses internal ids (object_ids, frontier_ids, room_ids).
-    - For declaration: model returns instance-like name from declared_names (e.g., 'tray_286').
+    - For declaration: model returns instance name (object_names), e.g. 'tray_286'.
     """
     frontier_step = genai.protos.Schema(
         type=genai.protos.Type.OBJECT,
@@ -85,8 +76,8 @@ def _planner_schema(
             "explanation": genai.protos.Schema(type=genai.protos.Type.STRING),
             "declared_target_object_id": genai.protos.Schema(
                 type=genai.protos.Type.STRING,
-                enum=declared_names,  # instance-like names such as 'tray_286' (fallback to class if unknown)
-                description="Return the instance-like name (e.g., 'tray_286'). If not available, return the class label.",
+                enum=object_names,  # instance names like 'tray_286'
+                description="Return the instance name (e.g., 'tray_286').",
             ),
             "confidence_level": genai.protos.Schema(type=genai.protos.Type.NUMBER),
             "is_confident": genai.protos.Schema(type=genai.protos.Type.BOOLEAN),
@@ -122,7 +113,7 @@ class VLMPlannerEQAGeminiSpatial:
     """
     VLM-based planner for spatial reasoning + target identification.
     - Navigation 'object_id'/'frontier_id'/'room_id' use internal graph ids.
-    - Final 'declared_target_object_id' uses instance-like *name* like 'tray_286' (if available).
+    - Final 'declared_target_object_id' uses instance *name* like 'tray_286'.
     """
 
     def __init__(self, cfg, sg_sim, question, ground_truth_target, output_path: Path):
@@ -171,35 +162,10 @@ class VLMPlannerEQAGeminiSpatial:
             "When absolutely certain you have visually located the correct object, set is_confident=true to end."
         )
 
-    def _collect_declared_names(self, obj_ids: List[str], obj_class_names: List[str]) -> List[str]:
-        """
-        Prefer instance-like names such as 'tray_286' using node attributes:
-        - instance_id / hm3d_instance_id / ins_id
-        Fallback to the class name if no instance id is available.
-        """
-        declared = []
-        G = getattr(self.sg_sim, "filtered_netx_graph", None)
-        for oid, base in zip(obj_ids, obj_class_names):
-            inst = None
-            if G is not None and oid in getattr(G, "nodes", {}):
-                attrs = G.nodes[oid]
-                inst = attrs.get("instance_id") or attrs.get("hm3d_instance_id") or attrs.get("ins_id")
-            if inst is not None and str(inst).strip() != "":
-                declared.append(f"{base}_{inst}")
-            else:
-                declared.append(str(base))
-        # Ensure non-empty and de-duplicate while preserving order
-        if not declared:
-            declared = ["unknown"]
-        # Deduplicate
-        dedup = list(dict.fromkeys([d if d else "unknown" for d in declared]))
-        return dedup
-
     def _current_candidates(self) -> Dict[str, List[str]]:
         """
         Pull candidate ids/names fresh each timestep.
-        Returns dict with keys: object_ids, object_names (class labels), declared_names (instance-like),
-        frontier_ids, room_ids.
+        Returns dict with keys: object_ids, object_names, frontier_ids, room_ids
         """
         obj_ids = list(getattr(self.sg_sim, "object_node_ids", []) or [])
         obj_names = list(getattr(self.sg_sim, "object_node_names", []) or [])
@@ -212,14 +178,11 @@ class VLMPlannerEQAGeminiSpatial:
         if not obj_ids:
             # provide a dummy to keep schema valid; planner will ignore it later
             obj_ids = ["no_objects_available"]
-            obj_names = ["unknown"]
-
-        declared_names = self._collect_declared_names(obj_ids, obj_names)
+            obj_names = ["no_objects_available"]
 
         return {
             "object_ids": obj_ids,
             "object_names": obj_names,
-            "declared_names": declared_names,
             "frontier_ids": fr_ids,
             "room_ids": rm_ids if rm_ids else ["room_unknown"],
         }
@@ -236,8 +199,7 @@ class VLMPlannerEQAGeminiSpatial:
         cand = self._current_candidates()
         s += (
             f"AVAILABLE OBJECT IDS: {cand['object_ids']}\n"
-            f"AVAILABLE OBJECT CLASS NAMES: {cand['object_names']}\n"
-            f"AVAILABLE DECLARE NAMES: {cand['declared_names']}\n"
+            f"AVAILABLE OBJECT NAMES: {cand['object_names']}\n"
             f"AVAILABLE FRONTIERS: {cand['frontier_ids']}\n"
             f"AVAILABLE ROOMS: {cand['room_ids']}\n"
         )
@@ -254,14 +216,11 @@ class VLMPlannerEQAGeminiSpatial:
         self._history += f"\n[Action(t={self.t})]: {action_str}"
 
     # ---------- Model Call ----------
-    def _call_model(
-        self, response_schema: genai.protos.Schema, current_state_prompt: str
-    ) -> Tuple[Optional[Dict[str, Any]], Optional[Dict[str, Any]]]:
+    def _call_model(self, response_schema: genai.protos.Schema) -> Tuple[Optional[Dict[str, Any]], Optional[Dict[str, Any]]]:
         parts = [{
             "text": (
                 f"QUESTION: {self._question}\n\n"
-                f"CURRENT STATE:\n{current_state_prompt}\n\n"
-                "Provide JSON that follows the given schema."
+                "Provide JSON that follows the given schema.\n"
             )
         }]
 
@@ -313,11 +272,11 @@ class VLMPlannerEQAGeminiSpatial:
             frontier_ids=cand["frontier_ids"],
             room_ids=cand["room_ids"],
             object_ids=cand["object_ids"],
-            declared_names=cand["declared_names"],
+            object_names=cand["object_names"],
         )
 
         # 3) Call model
-        nav_step_info, target_declaration = self._call_model(schema, current_state_prompt)
+        nav_step_info, target_declaration = self._call_model(schema)
 
         # If API failed, keep runner alive
         if target_declaration is None:
@@ -347,12 +306,16 @@ class VLMPlannerEQAGeminiSpatial:
             if "object" in step_type:
                 obj_id = nav_step_info[step_type].get("object_id")
                 # stale guard: ensure id still exists this step
-                if obj_id in cand["object_ids"] and obj_id != "no_objects_available":
+                if obj_id in cand["object_ids"]:
                     target_id = obj_id
+                else:
+                    target_id = None  # ignore stale
             elif "frontier" in step_type:
                 fr_id = nav_step_info[step_type].get("frontier_id")
                 if fr_id in cand["frontier_ids"] and fr_id != "no_frontiers_available":
                     target_id = fr_id
+                else:
+                    target_id = None
 
             if target_id:
                 try:
@@ -367,20 +330,7 @@ class VLMPlannerEQAGeminiSpatial:
         # 7) Advance time
         self._t += 1
 
-        # 8) Confidence/termination guards
-        raw_conf = target_declaration.get("confidence_level", 0.0)
-        conf = _safe_float(raw_conf, 0.0)
-        # Clamp to [0, 1] in case model outputs e.g. 5.0
-        conf = max(0.0, min(1.0, conf))
-
-        is_conf_claim = bool(target_declaration.get("is_confident", False))
-
-        # Only allow termination if:
-        # - confidence high enough, AND
-        # - declared id is in the current declared_names (prevents "door" when no door exists)
-        declared_id = str(target_declaration.get("declared_target_object_id", "")).strip()
-        in_declared_pool = declared_id in cand["declared_names"]
-
-        is_confident = is_conf_claim and (conf >= 0.8) and in_declared_pool
-
-        return target_pose, target_id, is_confident, conf, target_declaration
+        # 8) Return tuple for runner
+        is_confident = bool(target_declaration.get("is_confident", False))
+        confidence = float(target_declaration.get("confidence_level", 0.0))
+        return target_pose, target_id, is_confident, confidence, target_declaration

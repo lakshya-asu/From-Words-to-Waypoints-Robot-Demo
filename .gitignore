@@ -50,3 +50,5 @@ wandb
 
 STARTUP.md
 spatial_experiment/outputs
+spatial_experiment/data
+spatial_experiment/outputs_v2
