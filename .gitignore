@@ -44,7 +44,7 @@ ipython_config.py
 # pyenv
 .python-version
 
-outputs
+outputs*/
 media
 wandb
 

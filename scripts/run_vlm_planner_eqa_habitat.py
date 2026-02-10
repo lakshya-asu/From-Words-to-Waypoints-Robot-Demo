@@ -70,7 +70,21 @@ def main(cfg):
             click.secho(f'Executing=========Index: {question_ind} Scene: {question_data["scene"]} Floor: {question_data["floor"]}=======',fg="green",)
 
         # Planner reset with the new quesion
-        question_path = hydra_python.resolve_output_path(output_path / experiment_id)
+        # question_path = hydra_python.resolve_output_path(output_path / experiment_id)
+        # if question_path.exists():
+        #     click.secho(f"[resume-skip] Found existing folder: {question_path}", fg="yellow")
+        #     continue
+
+        raw_question_path = output_path / experiment_id
+
+        if raw_question_path.exists():
+            # Resume: reuse existing folder, do NOT delete anything
+            click.secho(f"[resume] Reusing existing folder: {raw_question_path}", fg="yellow")
+            question_path = raw_question_path
+        else:
+            # Fresh run: create folder using hydra utility (no prompt)
+            question_path = hydra_python.resolve_output_path(raw_question_path)
+
         scene_name = f'{cfg.data.scene_data_path}/{question_data["scene"]}/{question_data["scene"][6:]}.basis.glb'
         scene_id = question_data["scene"][6:]
         if cfg.data.use_semantic_data and not scene_has_semantics(scene_id):

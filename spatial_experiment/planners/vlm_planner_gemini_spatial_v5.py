@@ -8,8 +8,6 @@ import mimetypes
 from pathlib import Path
 from typing import Optional, Tuple, Dict, Any, List
 
-import re
-import numpy as np
 import google.generativeai as genai
 
 from graph_eqa.utils.data_utils import get_latest_image
@@ -48,96 +46,6 @@ def _safe_float(x: Any, default: float = 0.0) -> float:
 
 def _basename(s: str) -> str:
     return str(s).split("_")[0].strip().lower()
-
-
-# ---------- Distance-only parsing + internal candidate scoring (NOT sent to VLM) ----------
-def _parse_distance(question: str) -> Optional[float]:
-    """
-    Extract just the numeric distance in meters from the question.
-    No relation parsing at all.
-    """
-    ql = question.lower()
-    m = re.search(r"(\d+(?:\.\d+)?)\s*meters?", ql)
-    return float(m.group(1)) if m else None
-
-
-def _safe_size_xyz(cand: Dict[str, Any]) -> np.ndarray:
-    """
-    Size from bbox.size if present; otherwise a small neutral size.
-    Returns [width, height, depth].
-    """
-    try:
-        s = cand.get("bbox", {}).get("size", None)
-        if s:
-            return np.array([s.get("width", 0.5), s.get("height", 0.5), s.get("depth", 0.5)], dtype=float)
-    except Exception:
-        pass
-    if "size" in cand and isinstance(cand["size"], (list, tuple)) and len(cand["size"]) >= 3:
-        return np.array(cand["size"][:3], dtype=float)
-    return np.array([0.5, 0.5, 0.5], dtype=float)
-
-
-def _score_dataset_candidates(question: str,
-                              ref_pos: np.ndarray,
-                              candidates: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-    """
-    INTERNAL analysis-only scorer that uses **only** metric (Euclidean) distance.
-    No direction hints, no relation buckets. Size only affects tolerance.
-
-    logp ≈ -((||cand-ref|| - d0)^2) / (2*sigma_m^2)
-    where sigma_m scales with max object dimension (looser for larger objects).
-    If d0 is None (no metric mentioned), all candidates get the same neutral score 0.0.
-    """
-    d0 = _parse_distance(question)  # may be None
-    rows = []
-    for c in candidates or []:
-        pos = np.array(c.get("position", [0, 0, 0]), dtype=float)
-        dvec = pos - ref_pos
-        L = float(np.linalg.norm(dvec) + 1e-9)  # Euclidean distance center-to-center
-
-        w, h, dep = _safe_size_xyz(c)
-        maxdim = max(float(w), float(h), float(dep), 1e-6)
-        sigma_m = 0.35 * maxdim  # looser tolerance for larger objects
-
-        if d0 is None:
-            logp = 0.0
-        else:
-            dist_err = L - d0
-            logp = - (dist_err ** 2) / (2.0 * sigma_m ** 2 + 1e-12)
-
-        rows.append({
-            "declared": str(c.get("id") or c.get("name") or "unknown"),
-            "class": str(c.get("name", "object")).lower(),
-            "pos": [float(pos[0]), float(pos[1]), float(pos[2])],
-            "size": [float(w), float(h), float(dep)],
-            "logp": float(logp),
-            "dist": L,
-        })
-
-    rows.sort(key=lambda r: r["logp"], reverse=True)
-    return rows
-
-
-def evaluate_prediction(target_declaration: Dict[str, Any],
-                        ground_truth_target: Dict[str, Any],
-                        candidate_targets: List[Dict[str, Any]]) -> Dict[str, Any]:
-    """
-    Compute success/partial/fail for logging:
-      - 1.0 if declared id == ground_truth_target['id']
-      - 0.5 if declared id in [cand['id'] for cand in candidate_targets]
-      - 0.0 otherwise
-    Returns a small dict with 'score' and 'label' for convenience.
-    """
-    declared = str(target_declaration.get("declared_target_object_id", "")).strip()
-    gt_id = str((ground_truth_target or {}).get("id", "")).strip()
-    cand_ids = {str(c.get("id", "")).strip() for c in (candidate_targets or [])}
-
-    if declared == gt_id and gt_id != "":
-        return {"score": 1.0, "label": "success"}
-    elif declared in cand_ids and declared != "":
-        return {"score": 0.5, "label": "partial"}
-    else:
-        return {"score": 0.0, "label": "fail"}
 
 
 # ---------- Structured output schema ----------
@@ -217,10 +125,7 @@ class VLMPlannerEQAGeminiSpatial:
     - Final 'declared_target_object_id' uses instance-like *name* like 'tray_286' (if available).
     """
 
-    def __init__(self, cfg, sg_sim, question, ground_truth_target, output_path: Path,
-                 reference_object: Optional[Dict[str, Any]] = None,
-                 candidate_targets: Optional[List[Dict[str, Any]]] = None):
-        # ORIGINAL positional arguments preserved
+    def __init__(self, cfg, sg_sim, question, ground_truth_target, output_path: Path):
         self._question = str(question)
         self._ground_truth_target = ground_truth_target
         self._output_path = Path(output_path)
@@ -230,17 +135,6 @@ class VLMPlannerEQAGeminiSpatial:
         self.full_plan = ""
         self._t = 0
         self.sg_sim = sg_sim
-
-        # OPTIONAL extras (safe if not provided): dataset reference + candidates
-        self.reference_object = dict(reference_object or {})
-        self.ref_name = str(self.reference_object.get("name", "object")).lower()
-        self.ref_pos_hab = np.array(self.reference_object.get("position", [0, 0, 0]), dtype=float)
-        self.dataset_candidates = list(candidate_targets or [])
-
-        # For external evaluators: last computed scores & eval result (not used in prompting)
-        self.last_candidate_scores: List[Dict[str, Any]] = []
-        self.last_eval: Optional[Dict[str, Any]] = None
-
         self._outputs_to_save = [
             f'Question: {self._question}\nGround Truth: {self._ground_truth_target["name"]} '
             f'({self._ground_truth_target["id"]})\n'
@@ -259,10 +153,9 @@ class VLMPlannerEQAGeminiSpatial:
 
     @property
     def agent_role_prompt(self) -> str:
-        # Global frame explicitly declared here
         return (
-            "You are an expert robot navigator in a 3D indoor environment.\n"
-            "Global frame: Y-up, -Z forward, +X right.\n\n"
+            "You are an expert robot navigator in a 3D indoor environment. Your goal is to explore the "
+            "environment to find and identify a specific object based on a spatial query.\n\n"
             "TASK:\n"
             "Answer questions like “What object is 2 meters to the left of the sofa?”. Navigate, inspect objects, "
             "and build a mental map.\n\n"
@@ -283,9 +176,6 @@ class VLMPlannerEQAGeminiSpatial:
         Prefer instance-like names such as 'tray_286' using node attributes:
         - instance_id / hm3d_instance_id / ins_id
         Fallback to the class name if no instance id is available.
-
-        Also merges dataset candidate IDs so the VLM can legally declare them
-        (this is not a hint; it only expands the allowed output vocabulary).
         """
         declared = []
         G = getattr(self.sg_sim, "filtered_netx_graph", None)
@@ -294,19 +184,14 @@ class VLMPlannerEQAGeminiSpatial:
             if G is not None and oid in getattr(G, "nodes", {}):
                 attrs = G.nodes[oid]
                 inst = attrs.get("instance_id") or attrs.get("hm3d_instance_id") or attrs.get("ins_id")
-            base_lc = str(base).lower()
             if inst is not None and str(inst).strip() != "":
-                declared.append(f"{base_lc}_{inst}")
+                declared.append(f"{base}_{inst}")
             else:
-                declared.append(base_lc)
-
-        # Merge dataset candidate IDs (e.g., 'book_309') to the allowed set
-        ds_ids = [str(c.get("id")) for c in self.dataset_candidates if c and c.get("id")]
-        declared.extend(ds_ids)
-
+                declared.append(str(base))
         # Ensure non-empty and de-duplicate while preserving order
         if not declared:
             declared = ["unknown"]
+        # Deduplicate
         dedup = list(dict.fromkeys([d if d else "unknown" for d in declared]))
         return dedup
 
@@ -418,21 +303,9 @@ class VLMPlannerEQAGeminiSpatial:
 
     # ---------- Public: one planning step ----------
     def get_next_action(self):
-        # 1) Build prompt/state (NO hints/prior tables included)
+        # 1) Build prompt/state
         agent_state = self.sg_sim.get_current_semantic_state_str()
         current_state_prompt = self._state_prompt(self.sg_sim.scene_graph_str, agent_state)
-
-        # 1b) INTERNAL scoring only (kept out of the prompt)
-        if self.reference_object and self.dataset_candidates:
-            try:
-                self.last_candidate_scores = _score_dataset_candidates(
-                    self._question, self.ref_pos_hab, self.dataset_candidates
-                )
-            except Exception as e:
-                self.last_candidate_scores = []
-                print(f"[internal scoring] error: {e}")
-        else:
-            self.last_candidate_scores = []
 
         # 2) Build schema from *current* candidates
         cand = self._current_candidates()
@@ -450,25 +323,10 @@ class VLMPlannerEQAGeminiSpatial:
         if target_declaration is None:
             return None, None, False, 0.0, {"error": "API Failure"}
 
-        # 3b) INTERNAL evaluation (success/partial/fail) for logs
-        if self.dataset_candidates:
-            try:
-                self.last_eval = evaluate_prediction(
-                    target_declaration, self._ground_truth_target, self.dataset_candidates
-                )
-            except Exception as e:
-                self.last_eval = None
-                print(f"[internal eval] error: {e}")
-        else:
-            self.last_eval = None
-
-        # 4) Log what VLM said + our internal scores/eval (for analysis only)
+        # 4) Log what VLM said
         self._outputs_to_save.append(
             f"--- Timestep: {self._t} ---\n"
             f"Agent State: {agent_state}\n"
-            f"Internal candidate scores (top 8): "
-            f"{json.dumps(self.last_candidate_scores[:8], ensure_ascii=False)}\n"
-            f"Internal eval: {json.dumps(self.last_eval, ensure_ascii=False)}\n"
             f"VLM Thought: {nav_step_info}\n"
             f"VLM Declaration: {target_declaration}\n"
             f"Candidates snapshot: {cand}\n"

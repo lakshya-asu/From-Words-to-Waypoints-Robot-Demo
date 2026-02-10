@@ -1,0 +1,106 @@
+# /home/artemis/project/graph_eqa_swagat/spatial_experiment/cfg/spatial_vqa_v3.yaml
+# Spatial VQA v3 (MSP-augmented)
+
+seed: 42
+exp_name: grapheqa_spatial_${vlm.name}_v3
+output_path: outputs_v4/${exp_name}_test
+results_filename: ${vlm.name}_images_${vlm.use_image}
+gpu: 0
+sim_gpu: 0
+
+data:
+  spatial_data_path: '/root/graph_eqa/spatial_experiment/data/spatial_dataset_region_2_25q.json'
+  semantic_annot_data_path: '/datasets/hm3d/train'
+  scene_data_path: '/datasets/hm3d/train'
+  use_semantic_data: true
+
+vlm:
+  name: "gemini_v3"
+  use_image: true
+  use_done_action: false
+  early_exit: true
+  add_history: false
+
+  # === MSP bridge ===
+  msp:
+    enabled: true
+    # "prior" -> pass MSP table to Gemini (recommended)
+    # "fallback" -> use MSP if Gemini returns junk
+    # "hard" -> skip Gemini; MSP argmax only
+    mode: "prior"
+
+    # default to env if unset; you can hardcode here if you prefer
+    model_dir: ${env:MSP_MODEL_DIR,null}
+    metric_run: ${env:MSP_METRIC_RUN,null}
+    semantic_run: ${env:MSP_SEMANTIC_RUN,null}
+    predicate_run: ${env:MSP_PREDICATE_RUN,null}
+    semantic_ohe: ${env:MSP_SEM_OHE,null}
+    device: "cuda"
+
+logging:
+  output_parent_dir: results
+  save_obs: true
+  save_freq: 1
+
+scene_graph_sim:
+  save_image: ${vlm.use_image}
+  frontier_obj_thresh: 2.0
+  enrich_rooms: true
+  enrich_frontiers: true
+  enrich_objects: false
+  include_regions: false
+  no_scene_graph: false
+  key_frame_selection:
+    use_clip_for_images: false
+    use_siglip_for_images: true
+    topk: 2
+    visualize_best_image: false
+    choose_final_image: false
+  img_subsample_freq: 1
+
+planner:
+  max_step_room_size_ratio: 3
+  break_at_done: false
+
+habitat:
+  scene_type: 'hm3d'
+  dataset_type: 'train'
+  sim_gpu: ${sim_gpu}
+  inflation_radius: 0.25
+  img_width: 640
+  img_height: 480
+  camera_height: 1.5
+  camera_tilt_deg: -30
+  agent_z_offset: 0.0
+  hfov: 120
+  z_offset: 0
+  use_semantic_data: ${data.use_semantic_data}
+
+hydra:
+  glog_level: 0
+  verbosity: 0
+  label_space: 'hm3d'
+  config_verbosity: 0
+
+frontier_mapping:
+  tsdf_grid_size: 0.1
+  init_clearance: 0.5
+  img_width: ${habitat.img_width}
+  img_height: ${habitat.img_height}
+  margin_w_ratio: 0.25
+  margin_h_ratio: 0.3
+  height_offset: 0.2
+  range_height: [-0.2, 0.2]
+  visual_prompt:
+    cluster_threshold: 1.0
+    num_clusters: 10
+    num_prompt_points: 3
+    num_max_unoccupied: 300
+    min_points_for_clustering: 3
+    point_min_dist: 1
+    point_max_dist: 10
+    cam_offset: 0.6
+    min_num_prompt_points: 2
+    circle_radius: 18
+    frontier_min_neighbors: 2
+    frontier_max_neighbors: 3

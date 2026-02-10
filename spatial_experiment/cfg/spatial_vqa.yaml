@@ -3,7 +3,7 @@
 # General
 seed: 42
 exp_name: grapheqa_spatial_${vlm.name} # Changed to reflect spatial experiment
-output_path: outputs/${exp_name}_test # Changed output path
+output_path: outputs_v5/${exp_name}_test # Changed output path
 results_filename: ${vlm.name}_images_${vlm.use_image}
 gpu: 0 
 sim_gpu: 0
@@ -13,7 +13,7 @@ sim_gpu: 0
 # instead of the old EQA CSV files.
 data:
   # NEW: Path to the generated spatial questions and ground truth data
-  spatial_data_path: '/root/graph_eqa/spatial_experiment/data/spatial_dataset_v1.json'
+  spatial_data_path: '/root/graph_eqa/spatial_experiment/data/spatial_dataset_region_2_25q.json'
   
   # Paths for scene assets remain the same
   semantic_annot_data_path: '/datasets/hm3d/train'

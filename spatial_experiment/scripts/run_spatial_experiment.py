@@ -336,7 +336,13 @@ def main(cfg):
             # ---------- Planner ----------
             if "gemini" in cfg.vlm.name.lower():
                 vlm_planner = VLMPlannerEQAGeminiSpatial(
-                    cfg.vlm, sg_sim, question, ground_truth_target, task_output_path
+                    cfg.vlm,
+                    sg_sim,
+                    question,
+                    ground_truth_target,
+                    task_output_path,
+                    reference_object=task_data.get("reference_object"),
+                    candidate_targets=task_data.get("candidate_targets"),
                 )
             else:
                 raise NotImplementedError(f"Planner {cfg.vlm.name} not implemented for spatial task.")

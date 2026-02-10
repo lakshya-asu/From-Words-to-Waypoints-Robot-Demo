@@ -11,7 +11,7 @@ from graph_eqa.utils.data_utils import get_latest_image
 genai.configure(api_key=os.environ["GOOGLE_API_KEY"])
 
 # Choose a Gemini model.
-gemini_model = genai.GenerativeModel(model_name="models/gemini-2.5-pro-preview-03-25")
+gemini_model = genai.GenerativeModel(model_name="models/gemini-2.5-pro") # "models/gemini-2.5-pro-preview-03-25, gemini-3-pro-preview
 
 def encode_image(image_path):
   with open(image_path, "rb") as image_file:

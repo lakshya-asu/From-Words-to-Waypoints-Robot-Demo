@@ -1,46 +1,23 @@
-# /home/artemis/project/graph_eqa_swagat/spatial_experiment/cfg/gemini_spatial.yaml
-
 # General
 seed: 42
-exp_name: grapheqa_spatial_${vlm.name} # Changed to reflect spatial experiment
-output_path: outputs_v2/${exp_name}_test # Changed output path
-results_filename: ${vlm.name}_images_${vlm.use_image}
-gpu: 0 
+exp_name: msp_nobnn_final_${vlm.msp_nobnn.mode}
+output_path: outputs_msp_nobnn_final_which6/${exp_name}
+results_filename: results_${vlm.msp_nobnn.mode}
+gpu: 0
 sim_gpu: 0
 
-# --- DATA: CRITICAL CHANGES ---
-# This section is updated to use the new procedurally generated spatial dataset
-# instead of the old EQA CSV files.
 data:
-  # NEW: Path to the generated spatial questions and ground truth data
-  spatial_data_path: '/root/graph_eqa/spatial_experiment/data/spatial_dataset_region_2_25q.json'
-  
-  # Paths for scene assets remain the same
+  question_data_path: '/datasets/explore-eqa/questions_msp_sample_1.csv'
+  init_pose_data_path: '/datasets/explore-eqa/scene_init_poses_semantic_only.csv'
   semantic_annot_data_path: '/datasets/hm3d/train'
   scene_data_path: '/datasets/hm3d/train'
+  explore_eqa_dataset_enrich_labels: 'cfg/explore_eqa_dataset_enrich_labels.yaml'
   use_semantic_data: True
-
-  # REMOVED: EQA-specific paths are no longer needed
-  # question_data_path: '/datasets/explore-eqa/questions.csv'
-  # init_pose_data_path: '/datasets/explore-eqa/scene_init_poses.csv'
-  # explore_eqa_dataset_enrich_labels: 'cfg/explore_eqa_dataset_enrich_labels.yaml'
-
-# --- VLM: CRITICAL CHANGES ---
-# The VLM name is updated to a unique identifier for the spatial task.
-# Your run_spatial_experiment.py script will use this name to load the correct planner.
-vlm:
-  name: "gemini" # Changed to load your new spatial planner
-  use_image: True
-  use_done_action: False
-  early_exit: True
-  add_history: True
-
-# --- The sections below are unchanged as they control the simulation environment ---
 
 logging:
   output_parent_dir: results
   save_obs: true
-  save_freq: 1
+  save_freq: 10
 
 scene_graph_sim:
   save_image: ${vlm.use_image}
@@ -55,12 +32,42 @@ scene_graph_sim:
     use_siglip_for_images: True
     topk: 2
     visualize_best_image: False
-    choose_final_image: False
-  img_subsample_freq: 1
-  
+    choose_final_image: True
+  img_subsample_freq: 2
+
+vlm:
+  # We keep these fields because graph_eqa expects them,
+  # but our MSP No-BNN planner does not call VLM.
+  name: "gemini"
+  use_image: True
+  use_done_action: False
+  early_exit: True
+  add_history: False
+  answer_mode: "msp_point"
+
+  # >>> MSP No-BNN final config
+  msp_nobnn:
+    mode: "which"          # "which" or "where"
+    top_k: 5
+    confidence_threshold: 0.80
+
+    # scoring options
+    semantic_mode: "neutral"   # "neutral" or "candidate"
+    sigma_s_scale: 0.50        # used only if semantic_mode=candidate
+    sigma_m_scale: 0.30
+
+    # where mode options
+    where_top_frac: 0.02
+    region_grid:
+      half_extent_x: 3.0
+      half_extent_y: 1.5
+      half_extent_z: 3.0
+      resolution: 28
+      slice_dy: 0.25
+
 planner:
   max_step_room_size_ratio: 3
-  break_at_done: False
+  break_at_done: True
 
 habitat:
   scene_type: 'hm3d'
@@ -75,7 +82,7 @@ habitat:
   hfov: 120
   z_offset: 0
   use_semantic_data: ${data.use_semantic_data}
-  
+
 hydra:
   glog_level: 0
   verbosity: 0
