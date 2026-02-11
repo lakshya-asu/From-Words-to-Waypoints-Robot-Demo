@@ -1,0 +1,51 @@
+scene,floor,source_question,primary_object,distance_m,predicate,msp_question
+00388-pcpn6mFqFCg,0,Which rug did I put next to the kitchen sink?,rug,2.6,in front of,Where is 2.6 meters in front of the rug?
+00757-LVgQNuK8vtv,2,"What did I leave on the toilet, the one with flower painting?",toilet,0.8,left of,Where is 0.8 meters left of the toilet?
+00410-v7DzfFFEpsD,0,Which side of the front door is the plant now?,plant,0.6,below,Where is 0.6 meters below the plant?
+00440-wPLokgvCnuk,1,What did I leave on the coffee table?,coffee table,0.8,behind,Where is 0.8 meters behind the coffee table?
+00330-WhNyDTnd9g5,0,Are the pillows left on the porch chair?,pillows,2.8,behind,Where is 2.8 meters behind the pillows?
+00330-WhNyDTnd9g5,2,Is the curtain shade pulled down in the kid's room?,curtain shade,2.6,right of,Where is 2.6 meters right of the curtain shade?
+00404-QN2dRqwd84J,0,Is the television in the bedroom left on?,television,3.0,behind,Where is 3.0 meters behind the television?
+00135-HeSYRw7eMtG,2,How many table lamps are there in the bedroom?,table lamps,1.0,in front of,Where is 1.0 meters in front of the table lamps?
+00330-WhNyDTnd9g5,0,Are the pillows left on the porch chair?,pillows,1.4,in front of,Where is 1.4 meters in front of the pillows?
+00720-8B43pG641ff,0,How many chairs do we have around the outdoor dining table?,chairs,2.8,above,Where is 2.8 meters above the chairs?
+00366-fxbzYAGkrtm,1,How many pillows I put on the bed with red bedding?,pillows,3.4,below,Where is 3.4 meters below the pillows?
+00606-W16Bm4ysK8v,2,Which rug is there in the bathroom?,rug,2.8,below,Where is 2.8 meters below the rug?
+00591-JptJPosx1Z6,0,How many kitchen bar stools are there right now?,kitchen bar stools,0.6,below,Where is 0.6 meters below the kitchen bar stools?
+00444-sX9xad6ULKc,0,Are the curtains in the office closed?,curtains,3.4,behind,Where is 3.4 meters behind the curtains?
+00525-iKFn6fzyRqs,0,I am trying to remember where I left the dog food plates.,dog food plates,3.4,right of,Where is 3.4 meters right of the dog food plates?
+00757-LVgQNuK8vtv,0,I'm trying to remember where I placed my decorative zebra-patterned stool. Where is it?,zebra-patterned stool,2.4,right of,Where is 2.4 meters right of the zebra-patterned stool?
+00299-bdp1XNEdvmW,0,Are the monitors left on?,monitors,1.0,right of,Where is 1.0 meters right of the monitors?
+00757-LVgQNuK8vtv,0,How many pairs of long boots are in the coat closet?,long boots,3.4,in front of,Where is 3.4 meters in front of the long boots?
+00258-2Pc8W48bu21,0,I want to take a shower. Is there shampoo in the shower?,shampoo,1.4,above,Where is 1.4 meters above the shampoo?
+00006-HkseAnWCgqk,1,Is the living room light on?,living room light,2.0,above,Where is 2.0 meters above the living room light?
+00525-iKFn6fzyRqs,0,I am trying to remember where I left the dog food plates.,dog food plates,0.4,below,Where is 0.4 meters below the dog food plates?
+00313-PE6kVEtrxtj,0,I am looking for the stack of magazines I left somewhere in the living room.,stack of magazines,1.4,above,Where is 1.4 meters above the stack of magazines?
+00547-9h5JJxM6E5S,0,How many umbrellas are there in the ceramic vase near the staircase?,umbrellas,3.8,right of,Where is 3.8 meters right of the umbrellas?
+00582-TYDavTf8oyy,1,How many potted plants are on the kitchen windowsill?,potted plants,1.8,in front of,Where is 1.8 meters in front of the potted plants?
+00529-W9YAR9qcuvN,0,Is the bottom drawer of the refrigerator left open?,refrigerator bottom drawer,0.6,above,Where is 0.6 meters above the refrigerator bottom drawer?
+00324-DoSbsoo4EAg,0,Is there already some shampoo at the shower?,shampoo,1.8,above,Where is 1.8 meters above the shampoo?
+00440-wPLokgvCnuk,1,What did I leave on the coffee table?,coffee table,2.2,behind,Where is 2.2 meters behind the coffee table?
+00062-ACZZiU6BXLz,0,I'm trying to remember where I placed the wall clock. Where it is in the kitchen?,wall clock,2.6,below,Where is 2.6 meters below the wall clock?
+00323-yHLr6bvWsVm,0,Does the dining table have any fruit bowl on it?,fruit bowl,1.6,right of,Where is 1.6 meters right of the fruit bowl?
+00166-RaYrxWt5pR1,0,I'm looking for my laptop. It is on the bedroom dresser?,laptop,1.6,left of,Where is 1.6 meters left of the laptop?
+00410-v7DzfFFEpsD,1,I need to find my Louis Vuitton box.,Louis Vuitton box,3.8,below,Where is 3.8 meters below the Louis Vuitton box?
+00245-741Fdj7NLF9,0,I was playing darts last night and can't recall where I left the board.,darts board,1.0,right of,Where is 1.0 meters right of the darts board?
+00326-u9rPN5cHWBg,0,Are the bedroom lamps on?,bedroom lamps,0.8,above,Where is 0.8 meters above the bedroom lamps?
+00057-1UnKg1rAb8A,1,I'm looking for my colorful handbag. Do you see it somewhere?,colorful handbag,3.8,right of,Where is 3.8 meters right of the colorful handbag?
+00025-ixTj1aTMup2,1,Where did I leave the standing fan at? I moved it last week.,standing fan,2.8,below,Where is 2.8 meters below the standing fan?
+00557-fRZhp6vWGw7,1,I'm trying to remember where I placed the decorative wicker basket. Where is it?,decorative wicker basket,3.4,behind,Where is 3.4 meters behind the decorative wicker basket?
+00149-UuwwmrTsfBN,1,I am waiting for the guests. Have I put utensils on the dining table?,utensils,0.4,right of,Where is 0.4 meters right of the utensils?
+00757-LVgQNuK8vtv,0,How many pairs of long boots are in the coat closet?,long boots,2.4,left of,Where is 2.4 meters left of the long boots?
+00757-LVgQNuK8vtv,2,"What did I leave on the toilet, the one with flower painting?",toilet,3.0,above,Where is 3.0 meters above the toilet?
+00149-UuwwmrTsfBN,1,Is the patio door next to the dining table open?,patio door,3.2,behind,Where is 3.2 meters behind the patio door?
+00023-zepmXAdrpjR,1,Is the kettle on the kitchen counter?,kettle,1.4,right of,Where is 1.4 meters right of the kettle?
+00606-W16Bm4ysK8v,2,Which rug is there in the bathroom?,rug,3.8,behind,Where is 3.8 meters behind the rug?
+00299-bdp1XNEdvmW,0,Are the monitors left on?,monitors,1.8,below,Where is 1.8 meters below the monitors?
+00258-2Pc8W48bu21,1,Which channel is being shown on the TV?,TV,2.6,left of,Where is 2.6 meters left of the TV?
+00135-HeSYRw7eMtG,1,I forgot where I left the standing fan.,standing fan,2.6,below,Where is 2.6 meters below the standing fan?
+00757-LVgQNuK8vtv,0,I'm trying to remember where I placed my decorative zebra-patterned stool. Where is it?,zebra-patterned stool,0.8,behind,Where is 0.8 meters behind the zebra-patterned stool?
+00567-KjZrPggnHm8,0,Where did my husband leave the coffee machine at in the kitchen?,coffee machine,1.4,below,Where is 1.4 meters below the coffee machine?
+00135-HeSYRw7eMtG,1,I forgot where I left the standing fan.,standing fan,3.2,behind,Where is 3.2 meters behind the standing fan?
+00547-9h5JJxM6E5S,0,Guest is coming. Is the fruit bowl on the kitchen island already?,fruit bowl,1.8,left of,Where is 1.8 meters left of the fruit bowl?
+00404-QN2dRqwd84J,0,Is the television in the bedroom left on?,television,2.2,right of,Where is 2.2 meters right of the television?

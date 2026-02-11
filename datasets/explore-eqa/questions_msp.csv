@@ -1,0 +1,913 @@
+scene,floor,source_question,primary_object,distance_m,predicate,msp_question
+00006-HkseAnWCgqk,0,Did I fold the blanket on the bed in the bedroom?,bed,2.2,in front of,Where is 2.2 meters in front of the bed?
+00006-HkseAnWCgqk,0,Did I fold the blanket on the bed in the bedroom?,bed,1.0,above,Where is 1.0 meters above the bed?
+00006-HkseAnWCgqk,0,Did I fold the blanket on the bed in the bedroom?,bed,2.6,left of,Where is 2.6 meters left of the bed?
+00006-HkseAnWCgqk,0,Did I fold the blanket on the bed in the bedroom?,bed,0.4,above,Where is 0.4 meters above the bed?
+00006-HkseAnWCgqk,0,Did I fold the blanket on the bed in the bedroom?,bed,0.6,right of,Where is 0.6 meters right of the bed?
+00006-HkseAnWCgqk,0,Did I fold the blanket on the bed in the bedroom?,bed,2.8,left of,Where is 2.8 meters left of the bed?
+00006-HkseAnWCgqk,0,Did I fold the blanket on the bed in the bedroom?,bed,1.8,left of,Where is 1.8 meters left of the bed?
+00006-HkseAnWCgqk,0,Did I fold the blanket on the bed in the bedroom?,bed,3.4,behind,Where is 3.4 meters behind the bed?
+00006-HkseAnWCgqk,1,Is the living room light on?,living room light,2.8,left of,Where is 2.8 meters left of the living room light?
+00006-HkseAnWCgqk,1,Is the living room light on?,living room light,0.6,right of,Where is 0.6 meters right of the living room light?
+00006-HkseAnWCgqk,1,Is the living room light on?,living room light,1.6,below,Where is 1.6 meters below the living room light?
+00006-HkseAnWCgqk,1,Is the living room light on?,living room light,3.8,below,Where is 3.8 meters below the living room light?
+00006-HkseAnWCgqk,1,Is the living room light on?,living room light,4.0,above,Where is 4.0 meters above the living room light?
+00006-HkseAnWCgqk,1,Is the living room light on?,living room light,0.2,left of,Where is 0.2 meters left of the living room light?
+00006-HkseAnWCgqk,1,Is the living room light on?,living room light,3.2,above,Where is 3.2 meters above the living room light?
+00006-HkseAnWCgqk,1,Is the living room light on?,living room light,2.0,above,Where is 2.0 meters above the living room light?
+00023-zepmXAdrpjR,1,Is the kettle on the kitchen counter?,kettle,2.6,above,Where is 2.6 meters above the kettle?
+00023-zepmXAdrpjR,1,Is the kettle on the kitchen counter?,kettle,0.4,left of,Where is 0.4 meters left of the kettle?
+00023-zepmXAdrpjR,1,Is the kettle on the kitchen counter?,kettle,1.6,above,Where is 1.6 meters above the kettle?
+00023-zepmXAdrpjR,1,Is the kettle on the kitchen counter?,kettle,3.8,in front of,Where is 3.8 meters in front of the kettle?
+00023-zepmXAdrpjR,1,Is the kettle on the kitchen counter?,kettle,1.0,above,Where is 1.0 meters above the kettle?
+00023-zepmXAdrpjR,1,Is the kettle on the kitchen counter?,kettle,3.2,below,Where is 3.2 meters below the kettle?
+00023-zepmXAdrpjR,1,Is the kettle on the kitchen counter?,kettle,1.4,right of,Where is 1.4 meters right of the kettle?
+00023-zepmXAdrpjR,1,Is the kettle on the kitchen counter?,kettle,0.6,left of,Where is 0.6 meters left of the kettle?
+00023-zepmXAdrpjR,1,Where did I leave the silver trash can at,silver trash can,3.8,above,Where is 3.8 meters above the silver trash can?
+00023-zepmXAdrpjR,1,Where did I leave the silver trash can at,silver trash can,4.0,left of,Where is 4.0 meters left of the silver trash can?
+00023-zepmXAdrpjR,1,Where did I leave the silver trash can at,silver trash can,1.4,above,Where is 1.4 meters above the silver trash can?
+00023-zepmXAdrpjR,1,Where did I leave the silver trash can at,silver trash can,2.4,right of,Where is 2.4 meters right of the silver trash can?
+00023-zepmXAdrpjR,1,Where did I leave the silver trash can at,silver trash can,0.8,behind,Where is 0.8 meters behind the silver trash can?
+00023-zepmXAdrpjR,1,Where did I leave the silver trash can at,silver trash can,1.8,below,Where is 1.8 meters below the silver trash can?
+00023-zepmXAdrpjR,1,Where did I leave the silver trash can at,silver trash can,3.4,above,Where is 3.4 meters above the silver trash can?
+00023-zepmXAdrpjR,1,Where did I leave the silver trash can at,silver trash can,0.4,behind,Where is 0.4 meters behind the silver trash can?
+00025-ixTj1aTMup2,0,How many bedside tables are there in the bedroom with the white bedding?,bedside tables,2.2,below,Where is 2.2 meters below the bedside tables?
+00025-ixTj1aTMup2,0,How many bedside tables are there in the bedroom with the white bedding?,bedside tables,3.0,right of,Where is 3.0 meters right of the bedside tables?
+00025-ixTj1aTMup2,0,How many bedside tables are there in the bedroom with the white bedding?,bedside tables,3.8,left of,Where is 3.8 meters left of the bedside tables?
+00025-ixTj1aTMup2,0,How many bedside tables are there in the bedroom with the white bedding?,bedside tables,2.4,above,Where is 2.4 meters above the bedside tables?
+00025-ixTj1aTMup2,0,How many bedside tables are there in the bedroom with the white bedding?,bedside tables,2.0,in front of,Where is 2.0 meters in front of the bedside tables?
+00025-ixTj1aTMup2,0,How many bedside tables are there in the bedroom with the white bedding?,bedside tables,0.8,above,Where is 0.8 meters above the bedside tables?
+00025-ixTj1aTMup2,0,How many bedside tables are there in the bedroom with the white bedding?,bedside tables,2.6,behind,Where is 2.6 meters behind the bedside tables?
+00025-ixTj1aTMup2,0,How many bedside tables are there in the bedroom with the white bedding?,bedside tables,0.6,in front of,Where is 0.6 meters in front of the bedside tables?
+00025-ixTj1aTMup2,0,Is the gray curtain pulled down in the bedroom with two twin beds?,gray curtain,3.0,right of,Where is 3.0 meters right of the gray curtain?
+00025-ixTj1aTMup2,0,Is the gray curtain pulled down in the bedroom with two twin beds?,gray curtain,2.0,behind,Where is 2.0 meters behind the gray curtain?
+00025-ixTj1aTMup2,0,Is the gray curtain pulled down in the bedroom with two twin beds?,gray curtain,0.6,behind,Where is 0.6 meters behind the gray curtain?
+00025-ixTj1aTMup2,0,Is the gray curtain pulled down in the bedroom with two twin beds?,gray curtain,0.8,left of,Where is 0.8 meters left of the gray curtain?
+00025-ixTj1aTMup2,0,Is the gray curtain pulled down in the bedroom with two twin beds?,gray curtain,2.8,below,Where is 2.8 meters below the gray curtain?
+00025-ixTj1aTMup2,0,Is the gray curtain pulled down in the bedroom with two twin beds?,gray curtain,3.6,left of,Where is 3.6 meters left of the gray curtain?
+00025-ixTj1aTMup2,0,Is the gray curtain pulled down in the bedroom with two twin beds?,gray curtain,2.6,above,Where is 2.6 meters above the gray curtain?
+00025-ixTj1aTMup2,0,Is the gray curtain pulled down in the bedroom with two twin beds?,gray curtain,1.2,above,Where is 1.2 meters above the gray curtain?
+00025-ixTj1aTMup2,1,Where did I leave the standing fan at? I moved it last week.,standing fan,2.2,in front of,Where is 2.2 meters in front of the standing fan?
+00025-ixTj1aTMup2,1,Where did I leave the standing fan at? I moved it last week.,standing fan,4.0,behind,Where is 4.0 meters behind the standing fan?
+00025-ixTj1aTMup2,1,Where did I leave the standing fan at? I moved it last week.,standing fan,2.4,below,Where is 2.4 meters below the standing fan?
+00025-ixTj1aTMup2,1,Where did I leave the standing fan at? I moved it last week.,standing fan,3.2,below,Where is 3.2 meters below the standing fan?
+00025-ixTj1aTMup2,1,Where did I leave the standing fan at? I moved it last week.,standing fan,3.0,left of,Where is 3.0 meters left of the standing fan?
+00025-ixTj1aTMup2,1,Where did I leave the standing fan at? I moved it last week.,standing fan,0.4,left of,Where is 0.4 meters left of the standing fan?
+00025-ixTj1aTMup2,1,Where did I leave the standing fan at? I moved it last week.,standing fan,2.8,below,Where is 2.8 meters below the standing fan?
+00025-ixTj1aTMup2,1,Where did I leave the standing fan at? I moved it last week.,standing fan,3.4,below,Where is 3.4 meters below the standing fan?
+00025-ixTj1aTMup2,1,Did I leave the fruit bowl next to the microwave?,fruit bowl,2.0,left of,Where is 2.0 meters left of the fruit bowl?
+00025-ixTj1aTMup2,1,Did I leave the fruit bowl next to the microwave?,fruit bowl,3.8,behind,Where is 3.8 meters behind the fruit bowl?
+00025-ixTj1aTMup2,1,Did I leave the fruit bowl next to the microwave?,fruit bowl,3.0,in front of,Where is 3.0 meters in front of the fruit bowl?
+00025-ixTj1aTMup2,1,Did I leave the fruit bowl next to the microwave?,fruit bowl,4.0,right of,Where is 4.0 meters right of the fruit bowl?
+00025-ixTj1aTMup2,1,Did I leave the fruit bowl next to the microwave?,fruit bowl,2.6,above,Where is 2.6 meters above the fruit bowl?
+00025-ixTj1aTMup2,1,Did I leave the fruit bowl next to the microwave?,fruit bowl,3.6,left of,Where is 3.6 meters left of the fruit bowl?
+00025-ixTj1aTMup2,1,Did I leave the fruit bowl next to the microwave?,fruit bowl,2.2,behind,Where is 2.2 meters behind the fruit bowl?
+00025-ixTj1aTMup2,1,Did I leave the fruit bowl next to the microwave?,fruit bowl,1.2,left of,Where is 1.2 meters left of the fruit bowl?
+00031-Wo6kuutE9i7,0,Did I leave the blue decorative pillow on one of the living room sofas?,blue decorative pillow,1.4,left of,Where is 1.4 meters left of the blue decorative pillow?
+00031-Wo6kuutE9i7,0,Did I leave the blue decorative pillow on one of the living room sofas?,blue decorative pillow,2.0,right of,Where is 2.0 meters right of the blue decorative pillow?
+00031-Wo6kuutE9i7,0,Did I leave the blue decorative pillow on one of the living room sofas?,blue decorative pillow,1.0,behind,Where is 1.0 meters behind the blue decorative pillow?
+00031-Wo6kuutE9i7,0,Did I leave the blue decorative pillow on one of the living room sofas?,blue decorative pillow,1.6,behind,Where is 1.6 meters behind the blue decorative pillow?
+00031-Wo6kuutE9i7,0,Did I leave the blue decorative pillow on one of the living room sofas?,blue decorative pillow,2.6,above,Where is 2.6 meters above the blue decorative pillow?
+00031-Wo6kuutE9i7,0,Did I leave the blue decorative pillow on one of the living room sofas?,blue decorative pillow,4.0,in front of,Where is 4.0 meters in front of the blue decorative pillow?
+00031-Wo6kuutE9i7,0,Did I leave the blue decorative pillow on one of the living room sofas?,blue decorative pillow,2.8,right of,Where is 2.8 meters right of the blue decorative pillow?
+00031-Wo6kuutE9i7,0,Did I leave the blue decorative pillow on one of the living room sofas?,blue decorative pillow,3.4,behind,Where is 3.4 meters behind the blue decorative pillow?
+00033-oPj9qMxrDEa,0,Did you see the woven basket anywhere?,woven basket,3.6,right of,Where is 3.6 meters right of the woven basket?
+00033-oPj9qMxrDEa,0,Did you see the woven basket anywhere?,woven basket,1.8,right of,Where is 1.8 meters right of the woven basket?
+00033-oPj9qMxrDEa,0,Did you see the woven basket anywhere?,woven basket,2.8,right of,Where is 2.8 meters right of the woven basket?
+00033-oPj9qMxrDEa,0,Did you see the woven basket anywhere?,woven basket,2.4,below,Where is 2.4 meters below the woven basket?
+00033-oPj9qMxrDEa,0,Did you see the woven basket anywhere?,woven basket,2.6,right of,Where is 2.6 meters right of the woven basket?
+00033-oPj9qMxrDEa,0,Did you see the woven basket anywhere?,woven basket,0.8,left of,Where is 0.8 meters left of the woven basket?
+00033-oPj9qMxrDEa,0,Did you see the woven basket anywhere?,woven basket,0.6,behind,Where is 0.6 meters behind the woven basket?
+00033-oPj9qMxrDEa,0,Did you see the woven basket anywhere?,woven basket,0.4,above,Where is 0.4 meters above the woven basket?
+00033-oPj9qMxrDEa,0,Where did I leave the striped towel?,striped towel,1.2,above,Where is 1.2 meters above the striped towel?
+00033-oPj9qMxrDEa,0,Where did I leave the striped towel?,striped towel,1.8,above,Where is 1.8 meters above the striped towel?
+00033-oPj9qMxrDEa,0,Where did I leave the striped towel?,striped towel,2.0,in front of,Where is 2.0 meters in front of the striped towel?
+00033-oPj9qMxrDEa,0,Where did I leave the striped towel?,striped towel,0.2,right of,Where is 0.2 meters right of the striped towel?
+00033-oPj9qMxrDEa,0,Where did I leave the striped towel?,striped towel,1.0,below,Where is 1.0 meters below the striped towel?
+00033-oPj9qMxrDEa,0,Where did I leave the striped towel?,striped towel,1.4,above,Where is 1.4 meters above the striped towel?
+00033-oPj9qMxrDEa,0,Where did I leave the striped towel?,striped towel,3.8,above,Where is 3.8 meters above the striped towel?
+00033-oPj9qMxrDEa,0,Where did I leave the striped towel?,striped towel,4.0,below,Where is 4.0 meters below the striped towel?
+00035-3XYAD64HpDr,0,Is the kettle on the kitchen countertop?,kettle,0.4,behind,Where is 0.4 meters behind the kettle?
+00035-3XYAD64HpDr,0,Is the kettle on the kitchen countertop?,kettle,3.0,below,Where is 3.0 meters below the kettle?
+00035-3XYAD64HpDr,0,Is the kettle on the kitchen countertop?,kettle,3.6,behind,Where is 3.6 meters behind the kettle?
+00035-3XYAD64HpDr,0,Is the kettle on the kitchen countertop?,kettle,2.6,left of,Where is 2.6 meters left of the kettle?
+00035-3XYAD64HpDr,0,Is the kettle on the kitchen countertop?,kettle,3.4,right of,Where is 3.4 meters right of the kettle?
+00035-3XYAD64HpDr,0,Is the kettle on the kitchen countertop?,kettle,1.4,left of,Where is 1.4 meters left of the kettle?
+00035-3XYAD64HpDr,0,Is the kettle on the kitchen countertop?,kettle,3.8,right of,Where is 3.8 meters right of the kettle?
+00035-3XYAD64HpDr,0,Is the kettle on the kitchen countertop?,kettle,4.0,behind,Where is 4.0 meters behind the kettle?
+00035-3XYAD64HpDr,0,Are there more than twenty books by the window next to the dining table?,books,1.2,above,Where is 1.2 meters above the books?
+00035-3XYAD64HpDr,0,Are there more than twenty books by the window next to the dining table?,books,0.8,left of,Where is 0.8 meters left of the books?
+00035-3XYAD64HpDr,0,Are there more than twenty books by the window next to the dining table?,books,2.2,in front of,Where is 2.2 meters in front of the books?
+00035-3XYAD64HpDr,0,Are there more than twenty books by the window next to the dining table?,books,0.4,above,Where is 0.4 meters above the books?
+00035-3XYAD64HpDr,0,Are there more than twenty books by the window next to the dining table?,books,3.8,left of,Where is 3.8 meters left of the books?
+00035-3XYAD64HpDr,0,Are there more than twenty books by the window next to the dining table?,books,0.2,left of,Where is 0.2 meters left of the books?
+00035-3XYAD64HpDr,0,Are there more than twenty books by the window next to the dining table?,books,2.0,right of,Where is 2.0 meters right of the books?
+00035-3XYAD64HpDr,0,Are there more than twenty books by the window next to the dining table?,books,0.6,above,Where is 0.6 meters above the books?
+00057-1UnKg1rAb8A,0,Is the kitchen sink currently free of dishes?,kitchen sink,2.6,behind,Where is 2.6 meters behind the kitchen sink?
+00057-1UnKg1rAb8A,0,Is the kitchen sink currently free of dishes?,kitchen sink,1.0,behind,Where is 1.0 meters behind the kitchen sink?
+00057-1UnKg1rAb8A,0,Is the kitchen sink currently free of dishes?,kitchen sink,1.8,behind,Where is 1.8 meters behind the kitchen sink?
+00057-1UnKg1rAb8A,0,Is the kitchen sink currently free of dishes?,kitchen sink,2.4,behind,Where is 2.4 meters behind the kitchen sink?
+00057-1UnKg1rAb8A,0,Is the kitchen sink currently free of dishes?,kitchen sink,3.4,in front of,Where is 3.4 meters in front of the kitchen sink?
+00057-1UnKg1rAb8A,0,Is the kitchen sink currently free of dishes?,kitchen sink,1.6,left of,Where is 1.6 meters left of the kitchen sink?
+00057-1UnKg1rAb8A,0,Is the kitchen sink currently free of dishes?,kitchen sink,0.4,right of,Where is 0.4 meters right of the kitchen sink?
+00057-1UnKg1rAb8A,0,Is the kitchen sink currently free of dishes?,kitchen sink,2.8,left of,Where is 2.8 meters left of the kitchen sink?
+00057-1UnKg1rAb8A,0,Is the front door is currently open or closed?,front door,2.2,right of,Where is 2.2 meters right of the front door?
+00057-1UnKg1rAb8A,0,Is the front door is currently open or closed?,front door,1.8,below,Where is 1.8 meters below the front door?
+00057-1UnKg1rAb8A,0,Is the front door is currently open or closed?,front door,3.2,above,Where is 3.2 meters above the front door?
+00057-1UnKg1rAb8A,0,Is the front door is currently open or closed?,front door,1.2,left of,Where is 1.2 meters left of the front door?
+00057-1UnKg1rAb8A,0,Is the front door is currently open or closed?,front door,0.2,above,Where is 0.2 meters above the front door?
+00057-1UnKg1rAb8A,0,Is the front door is currently open or closed?,front door,0.8,in front of,Where is 0.8 meters in front of the front door?
+00057-1UnKg1rAb8A,0,Is the front door is currently open or closed?,front door,3.8,below,Where is 3.8 meters below the front door?
+00057-1UnKg1rAb8A,0,Is the front door is currently open or closed?,front door,3.4,left of,Where is 3.4 meters left of the front door?
+00057-1UnKg1rAb8A,0,Where did I place the decorative owl?,decorative owl,1.8,above,Where is 1.8 meters above the decorative owl?
+00057-1UnKg1rAb8A,0,Where did I place the decorative owl?,decorative owl,3.4,above,Where is 3.4 meters above the decorative owl?
+00057-1UnKg1rAb8A,0,Where did I place the decorative owl?,decorative owl,2.4,in front of,Where is 2.4 meters in front of the decorative owl?
+00057-1UnKg1rAb8A,0,Where did I place the decorative owl?,decorative owl,1.2,below,Where is 1.2 meters below the decorative owl?
+00057-1UnKg1rAb8A,0,Where did I place the decorative owl?,decorative owl,3.6,right of,Where is 3.6 meters right of the decorative owl?
+00057-1UnKg1rAb8A,0,Where did I place the decorative owl?,decorative owl,2.6,above,Where is 2.6 meters above the decorative owl?
+00057-1UnKg1rAb8A,0,Where did I place the decorative owl?,decorative owl,0.8,right of,Where is 0.8 meters right of the decorative owl?
+00057-1UnKg1rAb8A,0,Where did I place the decorative owl?,decorative owl,4.0,right of,Where is 4.0 meters right of the decorative owl?
+00057-1UnKg1rAb8A,1,Is there a fan somewhere?,fan,2.6,left of,Where is 2.6 meters left of the fan?
+00057-1UnKg1rAb8A,1,Is there a fan somewhere?,fan,1.6,in front of,Where is 1.6 meters in front of the fan?
+00057-1UnKg1rAb8A,1,Is there a fan somewhere?,fan,1.4,behind,Where is 1.4 meters behind the fan?
+00057-1UnKg1rAb8A,1,Is there a fan somewhere?,fan,3.4,in front of,Where is 3.4 meters in front of the fan?
+00057-1UnKg1rAb8A,1,Is there a fan somewhere?,fan,3.2,right of,Where is 3.2 meters right of the fan?
+00057-1UnKg1rAb8A,1,Is there a fan somewhere?,fan,1.2,below,Where is 1.2 meters below the fan?
+00057-1UnKg1rAb8A,1,Is there a fan somewhere?,fan,2.4,above,Where is 2.4 meters above the fan?
+00057-1UnKg1rAb8A,1,Is there a fan somewhere?,fan,0.2,in front of,Where is 0.2 meters in front of the fan?
+00057-1UnKg1rAb8A,1,I'm looking for my colorful handbag. Do you see it somewhere?,colorful handbag,3.0,right of,Where is 3.0 meters right of the colorful handbag?
+00057-1UnKg1rAb8A,1,I'm looking for my colorful handbag. Do you see it somewhere?,colorful handbag,2.4,in front of,Where is 2.4 meters in front of the colorful handbag?
+00057-1UnKg1rAb8A,1,I'm looking for my colorful handbag. Do you see it somewhere?,colorful handbag,3.8,right of,Where is 3.8 meters right of the colorful handbag?
+00057-1UnKg1rAb8A,1,I'm looking for my colorful handbag. Do you see it somewhere?,colorful handbag,0.6,behind,Where is 0.6 meters behind the colorful handbag?
+00057-1UnKg1rAb8A,1,I'm looking for my colorful handbag. Do you see it somewhere?,colorful handbag,1.6,above,Where is 1.6 meters above the colorful handbag?
+00057-1UnKg1rAb8A,1,I'm looking for my colorful handbag. Do you see it somewhere?,colorful handbag,0.4,above,Where is 0.4 meters above the colorful handbag?
+00057-1UnKg1rAb8A,1,I'm looking for my colorful handbag. Do you see it somewhere?,colorful handbag,0.8,left of,Where is 0.8 meters left of the colorful handbag?
+00057-1UnKg1rAb8A,1,I'm looking for my colorful handbag. Do you see it somewhere?,colorful handbag,3.2,behind,Where is 3.2 meters behind the colorful handbag?
+00062-ACZZiU6BXLz,0,I'm trying to remember where I placed the wall clock. Where it is in the kitchen?,wall clock,2.4,below,Where is 2.4 meters below the wall clock?
+00062-ACZZiU6BXLz,0,I'm trying to remember where I placed the wall clock. Where it is in the kitchen?,wall clock,0.6,in front of,Where is 0.6 meters in front of the wall clock?
+00062-ACZZiU6BXLz,0,I'm trying to remember where I placed the wall clock. Where it is in the kitchen?,wall clock,0.8,left of,Where is 0.8 meters left of the wall clock?
+00062-ACZZiU6BXLz,0,I'm trying to remember where I placed the wall clock. Where it is in the kitchen?,wall clock,2.6,below,Where is 2.6 meters below the wall clock?
+00062-ACZZiU6BXLz,0,I'm trying to remember where I placed the wall clock. Where it is in the kitchen?,wall clock,1.4,behind,Where is 1.4 meters behind the wall clock?
+00062-ACZZiU6BXLz,0,I'm trying to remember where I placed the wall clock. Where it is in the kitchen?,wall clock,1.6,behind,Where is 1.6 meters behind the wall clock?
+00062-ACZZiU6BXLz,0,I'm trying to remember where I placed the wall clock. Where it is in the kitchen?,wall clock,3.8,behind,Where is 3.8 meters behind the wall clock?
+00062-ACZZiU6BXLz,0,I'm trying to remember where I placed the wall clock. Where it is in the kitchen?,wall clock,3.2,below,Where is 3.2 meters below the wall clock?
+00062-ACZZiU6BXLz,0,I'm expecting guests and need to confirm the seating. How many dining chairs are around the dining table?,dining chairs,0.6,below,Where is 0.6 meters below the dining chairs?
+00062-ACZZiU6BXLz,0,I'm expecting guests and need to confirm the seating. How many dining chairs are around the dining table?,dining chairs,1.2,right of,Where is 1.2 meters right of the dining chairs?
+00062-ACZZiU6BXLz,0,I'm expecting guests and need to confirm the seating. How many dining chairs are around the dining table?,dining chairs,3.8,above,Where is 3.8 meters above the dining chairs?
+00062-ACZZiU6BXLz,0,I'm expecting guests and need to confirm the seating. How many dining chairs are around the dining table?,dining chairs,1.0,above,Where is 1.0 meters above the dining chairs?
+00062-ACZZiU6BXLz,0,I'm expecting guests and need to confirm the seating. How many dining chairs are around the dining table?,dining chairs,0.2,behind,Where is 0.2 meters behind the dining chairs?
+00062-ACZZiU6BXLz,0,I'm expecting guests and need to confirm the seating. How many dining chairs are around the dining table?,dining chairs,4.0,below,Where is 4.0 meters below the dining chairs?
+00062-ACZZiU6BXLz,0,I'm expecting guests and need to confirm the seating. How many dining chairs are around the dining table?,dining chairs,2.0,in front of,Where is 2.0 meters in front of the dining chairs?
+00062-ACZZiU6BXLz,0,I'm expecting guests and need to confirm the seating. How many dining chairs are around the dining table?,dining chairs,1.6,right of,Where is 1.6 meters right of the dining chairs?
+00062-ACZZiU6BXLz,0,Have I already put the fruit bowl on the kitchen counter?,fruit bowl,3.6,left of,Where is 3.6 meters left of the fruit bowl?
+00062-ACZZiU6BXLz,0,Have I already put the fruit bowl on the kitchen counter?,fruit bowl,4.0,above,Where is 4.0 meters above the fruit bowl?
+00062-ACZZiU6BXLz,0,Have I already put the fruit bowl on the kitchen counter?,fruit bowl,1.0,below,Where is 1.0 meters below the fruit bowl?
+00062-ACZZiU6BXLz,0,Have I already put the fruit bowl on the kitchen counter?,fruit bowl,0.2,right of,Where is 0.2 meters right of the fruit bowl?
+00062-ACZZiU6BXLz,0,Have I already put the fruit bowl on the kitchen counter?,fruit bowl,3.4,behind,Where is 3.4 meters behind the fruit bowl?
+00062-ACZZiU6BXLz,0,Have I already put the fruit bowl on the kitchen counter?,fruit bowl,2.6,right of,Where is 2.6 meters right of the fruit bowl?
+00062-ACZZiU6BXLz,0,Have I already put the fruit bowl on the kitchen counter?,fruit bowl,2.4,right of,Where is 2.4 meters right of the fruit bowl?
+00062-ACZZiU6BXLz,0,Have I already put the fruit bowl on the kitchen counter?,fruit bowl,2.2,left of,Where is 2.2 meters left of the fruit bowl?
+00062-ACZZiU6BXLz,1,I need to find my painting of the ocean. Where is it?,painting of the ocean,1.8,in front of,Where is 1.8 meters in front of the painting of the ocean?
+00062-ACZZiU6BXLz,1,I need to find my painting of the ocean. Where is it?,painting of the ocean,1.4,above,Where is 1.4 meters above the painting of the ocean?
+00062-ACZZiU6BXLz,1,I need to find my painting of the ocean. Where is it?,painting of the ocean,2.0,behind,Where is 2.0 meters behind the painting of the ocean?
+00062-ACZZiU6BXLz,1,I need to find my painting of the ocean. Where is it?,painting of the ocean,3.4,right of,Where is 3.4 meters right of the painting of the ocean?
+00062-ACZZiU6BXLz,1,I need to find my painting of the ocean. Where is it?,painting of the ocean,1.6,left of,Where is 1.6 meters left of the painting of the ocean?
+00062-ACZZiU6BXLz,1,I need to find my painting of the ocean. Where is it?,painting of the ocean,2.6,below,Where is 2.6 meters below the painting of the ocean?
+00062-ACZZiU6BXLz,1,I need to find my painting of the ocean. Where is it?,painting of the ocean,3.6,in front of,Where is 3.6 meters in front of the painting of the ocean?
+00062-ACZZiU6BXLz,1,I need to find my painting of the ocean. Where is it?,painting of the ocean,1.2,behind,Where is 1.2 meters behind the painting of the ocean?
+00062-ACZZiU6BXLz,1,How many pillows did I leave on the bed with green floral bedding?,pillows,3.8,above,Where is 3.8 meters above the pillows?
+00062-ACZZiU6BXLz,1,How many pillows did I leave on the bed with green floral bedding?,pillows,3.4,left of,Where is 3.4 meters left of the pillows?
+00062-ACZZiU6BXLz,1,How many pillows did I leave on the bed with green floral bedding?,pillows,2.8,behind,Where is 2.8 meters behind the pillows?
+00062-ACZZiU6BXLz,1,How many pillows did I leave on the bed with green floral bedding?,pillows,4.0,right of,Where is 4.0 meters right of the pillows?
+00062-ACZZiU6BXLz,1,How many pillows did I leave on the bed with green floral bedding?,pillows,1.0,above,Where is 1.0 meters above the pillows?
+00062-ACZZiU6BXLz,1,How many pillows did I leave on the bed with green floral bedding?,pillows,1.8,left of,Where is 1.8 meters left of the pillows?
+00062-ACZZiU6BXLz,1,How many pillows did I leave on the bed with green floral bedding?,pillows,0.6,right of,Where is 0.6 meters right of the pillows?
+00062-ACZZiU6BXLz,1,How many pillows did I leave on the bed with green floral bedding?,pillows,3.0,right of,Where is 3.0 meters right of the pillows?
+00081-5biL7VEkByM,0,Did the housekeeper clear the bookshelves already?,bookshelves,1.0,above,Where is 1.0 meters above the bookshelves?
+00081-5biL7VEkByM,0,Did the housekeeper clear the bookshelves already?,bookshelves,3.2,behind,Where is 3.2 meters behind the bookshelves?
+00081-5biL7VEkByM,0,Did the housekeeper clear the bookshelves already?,bookshelves,0.8,left of,Where is 0.8 meters left of the bookshelves?
+00081-5biL7VEkByM,0,Did the housekeeper clear the bookshelves already?,bookshelves,0.4,above,Where is 0.4 meters above the bookshelves?
+00081-5biL7VEkByM,0,Did the housekeeper clear the bookshelves already?,bookshelves,2.2,left of,Where is 2.2 meters left of the bookshelves?
+00081-5biL7VEkByM,0,Did the housekeeper clear the bookshelves already?,bookshelves,3.8,right of,Where is 3.8 meters right of the bookshelves?
+00081-5biL7VEkByM,0,Did the housekeeper clear the bookshelves already?,bookshelves,1.8,right of,Where is 1.8 meters right of the bookshelves?
+00081-5biL7VEkByM,0,Did the housekeeper clear the bookshelves already?,bookshelves,2.8,in front of,Where is 2.8 meters in front of the bookshelves?
+00081-5biL7VEkByM,0,Did any book fall onto the floor in the hallway where the bookselves are?,book,0.4,in front of,Where is 0.4 meters in front of the book?
+00081-5biL7VEkByM,0,Did any book fall onto the floor in the hallway where the bookselves are?,book,0.8,above,Where is 0.8 meters above the book?
+00081-5biL7VEkByM,0,Did any book fall onto the floor in the hallway where the bookselves are?,book,3.4,above,Where is 3.4 meters above the book?
+00081-5biL7VEkByM,0,Did any book fall onto the floor in the hallway where the bookselves are?,book,3.0,above,Where is 3.0 meters above the book?
+00081-5biL7VEkByM,0,Did any book fall onto the floor in the hallway where the bookselves are?,book,0.2,above,Where is 0.2 meters above the book?
+00081-5biL7VEkByM,0,Did any book fall onto the floor in the hallway where the bookselves are?,book,2.6,right of,Where is 2.6 meters right of the book?
+00081-5biL7VEkByM,0,Did any book fall onto the floor in the hallway where the bookselves are?,book,4.0,below,Where is 4.0 meters below the book?
+00081-5biL7VEkByM,0,Did any book fall onto the floor in the hallway where the bookselves are?,book,1.6,in front of,Where is 1.6 meters in front of the book?
+00109-GTV2Y73Sn5t,0,I need to water the plants. How many potted plants are on the kitchen island?,potted plants,3.0,above,Where is 3.0 meters above the potted plants?
+00109-GTV2Y73Sn5t,0,I need to water the plants. How many potted plants are on the kitchen island?,potted plants,3.4,right of,Where is 3.4 meters right of the potted plants?
+00109-GTV2Y73Sn5t,0,I need to water the plants. How many potted plants are on the kitchen island?,potted plants,3.6,behind,Where is 3.6 meters behind the potted plants?
+00109-GTV2Y73Sn5t,0,I need to water the plants. How many potted plants are on the kitchen island?,potted plants,3.2,right of,Where is 3.2 meters right of the potted plants?
+00109-GTV2Y73Sn5t,0,I need to water the plants. How many potted plants are on the kitchen island?,potted plants,1.6,behind,Where is 1.6 meters behind the potted plants?
+00109-GTV2Y73Sn5t,0,I need to water the plants. How many potted plants are on the kitchen island?,potted plants,2.4,left of,Where is 2.4 meters left of the potted plants?
+00109-GTV2Y73Sn5t,0,I need to water the plants. How many potted plants are on the kitchen island?,potted plants,1.8,behind,Where is 1.8 meters behind the potted plants?
+00109-GTV2Y73Sn5t,0,I need to water the plants. How many potted plants are on the kitchen island?,potted plants,1.0,behind,Where is 1.0 meters behind the potted plants?
+00109-GTV2Y73Sn5t,0,I'm expecting a package that should have been left by the door. Is there a parcel on the bench by the entrance?,parcel,2.2,left of,Where is 2.2 meters left of the parcel?
+00109-GTV2Y73Sn5t,0,I'm expecting a package that should have been left by the door. Is there a parcel on the bench by the entrance?,parcel,0.6,right of,Where is 0.6 meters right of the parcel?
+00109-GTV2Y73Sn5t,0,I'm expecting a package that should have been left by the door. Is there a parcel on the bench by the entrance?,parcel,1.6,below,Where is 1.6 meters below the parcel?
+00109-GTV2Y73Sn5t,0,I'm expecting a package that should have been left by the door. Is there a parcel on the bench by the entrance?,parcel,2.8,below,Where is 2.8 meters below the parcel?
+00109-GTV2Y73Sn5t,0,I'm expecting a package that should have been left by the door. Is there a parcel on the bench by the entrance?,parcel,3.8,below,Where is 3.8 meters below the parcel?
+00109-GTV2Y73Sn5t,0,I'm expecting a package that should have been left by the door. Is there a parcel on the bench by the entrance?,parcel,0.8,in front of,Where is 0.8 meters in front of the parcel?
+00109-GTV2Y73Sn5t,0,I'm expecting a package that should have been left by the door. Is there a parcel on the bench by the entrance?,parcel,4.0,right of,Where is 4.0 meters right of the parcel?
+00109-GTV2Y73Sn5t,0,I'm expecting a package that should have been left by the door. Is there a parcel on the bench by the entrance?,parcel,1.0,in front of,Where is 1.0 meters in front of the parcel?
+00109-GTV2Y73Sn5t,1,I need to find my backpack for a trip. Where did I place it?,backpack,1.0,below,Where is 1.0 meters below the backpack?
+00109-GTV2Y73Sn5t,1,I need to find my backpack for a trip. Where did I place it?,backpack,3.0,right of,Where is 3.0 meters right of the backpack?
+00109-GTV2Y73Sn5t,1,I need to find my backpack for a trip. Where did I place it?,backpack,1.6,right of,Where is 1.6 meters right of the backpack?
+00109-GTV2Y73Sn5t,1,I need to find my backpack for a trip. Where did I place it?,backpack,0.8,below,Where is 0.8 meters below the backpack?
+00109-GTV2Y73Sn5t,1,I need to find my backpack for a trip. Where did I place it?,backpack,2.6,behind,Where is 2.6 meters behind the backpack?
+00109-GTV2Y73Sn5t,1,I need to find my backpack for a trip. Where did I place it?,backpack,3.8,above,Where is 3.8 meters above the backpack?
+00109-GTV2Y73Sn5t,1,I need to find my backpack for a trip. Where did I place it?,backpack,3.6,behind,Where is 3.6 meters behind the backpack?
+00109-GTV2Y73Sn5t,1,I need to find my backpack for a trip. Where did I place it?,backpack,0.6,in front of,Where is 0.6 meters in front of the backpack?
+00109-GTV2Y73Sn5t,1,Is my son sleeping on his red bed?,red bed,2.8,in front of,Where is 2.8 meters in front of the red bed?
+00109-GTV2Y73Sn5t,1,Is my son sleeping on his red bed?,red bed,1.4,above,Where is 1.4 meters above the red bed?
+00109-GTV2Y73Sn5t,1,Is my son sleeping on his red bed?,red bed,2.4,behind,Where is 2.4 meters behind the red bed?
+00109-GTV2Y73Sn5t,1,Is my son sleeping on his red bed?,red bed,2.2,behind,Where is 2.2 meters behind the red bed?
+00109-GTV2Y73Sn5t,1,Is my son sleeping on his red bed?,red bed,0.6,below,Where is 0.6 meters below the red bed?
+00109-GTV2Y73Sn5t,1,Is my son sleeping on his red bed?,red bed,3.6,left of,Where is 3.6 meters left of the red bed?
+00109-GTV2Y73Sn5t,1,Is my son sleeping on his red bed?,red bed,1.2,behind,Where is 1.2 meters behind the red bed?
+00109-GTV2Y73Sn5t,1,Is my son sleeping on his red bed?,red bed,0.2,in front of,Where is 0.2 meters in front of the red bed?
+00135-HeSYRw7eMtG,1,What time is it now?,clock,3.4,left of,Where is 3.4 meters left of the clock?
+00135-HeSYRw7eMtG,1,What time is it now?,clock,2.0,left of,Where is 2.0 meters left of the clock?
+00135-HeSYRw7eMtG,1,What time is it now?,clock,4.0,in front of,Where is 4.0 meters in front of the clock?
+00135-HeSYRw7eMtG,1,What time is it now?,clock,0.6,in front of,Where is 0.6 meters in front of the clock?
+00135-HeSYRw7eMtG,1,What time is it now?,clock,0.8,left of,Where is 0.8 meters left of the clock?
+00135-HeSYRw7eMtG,1,What time is it now?,clock,3.0,right of,Where is 3.0 meters right of the clock?
+00135-HeSYRw7eMtG,1,What time is it now?,clock,2.6,in front of,Where is 2.6 meters in front of the clock?
+00135-HeSYRw7eMtG,1,What time is it now?,clock,3.2,right of,Where is 3.2 meters right of the clock?
+00135-HeSYRw7eMtG,1,I forgot where I left the standing fan.,standing fan,2.8,in front of,Where is 2.8 meters in front of the standing fan?
+00135-HeSYRw7eMtG,1,I forgot where I left the standing fan.,standing fan,1.8,left of,Where is 1.8 meters left of the standing fan?
+00135-HeSYRw7eMtG,1,I forgot where I left the standing fan.,standing fan,2.6,below,Where is 2.6 meters below the standing fan?
+00135-HeSYRw7eMtG,1,I forgot where I left the standing fan.,standing fan,1.0,right of,Where is 1.0 meters right of the standing fan?
+00135-HeSYRw7eMtG,1,I forgot where I left the standing fan.,standing fan,3.2,behind,Where is 3.2 meters behind the standing fan?
+00135-HeSYRw7eMtG,1,I forgot where I left the standing fan.,standing fan,2.4,left of,Where is 2.4 meters left of the standing fan?
+00135-HeSYRw7eMtG,1,I forgot where I left the standing fan.,standing fan,1.2,in front of,Where is 1.2 meters in front of the standing fan?
+00135-HeSYRw7eMtG,1,I forgot where I left the standing fan.,standing fan,0.4,left of,Where is 0.4 meters left of the standing fan?
+00135-HeSYRw7eMtG,2,How many table lamps are there in the bedroom?,table lamps,0.6,behind,Where is 0.6 meters behind the table lamps?
+00135-HeSYRw7eMtG,2,How many table lamps are there in the bedroom?,table lamps,1.8,left of,Where is 1.8 meters left of the table lamps?
+00135-HeSYRw7eMtG,2,How many table lamps are there in the bedroom?,table lamps,4.0,in front of,Where is 4.0 meters in front of the table lamps?
+00135-HeSYRw7eMtG,2,How many table lamps are there in the bedroom?,table lamps,1.6,above,Where is 1.6 meters above the table lamps?
+00135-HeSYRw7eMtG,2,How many table lamps are there in the bedroom?,table lamps,3.6,behind,Where is 3.6 meters behind the table lamps?
+00135-HeSYRw7eMtG,2,How many table lamps are there in the bedroom?,table lamps,1.0,in front of,Where is 1.0 meters in front of the table lamps?
+00135-HeSYRw7eMtG,2,How many table lamps are there in the bedroom?,table lamps,2.8,above,Where is 2.8 meters above the table lamps?
+00135-HeSYRw7eMtG,2,How many table lamps are there in the bedroom?,table lamps,0.4,right of,Where is 0.4 meters right of the table lamps?
+00149-UuwwmrTsfBN,1,I am waiting for the guests. Have I put utensils on the dining table?,utensils,0.4,right of,Where is 0.4 meters right of the utensils?
+00149-UuwwmrTsfBN,1,I am waiting for the guests. Have I put utensils on the dining table?,utensils,3.4,in front of,Where is 3.4 meters in front of the utensils?
+00149-UuwwmrTsfBN,1,I am waiting for the guests. Have I put utensils on the dining table?,utensils,1.6,below,Where is 1.6 meters below the utensils?
+00149-UuwwmrTsfBN,1,I am waiting for the guests. Have I put utensils on the dining table?,utensils,0.8,in front of,Where is 0.8 meters in front of the utensils?
+00149-UuwwmrTsfBN,1,I am waiting for the guests. Have I put utensils on the dining table?,utensils,1.2,above,Where is 1.2 meters above the utensils?
+00149-UuwwmrTsfBN,1,I am waiting for the guests. Have I put utensils on the dining table?,utensils,1.0,right of,Where is 1.0 meters right of the utensils?
+00149-UuwwmrTsfBN,1,I am waiting for the guests. Have I put utensils on the dining table?,utensils,0.2,in front of,Where is 0.2 meters in front of the utensils?
+00149-UuwwmrTsfBN,1,I am waiting for the guests. Have I put utensils on the dining table?,utensils,0.6,behind,Where is 0.6 meters behind the utensils?
+00149-UuwwmrTsfBN,1,Is the patio door next to the dining table open?,patio door,3.4,left of,Where is 3.4 meters left of the patio door?
+00149-UuwwmrTsfBN,1,Is the patio door next to the dining table open?,patio door,1.2,below,Where is 1.2 meters below the patio door?
+00149-UuwwmrTsfBN,1,Is the patio door next to the dining table open?,patio door,1.8,above,Where is 1.8 meters above the patio door?
+00149-UuwwmrTsfBN,1,Is the patio door next to the dining table open?,patio door,2.4,above,Where is 2.4 meters above the patio door?
+00149-UuwwmrTsfBN,1,Is the patio door next to the dining table open?,patio door,0.2,right of,Where is 0.2 meters right of the patio door?
+00149-UuwwmrTsfBN,1,Is the patio door next to the dining table open?,patio door,1.0,above,Where is 1.0 meters above the patio door?
+00149-UuwwmrTsfBN,1,Is the patio door next to the dining table open?,patio door,3.2,behind,Where is 3.2 meters behind the patio door?
+00149-UuwwmrTsfBN,1,Is the patio door next to the dining table open?,patio door,2.8,right of,Where is 2.8 meters right of the patio door?
+00155-iLDo95ZbDJq,0,"Is the bedroom closet open or closed, the bedroom with horse painting?",bedroom closet,3.0,right of,Where is 3.0 meters right of the bedroom closet?
+00155-iLDo95ZbDJq,0,"Is the bedroom closet open or closed, the bedroom with horse painting?",bedroom closet,0.8,right of,Where is 0.8 meters right of the bedroom closet?
+00155-iLDo95ZbDJq,0,"Is the bedroom closet open or closed, the bedroom with horse painting?",bedroom closet,2.8,in front of,Where is 2.8 meters in front of the bedroom closet?
+00155-iLDo95ZbDJq,0,"Is the bedroom closet open or closed, the bedroom with horse painting?",bedroom closet,3.2,right of,Where is 3.2 meters right of the bedroom closet?
+00155-iLDo95ZbDJq,0,"Is the bedroom closet open or closed, the bedroom with horse painting?",bedroom closet,2.6,below,Where is 2.6 meters below the bedroom closet?
+00155-iLDo95ZbDJq,0,"Is the bedroom closet open or closed, the bedroom with horse painting?",bedroom closet,1.8,below,Where is 1.8 meters below the bedroom closet?
+00155-iLDo95ZbDJq,0,"Is the bedroom closet open or closed, the bedroom with horse painting?",bedroom closet,1.0,below,Where is 1.0 meters below the bedroom closet?
+00155-iLDo95ZbDJq,0,"Is the bedroom closet open or closed, the bedroom with horse painting?",bedroom closet,2.4,right of,Where is 2.4 meters right of the bedroom closet?
+00166-RaYrxWt5pR1,0,I'm trying to remember how many bar stools are at the kitchen island.,bar stools,2.6,in front of,Where is 2.6 meters in front of the bar stools?
+00166-RaYrxWt5pR1,0,I'm trying to remember how many bar stools are at the kitchen island.,bar stools,2.4,behind,Where is 2.4 meters behind the bar stools?
+00166-RaYrxWt5pR1,0,I'm trying to remember how many bar stools are at the kitchen island.,bar stools,0.4,right of,Where is 0.4 meters right of the bar stools?
+00166-RaYrxWt5pR1,0,I'm trying to remember how many bar stools are at the kitchen island.,bar stools,1.0,left of,Where is 1.0 meters left of the bar stools?
+00166-RaYrxWt5pR1,0,I'm trying to remember how many bar stools are at the kitchen island.,bar stools,0.2,left of,Where is 0.2 meters left of the bar stools?
+00166-RaYrxWt5pR1,0,I'm trying to remember how many bar stools are at the kitchen island.,bar stools,3.6,below,Where is 3.6 meters below the bar stools?
+00166-RaYrxWt5pR1,0,I'm trying to remember how many bar stools are at the kitchen island.,bar stools,2.2,behind,Where is 2.2 meters behind the bar stools?
+00166-RaYrxWt5pR1,0,I'm trying to remember how many bar stools are at the kitchen island.,bar stools,3.8,above,Where is 3.8 meters above the bar stools?
+00166-RaYrxWt5pR1,0,I'm looking for my laptop. It is on the bedroom dresser?,laptop,2.0,behind,Where is 2.0 meters behind the laptop?
+00166-RaYrxWt5pR1,0,I'm looking for my laptop. It is on the bedroom dresser?,laptop,1.6,left of,Where is 1.6 meters left of the laptop?
+00166-RaYrxWt5pR1,0,I'm looking for my laptop. It is on the bedroom dresser?,laptop,4.0,in front of,Where is 4.0 meters in front of the laptop?
+00166-RaYrxWt5pR1,0,I'm looking for my laptop. It is on the bedroom dresser?,laptop,0.4,in front of,Where is 0.4 meters in front of the laptop?
+00166-RaYrxWt5pR1,0,I'm looking for my laptop. It is on the bedroom dresser?,laptop,3.0,in front of,Where is 3.0 meters in front of the laptop?
+00166-RaYrxWt5pR1,0,I'm looking for my laptop. It is on the bedroom dresser?,laptop,0.6,above,Where is 0.6 meters above the laptop?
+00166-RaYrxWt5pR1,0,I'm looking for my laptop. It is on the bedroom dresser?,laptop,3.2,in front of,Where is 3.2 meters in front of the laptop?
+00166-RaYrxWt5pR1,0,I'm looking for my laptop. It is on the bedroom dresser?,laptop,1.0,right of,Where is 1.0 meters right of the laptop?
+00203-VoVGtfYrpuQ,0,I'm trying to remember where I placed the decorative wooden bowl. Is it on the dining table?,decorative wooden bowl,0.4,left of,Where is 0.4 meters left of the decorative wooden bowl?
+00203-VoVGtfYrpuQ,0,I'm trying to remember where I placed the decorative wooden bowl. Is it on the dining table?,decorative wooden bowl,2.0,behind,Where is 2.0 meters behind the decorative wooden bowl?
+00203-VoVGtfYrpuQ,0,I'm trying to remember where I placed the decorative wooden bowl. Is it on the dining table?,decorative wooden bowl,1.4,in front of,Where is 1.4 meters in front of the decorative wooden bowl?
+00203-VoVGtfYrpuQ,0,I'm trying to remember where I placed the decorative wooden bowl. Is it on the dining table?,decorative wooden bowl,2.4,above,Where is 2.4 meters above the decorative wooden bowl?
+00203-VoVGtfYrpuQ,0,I'm trying to remember where I placed the decorative wooden bowl. Is it on the dining table?,decorative wooden bowl,1.2,below,Where is 1.2 meters below the decorative wooden bowl?
+00203-VoVGtfYrpuQ,0,I'm trying to remember where I placed the decorative wooden bowl. Is it on the dining table?,decorative wooden bowl,0.2,right of,Where is 0.2 meters right of the decorative wooden bowl?
+00203-VoVGtfYrpuQ,0,I'm trying to remember where I placed the decorative wooden bowl. Is it on the dining table?,decorative wooden bowl,3.2,right of,Where is 3.2 meters right of the decorative wooden bowl?
+00203-VoVGtfYrpuQ,0,I'm trying to remember where I placed the decorative wooden bowl. Is it on the dining table?,decorative wooden bowl,3.6,above,Where is 3.6 meters above the decorative wooden bowl?
+00203-VoVGtfYrpuQ,0,Is the air conditioning unit in the dining area still on?,air conditioning unit,0.2,behind,Where is 0.2 meters behind the air conditioning unit?
+00203-VoVGtfYrpuQ,0,Is the air conditioning unit in the dining area still on?,air conditioning unit,0.6,left of,Where is 0.6 meters left of the air conditioning unit?
+00203-VoVGtfYrpuQ,0,Is the air conditioning unit in the dining area still on?,air conditioning unit,1.8,in front of,Where is 1.8 meters in front of the air conditioning unit?
+00203-VoVGtfYrpuQ,0,Is the air conditioning unit in the dining area still on?,air conditioning unit,3.8,in front of,Where is 3.8 meters in front of the air conditioning unit?
+00203-VoVGtfYrpuQ,0,Is the air conditioning unit in the dining area still on?,air conditioning unit,1.0,below,Where is 1.0 meters below the air conditioning unit?
+00203-VoVGtfYrpuQ,0,Is the air conditioning unit in the dining area still on?,air conditioning unit,1.4,right of,Where is 1.4 meters right of the air conditioning unit?
+00203-VoVGtfYrpuQ,0,Is the air conditioning unit in the dining area still on?,air conditioning unit,2.0,left of,Where is 2.0 meters left of the air conditioning unit?
+00203-VoVGtfYrpuQ,0,Is the air conditioning unit in the dining area still on?,air conditioning unit,4.0,above,Where is 4.0 meters above the air conditioning unit?
+00207-FRQ75PjD278,0,I need to find my large red storage bag. Where did I put it last?,large red storage bag,3.4,above,Where is 3.4 meters above the large red storage bag?
+00207-FRQ75PjD278,0,I need to find my large red storage bag. Where did I put it last?,large red storage bag,1.0,below,Where is 1.0 meters below the large red storage bag?
+00207-FRQ75PjD278,0,I need to find my large red storage bag. Where did I put it last?,large red storage bag,2.6,right of,Where is 2.6 meters right of the large red storage bag?
+00207-FRQ75PjD278,0,I need to find my large red storage bag. Where did I put it last?,large red storage bag,2.2,left of,Where is 2.2 meters left of the large red storage bag?
+00207-FRQ75PjD278,0,I need to find my large red storage bag. Where did I put it last?,large red storage bag,3.2,below,Where is 3.2 meters below the large red storage bag?
+00207-FRQ75PjD278,0,I need to find my large red storage bag. Where did I put it last?,large red storage bag,0.6,above,Where is 0.6 meters above the large red storage bag?
+00207-FRQ75PjD278,0,I need to find my large red storage bag. Where did I put it last?,large red storage bag,3.8,below,Where is 3.8 meters below the large red storage bag?
+00207-FRQ75PjD278,0,I need to find my large red storage bag. Where did I put it last?,large red storage bag,2.4,behind,Where is 2.4 meters behind the large red storage bag?
+00217-qz3829g1Lzf,0,Did I leave any pot on the stove?,pot,3.4,below,Where is 3.4 meters below the pot?
+00217-qz3829g1Lzf,0,Did I leave any pot on the stove?,pot,1.0,below,Where is 1.0 meters below the pot?
+00217-qz3829g1Lzf,0,Did I leave any pot on the stove?,pot,4.0,below,Where is 4.0 meters below the pot?
+00217-qz3829g1Lzf,0,Did I leave any pot on the stove?,pot,3.6,below,Where is 3.6 meters below the pot?
+00217-qz3829g1Lzf,0,Did I leave any pot on the stove?,pot,0.2,right of,Where is 0.2 meters right of the pot?
+00217-qz3829g1Lzf,0,Did I leave any pot on the stove?,pot,2.8,left of,Where is 2.8 meters left of the pot?
+00217-qz3829g1Lzf,0,Did I leave any pot on the stove?,pot,2.2,left of,Where is 2.2 meters left of the pot?
+00217-qz3829g1Lzf,0,Did I leave any pot on the stove?,pot,2.0,left of,Where is 2.0 meters left of the pot?
+00217-qz3829g1Lzf,0,How many wooden chairs we have at the dining table right now?,wooden chairs,1.0,left of,Where is 1.0 meters left of the wooden chairs?
+00217-qz3829g1Lzf,0,How many wooden chairs we have at the dining table right now?,wooden chairs,2.4,below,Where is 2.4 meters below the wooden chairs?
+00217-qz3829g1Lzf,0,How many wooden chairs we have at the dining table right now?,wooden chairs,0.8,above,Where is 0.8 meters above the wooden chairs?
+00217-qz3829g1Lzf,0,How many wooden chairs we have at the dining table right now?,wooden chairs,2.6,below,Where is 2.6 meters below the wooden chairs?
+00217-qz3829g1Lzf,0,How many wooden chairs we have at the dining table right now?,wooden chairs,3.0,right of,Where is 3.0 meters right of the wooden chairs?
+00217-qz3829g1Lzf,0,How many wooden chairs we have at the dining table right now?,wooden chairs,1.8,behind,Where is 1.8 meters behind the wooden chairs?
+00217-qz3829g1Lzf,0,How many wooden chairs we have at the dining table right now?,wooden chairs,0.2,in front of,Where is 0.2 meters in front of the wooden chairs?
+00217-qz3829g1Lzf,0,How many wooden chairs we have at the dining table right now?,wooden chairs,2.2,left of,Where is 2.2 meters left of the wooden chairs?
+00217-qz3829g1Lzf,1,I need to find two gray bags with beddings. Is it in the room with the wooden dresser and the quilted bedspread?,two gray bags,3.0,in front of,Where is 3.0 meters in front of the two gray bags?
+00217-qz3829g1Lzf,1,I need to find two gray bags with beddings. Is it in the room with the wooden dresser and the quilted bedspread?,two gray bags,0.6,left of,Where is 0.6 meters left of the two gray bags?
+00217-qz3829g1Lzf,1,I need to find two gray bags with beddings. Is it in the room with the wooden dresser and the quilted bedspread?,two gray bags,3.4,in front of,Where is 3.4 meters in front of the two gray bags?
+00217-qz3829g1Lzf,1,I need to find two gray bags with beddings. Is it in the room with the wooden dresser and the quilted bedspread?,two gray bags,3.8,right of,Where is 3.8 meters right of the two gray bags?
+00217-qz3829g1Lzf,1,I need to find two gray bags with beddings. Is it in the room with the wooden dresser and the quilted bedspread?,two gray bags,3.6,below,Where is 3.6 meters below the two gray bags?
+00217-qz3829g1Lzf,1,I need to find two gray bags with beddings. Is it in the room with the wooden dresser and the quilted bedspread?,two gray bags,2.4,right of,Where is 2.4 meters right of the two gray bags?
+00217-qz3829g1Lzf,1,I need to find two gray bags with beddings. Is it in the room with the wooden dresser and the quilted bedspread?,two gray bags,4.0,right of,Where is 4.0 meters right of the two gray bags?
+00217-qz3829g1Lzf,1,I need to find two gray bags with beddings. Is it in the room with the wooden dresser and the quilted bedspread?,two gray bags,1.6,below,Where is 1.6 meters below the two gray bags?
+00245-741Fdj7NLF9,0,I was playing darts last night and can't recall where I left the board.,darts board,3.0,left of,Where is 3.0 meters left of the darts board?
+00245-741Fdj7NLF9,0,I was playing darts last night and can't recall where I left the board.,darts board,3.2,above,Where is 3.2 meters above the darts board?
+00245-741Fdj7NLF9,0,I was playing darts last night and can't recall where I left the board.,darts board,2.6,below,Where is 2.6 meters below the darts board?
+00245-741Fdj7NLF9,0,I was playing darts last night and can't recall where I left the board.,darts board,0.6,below,Where is 0.6 meters below the darts board?
+00245-741Fdj7NLF9,0,I was playing darts last night and can't recall where I left the board.,darts board,3.8,right of,Where is 3.8 meters right of the darts board?
+00245-741Fdj7NLF9,0,I was playing darts last night and can't recall where I left the board.,darts board,4.0,left of,Where is 4.0 meters left of the darts board?
+00245-741Fdj7NLF9,0,I was playing darts last night and can't recall where I left the board.,darts board,2.2,above,Where is 2.2 meters above the darts board?
+00245-741Fdj7NLF9,0,I was playing darts last night and can't recall where I left the board.,darts board,1.0,right of,Where is 1.0 meters right of the darts board?
+00245-741Fdj7NLF9,0,Can you check if I left the lamps on in the bedroom with gray bedding?,bedroom lamps,2.2,in front of,Where is 2.2 meters in front of the bedroom lamps?
+00245-741Fdj7NLF9,0,Can you check if I left the lamps on in the bedroom with gray bedding?,bedroom lamps,1.8,below,Where is 1.8 meters below the bedroom lamps?
+00245-741Fdj7NLF9,0,Can you check if I left the lamps on in the bedroom with gray bedding?,bedroom lamps,2.0,left of,Where is 2.0 meters left of the bedroom lamps?
+00245-741Fdj7NLF9,0,Can you check if I left the lamps on in the bedroom with gray bedding?,bedroom lamps,1.0,below,Where is 1.0 meters below the bedroom lamps?
+00245-741Fdj7NLF9,0,Can you check if I left the lamps on in the bedroom with gray bedding?,bedroom lamps,0.2,right of,Where is 0.2 meters right of the bedroom lamps?
+00245-741Fdj7NLF9,0,Can you check if I left the lamps on in the bedroom with gray bedding?,bedroom lamps,1.6,below,Where is 1.6 meters below the bedroom lamps?
+00245-741Fdj7NLF9,0,Can you check if I left the lamps on in the bedroom with gray bedding?,bedroom lamps,3.2,behind,Where is 3.2 meters behind the bedroom lamps?
+00245-741Fdj7NLF9,0,Can you check if I left the lamps on in the bedroom with gray bedding?,bedroom lamps,3.0,in front of,Where is 3.0 meters in front of the bedroom lamps?
+00256-92vYG1q49FY,0,Is the air conditioning at the entrance turned off?,air conditioning,3.4,right of,Where is 3.4 meters right of the air conditioning?
+00256-92vYG1q49FY,0,Is the air conditioning at the entrance turned off?,air conditioning,2.0,in front of,Where is 2.0 meters in front of the air conditioning?
+00256-92vYG1q49FY,0,Is the air conditioning at the entrance turned off?,air conditioning,3.0,left of,Where is 3.0 meters left of the air conditioning?
+00256-92vYG1q49FY,0,Is the air conditioning at the entrance turned off?,air conditioning,3.6,behind,Where is 3.6 meters behind the air conditioning?
+00256-92vYG1q49FY,0,Is the air conditioning at the entrance turned off?,air conditioning,4.0,left of,Where is 4.0 meters left of the air conditioning?
+00256-92vYG1q49FY,0,Is the air conditioning at the entrance turned off?,air conditioning,2.6,in front of,Where is 2.6 meters in front of the air conditioning?
+00256-92vYG1q49FY,0,Is the air conditioning at the entrance turned off?,air conditioning,0.4,behind,Where is 0.4 meters behind the air conditioning?
+00256-92vYG1q49FY,0,Is the air conditioning at the entrance turned off?,air conditioning,1.8,left of,Where is 1.8 meters left of the air conditioning?
+00258-2Pc8W48bu21,0,I want to take a shower. Is there shampoo in the shower?,shampoo,3.4,above,Where is 3.4 meters above the shampoo?
+00258-2Pc8W48bu21,0,I want to take a shower. Is there shampoo in the shower?,shampoo,3.0,left of,Where is 3.0 meters left of the shampoo?
+00258-2Pc8W48bu21,0,I want to take a shower. Is there shampoo in the shower?,shampoo,1.8,right of,Where is 1.8 meters right of the shampoo?
+00258-2Pc8W48bu21,0,I want to take a shower. Is there shampoo in the shower?,shampoo,2.6,below,Where is 2.6 meters below the shampoo?
+00258-2Pc8W48bu21,0,I want to take a shower. Is there shampoo in the shower?,shampoo,1.4,above,Where is 1.4 meters above the shampoo?
+00258-2Pc8W48bu21,0,I want to take a shower. Is there shampoo in the shower?,shampoo,3.8,in front of,Where is 3.8 meters in front of the shampoo?
+00258-2Pc8W48bu21,0,I want to take a shower. Is there shampoo in the shower?,shampoo,0.8,in front of,Where is 0.8 meters in front of the shampoo?
+00258-2Pc8W48bu21,0,I want to take a shower. Is there shampoo in the shower?,shampoo,0.4,right of,Where is 0.4 meters right of the shampoo?
+00258-2Pc8W48bu21,1,I need to retrieve my pool cues. How many are on the pool table?,pool cues,4.0,behind,Where is 4.0 meters behind the pool cues?
+00258-2Pc8W48bu21,1,I need to retrieve my pool cues. How many are on the pool table?,pool cues,3.4,left of,Where is 3.4 meters left of the pool cues?
+00258-2Pc8W48bu21,1,I need to retrieve my pool cues. How many are on the pool table?,pool cues,1.8,right of,Where is 1.8 meters right of the pool cues?
+00258-2Pc8W48bu21,1,I need to retrieve my pool cues. How many are on the pool table?,pool cues,0.8,left of,Where is 0.8 meters left of the pool cues?
+00258-2Pc8W48bu21,1,I need to retrieve my pool cues. How many are on the pool table?,pool cues,2.4,behind,Where is 2.4 meters behind the pool cues?
+00258-2Pc8W48bu21,1,I need to retrieve my pool cues. How many are on the pool table?,pool cues,3.8,below,Where is 3.8 meters below the pool cues?
+00258-2Pc8W48bu21,1,I need to retrieve my pool cues. How many are on the pool table?,pool cues,1.6,behind,Where is 1.6 meters behind the pool cues?
+00258-2Pc8W48bu21,1,I need to retrieve my pool cues. How many are on the pool table?,pool cues,2.8,behind,Where is 2.8 meters behind the pool cues?
+00258-2Pc8W48bu21,1,Which channel is being shown on the TV?,TV,2.0,left of,Where is 2.0 meters left of the TV?
+00258-2Pc8W48bu21,1,Which channel is being shown on the TV?,TV,1.0,in front of,Where is 1.0 meters in front of the TV?
+00258-2Pc8W48bu21,1,Which channel is being shown on the TV?,TV,2.8,in front of,Where is 2.8 meters in front of the TV?
+00258-2Pc8W48bu21,1,Which channel is being shown on the TV?,TV,2.4,behind,Where is 2.4 meters behind the TV?
+00258-2Pc8W48bu21,1,Which channel is being shown on the TV?,TV,2.6,left of,Where is 2.6 meters left of the TV?
+00258-2Pc8W48bu21,1,Which channel is being shown on the TV?,TV,1.2,right of,Where is 1.2 meters right of the TV?
+00258-2Pc8W48bu21,1,Which channel is being shown on the TV?,TV,0.4,below,Where is 0.4 meters below the TV?
+00258-2Pc8W48bu21,1,Which channel is being shown on the TV?,TV,3.0,left of,Where is 3.0 meters left of the TV?
+00262-1xGrZPxG1Hz,0,Is the wooden chair left in a room?,wooden chair,2.0,left of,Where is 2.0 meters left of the wooden chair?
+00262-1xGrZPxG1Hz,0,Is the wooden chair left in a room?,wooden chair,1.8,in front of,Where is 1.8 meters in front of the wooden chair?
+00262-1xGrZPxG1Hz,0,Is the wooden chair left in a room?,wooden chair,2.4,behind,Where is 2.4 meters behind the wooden chair?
+00262-1xGrZPxG1Hz,0,Is the wooden chair left in a room?,wooden chair,0.6,in front of,Where is 0.6 meters in front of the wooden chair?
+00262-1xGrZPxG1Hz,0,Is the wooden chair left in a room?,wooden chair,2.6,left of,Where is 2.6 meters left of the wooden chair?
+00262-1xGrZPxG1Hz,0,Is the wooden chair left in a room?,wooden chair,1.4,in front of,Where is 1.4 meters in front of the wooden chair?
+00262-1xGrZPxG1Hz,0,Is the wooden chair left in a room?,wooden chair,2.8,left of,Where is 2.8 meters left of the wooden chair?
+00262-1xGrZPxG1Hz,0,Is the wooden chair left in a room?,wooden chair,4.0,left of,Where is 4.0 meters left of the wooden chair?
+00262-1xGrZPxG1Hz,1,Are the candles by the entrace put out?,candles,2.0,in front of,Where is 2.0 meters in front of the candles?
+00262-1xGrZPxG1Hz,1,Are the candles by the entrace put out?,candles,1.0,behind,Where is 1.0 meters behind the candles?
+00262-1xGrZPxG1Hz,1,Are the candles by the entrace put out?,candles,1.6,left of,Where is 1.6 meters left of the candles?
+00262-1xGrZPxG1Hz,1,Are the candles by the entrace put out?,candles,1.8,below,Where is 1.8 meters below the candles?
+00262-1xGrZPxG1Hz,1,Are the candles by the entrace put out?,candles,2.8,behind,Where is 2.8 meters behind the candles?
+00262-1xGrZPxG1Hz,1,Are the candles by the entrace put out?,candles,3.4,above,Where is 3.4 meters above the candles?
+00262-1xGrZPxG1Hz,1,Are the candles by the entrace put out?,candles,1.2,above,Where is 1.2 meters above the candles?
+00262-1xGrZPxG1Hz,1,Are the candles by the entrace put out?,candles,0.8,right of,Where is 0.8 meters right of the candles?
+00299-bdp1XNEdvmW,0,How many sports balls are stored on the rack in the hallway?,sports balls,0.6,behind,Where is 0.6 meters behind the sports balls?
+00299-bdp1XNEdvmW,0,How many sports balls are stored on the rack in the hallway?,sports balls,0.4,left of,Where is 0.4 meters left of the sports balls?
+00299-bdp1XNEdvmW,0,How many sports balls are stored on the rack in the hallway?,sports balls,2.8,above,Where is 2.8 meters above the sports balls?
+00299-bdp1XNEdvmW,0,How many sports balls are stored on the rack in the hallway?,sports balls,3.0,right of,Where is 3.0 meters right of the sports balls?
+00299-bdp1XNEdvmW,0,How many sports balls are stored on the rack in the hallway?,sports balls,1.0,right of,Where is 1.0 meters right of the sports balls?
+00299-bdp1XNEdvmW,0,How many sports balls are stored on the rack in the hallway?,sports balls,2.2,behind,Where is 2.2 meters behind the sports balls?
+00299-bdp1XNEdvmW,0,How many sports balls are stored on the rack in the hallway?,sports balls,3.6,behind,Where is 3.6 meters behind the sports balls?
+00299-bdp1XNEdvmW,0,How many sports balls are stored on the rack in the hallway?,sports balls,3.2,in front of,Where is 3.2 meters in front of the sports balls?
+00299-bdp1XNEdvmW,0,Are the monitors left on?,monitors,2.0,behind,Where is 2.0 meters behind the monitors?
+00299-bdp1XNEdvmW,0,Are the monitors left on?,monitors,4.0,above,Where is 4.0 meters above the monitors?
+00299-bdp1XNEdvmW,0,Are the monitors left on?,monitors,1.8,below,Where is 1.8 meters below the monitors?
+00299-bdp1XNEdvmW,0,Are the monitors left on?,monitors,3.6,behind,Where is 3.6 meters behind the monitors?
+00299-bdp1XNEdvmW,0,Are the monitors left on?,monitors,2.6,left of,Where is 2.6 meters left of the monitors?
+00299-bdp1XNEdvmW,0,Are the monitors left on?,monitors,2.2,right of,Where is 2.2 meters right of the monitors?
+00299-bdp1XNEdvmW,0,Are the monitors left on?,monitors,0.8,below,Where is 0.8 meters below the monitors?
+00299-bdp1XNEdvmW,0,Are the monitors left on?,monitors,1.0,right of,Where is 1.0 meters right of the monitors?
+00299-bdp1XNEdvmW,1,Is there any vegetable left on the cutting board?,vegetable,0.6,behind,Where is 0.6 meters behind the vegetable?
+00299-bdp1XNEdvmW,1,Is there any vegetable left on the cutting board?,vegetable,1.4,behind,Where is 1.4 meters behind the vegetable?
+00299-bdp1XNEdvmW,1,Is there any vegetable left on the cutting board?,vegetable,3.4,right of,Where is 3.4 meters right of the vegetable?
+00299-bdp1XNEdvmW,1,Is there any vegetable left on the cutting board?,vegetable,3.2,above,Where is 3.2 meters above the vegetable?
+00299-bdp1XNEdvmW,1,Is there any vegetable left on the cutting board?,vegetable,1.6,right of,Where is 1.6 meters right of the vegetable?
+00299-bdp1XNEdvmW,1,Is there any vegetable left on the cutting board?,vegetable,3.6,right of,Where is 3.6 meters right of the vegetable?
+00299-bdp1XNEdvmW,1,Is there any vegetable left on the cutting board?,vegetable,1.2,left of,Where is 1.2 meters left of the vegetable?
+00299-bdp1XNEdvmW,1,Is there any vegetable left on the cutting board?,vegetable,2.6,right of,Where is 2.6 meters right of the vegetable?
+00304-X6Pct1msZv5,0,Is the air conditioning in the bedroom with flower painting turned on?,air conditioning,2.2,above,Where is 2.2 meters above the air conditioning?
+00304-X6Pct1msZv5,0,Is the air conditioning in the bedroom with flower painting turned on?,air conditioning,3.6,right of,Where is 3.6 meters right of the air conditioning?
+00304-X6Pct1msZv5,0,Is the air conditioning in the bedroom with flower painting turned on?,air conditioning,0.6,left of,Where is 0.6 meters left of the air conditioning?
+00304-X6Pct1msZv5,0,Is the air conditioning in the bedroom with flower painting turned on?,air conditioning,4.0,below,Where is 4.0 meters below the air conditioning?
+00304-X6Pct1msZv5,0,Is the air conditioning in the bedroom with flower painting turned on?,air conditioning,1.6,behind,Where is 1.6 meters behind the air conditioning?
+00304-X6Pct1msZv5,0,Is the air conditioning in the bedroom with flower painting turned on?,air conditioning,1.2,behind,Where is 1.2 meters behind the air conditioning?
+00304-X6Pct1msZv5,0,Is the air conditioning in the bedroom with flower painting turned on?,air conditioning,1.0,behind,Where is 1.0 meters behind the air conditioning?
+00304-X6Pct1msZv5,0,Is the air conditioning in the bedroom with flower painting turned on?,air conditioning,2.6,below,Where is 2.6 meters below the air conditioning?
+00313-PE6kVEtrxtj,0,I am looking for the stack of magazines I left somewhere in the living room.,stack of magazines,3.4,in front of,Where is 3.4 meters in front of the stack of magazines?
+00313-PE6kVEtrxtj,0,I am looking for the stack of magazines I left somewhere in the living room.,stack of magazines,1.4,above,Where is 1.4 meters above the stack of magazines?
+00313-PE6kVEtrxtj,0,I am looking for the stack of magazines I left somewhere in the living room.,stack of magazines,2.6,in front of,Where is 2.6 meters in front of the stack of magazines?
+00313-PE6kVEtrxtj,0,I am looking for the stack of magazines I left somewhere in the living room.,stack of magazines,1.8,right of,Where is 1.8 meters right of the stack of magazines?
+00313-PE6kVEtrxtj,0,I am looking for the stack of magazines I left somewhere in the living room.,stack of magazines,2.2,below,Where is 2.2 meters below the stack of magazines?
+00313-PE6kVEtrxtj,0,I am looking for the stack of magazines I left somewhere in the living room.,stack of magazines,3.6,above,Where is 3.6 meters above the stack of magazines?
+00313-PE6kVEtrxtj,0,I am looking for the stack of magazines I left somewhere in the living room.,stack of magazines,0.2,above,Where is 0.2 meters above the stack of magazines?
+00313-PE6kVEtrxtj,0,I am looking for the stack of magazines I left somewhere in the living room.,stack of magazines,1.6,below,Where is 1.6 meters below the stack of magazines?
+00323-yHLr6bvWsVm,0,Does the dining table have any fruit bowl on it?,fruit bowl,1.4,behind,Where is 1.4 meters behind the fruit bowl?
+00323-yHLr6bvWsVm,0,Does the dining table have any fruit bowl on it?,fruit bowl,0.6,in front of,Where is 0.6 meters in front of the fruit bowl?
+00323-yHLr6bvWsVm,0,Does the dining table have any fruit bowl on it?,fruit bowl,1.8,left of,Where is 1.8 meters left of the fruit bowl?
+00323-yHLr6bvWsVm,0,Does the dining table have any fruit bowl on it?,fruit bowl,1.6,right of,Where is 1.6 meters right of the fruit bowl?
+00323-yHLr6bvWsVm,0,Does the dining table have any fruit bowl on it?,fruit bowl,2.6,left of,Where is 2.6 meters left of the fruit bowl?
+00323-yHLr6bvWsVm,0,Does the dining table have any fruit bowl on it?,fruit bowl,4.0,behind,Where is 4.0 meters behind the fruit bowl?
+00323-yHLr6bvWsVm,0,Does the dining table have any fruit bowl on it?,fruit bowl,2.2,below,Where is 2.2 meters below the fruit bowl?
+00323-yHLr6bvWsVm,0,Does the dining table have any fruit bowl on it?,fruit bowl,3.4,behind,Where is 3.4 meters behind the fruit bowl?
+00324-DoSbsoo4EAg,0,Is there already some shampoo at the shower?,shampoo,3.8,behind,Where is 3.8 meters behind the shampoo?
+00324-DoSbsoo4EAg,0,Is there already some shampoo at the shower?,shampoo,3.2,behind,Where is 3.2 meters behind the shampoo?
+00324-DoSbsoo4EAg,0,Is there already some shampoo at the shower?,shampoo,0.2,right of,Where is 0.2 meters right of the shampoo?
+00324-DoSbsoo4EAg,0,Is there already some shampoo at the shower?,shampoo,0.6,left of,Where is 0.6 meters left of the shampoo?
+00324-DoSbsoo4EAg,0,Is there already some shampoo at the shower?,shampoo,2.6,right of,Where is 2.6 meters right of the shampoo?
+00324-DoSbsoo4EAg,0,Is there already some shampoo at the shower?,shampoo,3.0,right of,Where is 3.0 meters right of the shampoo?
+00324-DoSbsoo4EAg,0,Is there already some shampoo at the shower?,shampoo,2.8,right of,Where is 2.8 meters right of the shampoo?
+00324-DoSbsoo4EAg,0,Is there already some shampoo at the shower?,shampoo,1.8,above,Where is 1.8 meters above the shampoo?
+00326-u9rPN5cHWBg,0,Are the bedroom lamps on?,bedroom lamps,0.8,above,Where is 0.8 meters above the bedroom lamps?
+00326-u9rPN5cHWBg,0,Are the bedroom lamps on?,bedroom lamps,3.0,left of,Where is 3.0 meters left of the bedroom lamps?
+00326-u9rPN5cHWBg,0,Are the bedroom lamps on?,bedroom lamps,0.6,below,Where is 0.6 meters below the bedroom lamps?
+00326-u9rPN5cHWBg,0,Are the bedroom lamps on?,bedroom lamps,0.4,below,Where is 0.4 meters below the bedroom lamps?
+00326-u9rPN5cHWBg,0,Are the bedroom lamps on?,bedroom lamps,0.2,in front of,Where is 0.2 meters in front of the bedroom lamps?
+00326-u9rPN5cHWBg,0,Are the bedroom lamps on?,bedroom lamps,2.6,right of,Where is 2.6 meters right of the bedroom lamps?
+00326-u9rPN5cHWBg,0,Are the bedroom lamps on?,bedroom lamps,3.6,below,Where is 3.6 meters below the bedroom lamps?
+00326-u9rPN5cHWBg,0,Are the bedroom lamps on?,bedroom lamps,4.0,in front of,Where is 4.0 meters in front of the bedroom lamps?
+00327-xgLmjqzoAzF,0,Where did I leave the black suitcases?,black suitcases,3.4,right of,Where is 3.4 meters right of the black suitcases?
+00327-xgLmjqzoAzF,0,Where did I leave the black suitcases?,black suitcases,2.8,behind,Where is 2.8 meters behind the black suitcases?
+00327-xgLmjqzoAzF,0,Where did I leave the black suitcases?,black suitcases,0.8,in front of,Where is 0.8 meters in front of the black suitcases?
+00327-xgLmjqzoAzF,0,Where did I leave the black suitcases?,black suitcases,3.6,right of,Where is 3.6 meters right of the black suitcases?
+00327-xgLmjqzoAzF,0,Where did I leave the black suitcases?,black suitcases,0.6,above,Where is 0.6 meters above the black suitcases?
+00327-xgLmjqzoAzF,0,Where did I leave the black suitcases?,black suitcases,1.0,left of,Where is 1.0 meters left of the black suitcases?
+00327-xgLmjqzoAzF,0,Where did I leave the black suitcases?,black suitcases,1.8,left of,Where is 1.8 meters left of the black suitcases?
+00327-xgLmjqzoAzF,0,Where did I leave the black suitcases?,black suitcases,2.0,above,Where is 2.0 meters above the black suitcases?
+00327-xgLmjqzoAzF,0,I was playing pool with friends. Are the balls put away from the table?,pool balls,2.0,above,Where is 2.0 meters above the pool balls?
+00327-xgLmjqzoAzF,0,I was playing pool with friends. Are the balls put away from the table?,pool balls,3.0,right of,Where is 3.0 meters right of the pool balls?
+00327-xgLmjqzoAzF,0,I was playing pool with friends. Are the balls put away from the table?,pool balls,1.8,left of,Where is 1.8 meters left of the pool balls?
+00327-xgLmjqzoAzF,0,I was playing pool with friends. Are the balls put away from the table?,pool balls,2.2,behind,Where is 2.2 meters behind the pool balls?
+00327-xgLmjqzoAzF,0,I was playing pool with friends. Are the balls put away from the table?,pool balls,1.6,below,Where is 1.6 meters below the pool balls?
+00327-xgLmjqzoAzF,0,I was playing pool with friends. Are the balls put away from the table?,pool balls,3.2,below,Where is 3.2 meters below the pool balls?
+00327-xgLmjqzoAzF,0,I was playing pool with friends. Are the balls put away from the table?,pool balls,3.6,in front of,Where is 3.6 meters in front of the pool balls?
+00327-xgLmjqzoAzF,0,I was playing pool with friends. Are the balls put away from the table?,pool balls,0.8,left of,Where is 0.8 meters left of the pool balls?
+00330-WhNyDTnd9g5,0,Are the pillows left on the porch chair?,pillows,0.2,behind,Where is 0.2 meters behind the pillows?
+00330-WhNyDTnd9g5,0,Are the pillows left on the porch chair?,pillows,1.4,in front of,Where is 1.4 meters in front of the pillows?
+00330-WhNyDTnd9g5,0,Are the pillows left on the porch chair?,pillows,3.2,right of,Where is 3.2 meters right of the pillows?
+00330-WhNyDTnd9g5,0,Are the pillows left on the porch chair?,pillows,2.8,behind,Where is 2.8 meters behind the pillows?
+00330-WhNyDTnd9g5,0,Are the pillows left on the porch chair?,pillows,0.6,left of,Where is 0.6 meters left of the pillows?
+00330-WhNyDTnd9g5,0,Are the pillows left on the porch chair?,pillows,1.0,below,Where is 1.0 meters below the pillows?
+00330-WhNyDTnd9g5,0,Are the pillows left on the porch chair?,pillows,0.8,in front of,Where is 0.8 meters in front of the pillows?
+00330-WhNyDTnd9g5,0,Are the pillows left on the porch chair?,pillows,2.2,below,Where is 2.2 meters below the pillows?
+00330-WhNyDTnd9g5,2,Is the curtain shade pulled down in the kid's room?,curtain shade,2.8,above,Where is 2.8 meters above the curtain shade?
+00330-WhNyDTnd9g5,2,Is the curtain shade pulled down in the kid's room?,curtain shade,2.4,left of,Where is 2.4 meters left of the curtain shade?
+00330-WhNyDTnd9g5,2,Is the curtain shade pulled down in the kid's room?,curtain shade,2.6,right of,Where is 2.6 meters right of the curtain shade?
+00330-WhNyDTnd9g5,2,Is the curtain shade pulled down in the kid's room?,curtain shade,1.4,behind,Where is 1.4 meters behind the curtain shade?
+00330-WhNyDTnd9g5,2,Is the curtain shade pulled down in the kid's room?,curtain shade,0.2,right of,Where is 0.2 meters right of the curtain shade?
+00330-WhNyDTnd9g5,2,Is the curtain shade pulled down in the kid's room?,curtain shade,3.6,in front of,Where is 3.6 meters in front of the curtain shade?
+00330-WhNyDTnd9g5,2,Is the curtain shade pulled down in the kid's room?,curtain shade,1.0,right of,Where is 1.0 meters right of the curtain shade?
+00330-WhNyDTnd9g5,2,Is the curtain shade pulled down in the kid's room?,curtain shade,3.8,right of,Where is 3.8 meters right of the curtain shade?
+00366-fxbzYAGkrtm,0,I am looking for my boots. Are they on the stairs by the entrance door?,boots,3.0,right of,Where is 3.0 meters right of the boots?
+00366-fxbzYAGkrtm,0,I am looking for my boots. Are they on the stairs by the entrance door?,boots,1.6,right of,Where is 1.6 meters right of the boots?
+00366-fxbzYAGkrtm,0,I am looking for my boots. Are they on the stairs by the entrance door?,boots,1.8,behind,Where is 1.8 meters behind the boots?
+00366-fxbzYAGkrtm,0,I am looking for my boots. Are they on the stairs by the entrance door?,boots,2.0,behind,Where is 2.0 meters behind the boots?
+00366-fxbzYAGkrtm,0,I am looking for my boots. Are they on the stairs by the entrance door?,boots,0.8,below,Where is 0.8 meters below the boots?
+00366-fxbzYAGkrtm,0,I am looking for my boots. Are they on the stairs by the entrance door?,boots,3.4,left of,Where is 3.4 meters left of the boots?
+00366-fxbzYAGkrtm,0,I am looking for my boots. Are they on the stairs by the entrance door?,boots,3.8,above,Where is 3.8 meters above the boots?
+00366-fxbzYAGkrtm,0,I am looking for my boots. Are they on the stairs by the entrance door?,boots,4.0,right of,Where is 4.0 meters right of the boots?
+00366-fxbzYAGkrtm,1,How many pillows I put on the bed with red bedding?,pillows,2.6,left of,Where is 2.6 meters left of the pillows?
+00366-fxbzYAGkrtm,1,How many pillows I put on the bed with red bedding?,pillows,0.4,right of,Where is 0.4 meters right of the pillows?
+00366-fxbzYAGkrtm,1,How many pillows I put on the bed with red bedding?,pillows,1.4,behind,Where is 1.4 meters behind the pillows?
+00366-fxbzYAGkrtm,1,How many pillows I put on the bed with red bedding?,pillows,0.2,behind,Where is 0.2 meters behind the pillows?
+00366-fxbzYAGkrtm,1,How many pillows I put on the bed with red bedding?,pillows,1.0,below,Where is 1.0 meters below the pillows?
+00366-fxbzYAGkrtm,1,How many pillows I put on the bed with red bedding?,pillows,3.6,in front of,Where is 3.6 meters in front of the pillows?
+00366-fxbzYAGkrtm,1,How many pillows I put on the bed with red bedding?,pillows,3.4,below,Where is 3.4 meters below the pillows?
+00366-fxbzYAGkrtm,1,How many pillows I put on the bed with red bedding?,pillows,2.4,left of,Where is 2.4 meters left of the pillows?
+00386-b3WpMbPFB6q,0,I can't find my laptop anywhere.,laptop,0.6,behind,Where is 0.6 meters behind the laptop?
+00386-b3WpMbPFB6q,0,I can't find my laptop anywhere.,laptop,1.2,left of,Where is 1.2 meters left of the laptop?
+00386-b3WpMbPFB6q,0,I can't find my laptop anywhere.,laptop,2.2,in front of,Where is 2.2 meters in front of the laptop?
+00386-b3WpMbPFB6q,0,I can't find my laptop anywhere.,laptop,1.4,below,Where is 1.4 meters below the laptop?
+00386-b3WpMbPFB6q,0,I can't find my laptop anywhere.,laptop,3.8,below,Where is 3.8 meters below the laptop?
+00386-b3WpMbPFB6q,0,I can't find my laptop anywhere.,laptop,3.6,behind,Where is 3.6 meters behind the laptop?
+00386-b3WpMbPFB6q,0,I can't find my laptop anywhere.,laptop,1.8,in front of,Where is 1.8 meters in front of the laptop?
+00386-b3WpMbPFB6q,0,I can't find my laptop anywhere.,laptop,2.4,in front of,Where is 2.4 meters in front of the laptop?
+00386-b3WpMbPFB6q,0,Is my jacket left on the staircase?,jacket,3.0,behind,Where is 3.0 meters behind the jacket?
+00386-b3WpMbPFB6q,0,Is my jacket left on the staircase?,jacket,1.2,left of,Where is 1.2 meters left of the jacket?
+00386-b3WpMbPFB6q,0,Is my jacket left on the staircase?,jacket,0.8,above,Where is 0.8 meters above the jacket?
+00386-b3WpMbPFB6q,0,Is my jacket left on the staircase?,jacket,0.2,right of,Where is 0.2 meters right of the jacket?
+00386-b3WpMbPFB6q,0,Is my jacket left on the staircase?,jacket,0.6,behind,Where is 0.6 meters behind the jacket?
+00386-b3WpMbPFB6q,0,Is my jacket left on the staircase?,jacket,1.0,in front of,Where is 1.0 meters in front of the jacket?
+00386-b3WpMbPFB6q,0,Is my jacket left on the staircase?,jacket,0.4,in front of,Where is 0.4 meters in front of the jacket?
+00386-b3WpMbPFB6q,0,Is my jacket left on the staircase?,jacket,3.8,behind,Where is 3.8 meters behind the jacket?
+00388-pcpn6mFqFCg,0,Is the kettle on the coffee table?,kettle,0.6,in front of,Where is 0.6 meters in front of the kettle?
+00388-pcpn6mFqFCg,0,Is the kettle on the coffee table?,kettle,0.4,in front of,Where is 0.4 meters in front of the kettle?
+00388-pcpn6mFqFCg,0,Is the kettle on the coffee table?,kettle,3.2,below,Where is 3.2 meters below the kettle?
+00388-pcpn6mFqFCg,0,Is the kettle on the coffee table?,kettle,1.4,behind,Where is 1.4 meters behind the kettle?
+00388-pcpn6mFqFCg,0,Is the kettle on the coffee table?,kettle,2.4,left of,Where is 2.4 meters left of the kettle?
+00388-pcpn6mFqFCg,0,Is the kettle on the coffee table?,kettle,1.8,below,Where is 1.8 meters below the kettle?
+00388-pcpn6mFqFCg,0,Is the kettle on the coffee table?,kettle,1.6,behind,Where is 1.6 meters behind the kettle?
+00388-pcpn6mFqFCg,0,Is the kettle on the coffee table?,kettle,0.8,right of,Where is 0.8 meters right of the kettle?
+00388-pcpn6mFqFCg,0,Which rug did I put next to the kitchen sink?,rug,2.6,in front of,Where is 2.6 meters in front of the rug?
+00388-pcpn6mFqFCg,0,Which rug did I put next to the kitchen sink?,rug,0.4,right of,Where is 0.4 meters right of the rug?
+00388-pcpn6mFqFCg,0,Which rug did I put next to the kitchen sink?,rug,4.0,below,Where is 4.0 meters below the rug?
+00388-pcpn6mFqFCg,0,Which rug did I put next to the kitchen sink?,rug,3.8,left of,Where is 3.8 meters left of the rug?
+00388-pcpn6mFqFCg,0,Which rug did I put next to the kitchen sink?,rug,3.0,above,Where is 3.0 meters above the rug?
+00388-pcpn6mFqFCg,0,Which rug did I put next to the kitchen sink?,rug,3.4,in front of,Where is 3.4 meters in front of the rug?
+00388-pcpn6mFqFCg,0,Which rug did I put next to the kitchen sink?,rug,3.6,in front of,Where is 3.6 meters in front of the rug?
+00388-pcpn6mFqFCg,0,Which rug did I put next to the kitchen sink?,rug,0.2,in front of,Where is 0.2 meters in front of the rug?
+00397-ZNanfzgCdm3,0,Are curtains closed in the bedroom?,curtains,2.2,above,Where is 2.2 meters above the curtains?
+00397-ZNanfzgCdm3,0,Are curtains closed in the bedroom?,curtains,0.4,below,Where is 0.4 meters below the curtains?
+00397-ZNanfzgCdm3,0,Are curtains closed in the bedroom?,curtains,1.8,left of,Where is 1.8 meters left of the curtains?
+00397-ZNanfzgCdm3,0,Are curtains closed in the bedroom?,curtains,4.0,left of,Where is 4.0 meters left of the curtains?
+00397-ZNanfzgCdm3,0,Are curtains closed in the bedroom?,curtains,3.6,right of,Where is 3.6 meters right of the curtains?
+00397-ZNanfzgCdm3,0,Are curtains closed in the bedroom?,curtains,1.0,left of,Where is 1.0 meters left of the curtains?
+00397-ZNanfzgCdm3,0,Are curtains closed in the bedroom?,curtains,0.2,behind,Where is 0.2 meters behind the curtains?
+00397-ZNanfzgCdm3,0,Are curtains closed in the bedroom?,curtains,2.4,below,Where is 2.4 meters below the curtains?
+00397-ZNanfzgCdm3,0,Where are the laptops?,laptops,3.0,left of,Where is 3.0 meters left of the laptops?
+00397-ZNanfzgCdm3,0,Where are the laptops?,laptops,2.6,below,Where is 2.6 meters below the laptops?
+00397-ZNanfzgCdm3,0,Where are the laptops?,laptops,1.8,in front of,Where is 1.8 meters in front of the laptops?
+00397-ZNanfzgCdm3,0,Where are the laptops?,laptops,2.8,below,Where is 2.8 meters below the laptops?
+00397-ZNanfzgCdm3,0,Where are the laptops?,laptops,3.2,right of,Where is 3.2 meters right of the laptops?
+00397-ZNanfzgCdm3,0,Where are the laptops?,laptops,0.6,above,Where is 0.6 meters above the laptops?
+00397-ZNanfzgCdm3,0,Where are the laptops?,laptops,1.6,right of,Where is 1.6 meters right of the laptops?
+00397-ZNanfzgCdm3,0,Where are the laptops?,laptops,4.0,in front of,Where is 4.0 meters in front of the laptops?
+00404-QN2dRqwd84J,0,Is the television in the bedroom left on?,television,2.2,right of,Where is 2.2 meters right of the television?
+00404-QN2dRqwd84J,0,Is the television in the bedroom left on?,television,3.0,behind,Where is 3.0 meters behind the television?
+00404-QN2dRqwd84J,0,Is the television in the bedroom left on?,television,2.4,left of,Where is 2.4 meters left of the television?
+00404-QN2dRqwd84J,0,Is the television in the bedroom left on?,television,0.6,below,Where is 0.6 meters below the television?
+00404-QN2dRqwd84J,0,Is the television in the bedroom left on?,television,1.4,left of,Where is 1.4 meters left of the television?
+00404-QN2dRqwd84J,0,Is the television in the bedroom left on?,television,3.2,behind,Where is 3.2 meters behind the television?
+00404-QN2dRqwd84J,0,Is the television in the bedroom left on?,television,2.6,above,Where is 2.6 meters above the television?
+00404-QN2dRqwd84J,0,Is the television in the bedroom left on?,television,3.4,above,Where is 3.4 meters above the television?
+00410-v7DzfFFEpsD,0,Which side of the front door is the plant now?,plant,2.2,right of,Where is 2.2 meters right of the plant?
+00410-v7DzfFFEpsD,0,Which side of the front door is the plant now?,plant,1.2,left of,Where is 1.2 meters left of the plant?
+00410-v7DzfFFEpsD,0,Which side of the front door is the plant now?,plant,2.8,behind,Where is 2.8 meters behind the plant?
+00410-v7DzfFFEpsD,0,Which side of the front door is the plant now?,plant,0.8,behind,Where is 0.8 meters behind the plant?
+00410-v7DzfFFEpsD,0,Which side of the front door is the plant now?,plant,0.6,below,Where is 0.6 meters below the plant?
+00410-v7DzfFFEpsD,0,Which side of the front door is the plant now?,plant,1.0,behind,Where is 1.0 meters behind the plant?
+00410-v7DzfFFEpsD,0,Which side of the front door is the plant now?,plant,2.0,right of,Where is 2.0 meters right of the plant?
+00410-v7DzfFFEpsD,0,Which side of the front door is the plant now?,plant,0.4,right of,Where is 0.4 meters right of the plant?
+00410-v7DzfFFEpsD,1,I need to find my Louis Vuitton box.,Louis Vuitton box,1.0,in front of,Where is 1.0 meters in front of the Louis Vuitton box?
+00410-v7DzfFFEpsD,1,I need to find my Louis Vuitton box.,Louis Vuitton box,2.8,in front of,Where is 2.8 meters in front of the Louis Vuitton box?
+00410-v7DzfFFEpsD,1,I need to find my Louis Vuitton box.,Louis Vuitton box,3.0,above,Where is 3.0 meters above the Louis Vuitton box?
+00410-v7DzfFFEpsD,1,I need to find my Louis Vuitton box.,Louis Vuitton box,1.6,in front of,Where is 1.6 meters in front of the Louis Vuitton box?
+00410-v7DzfFFEpsD,1,I need to find my Louis Vuitton box.,Louis Vuitton box,0.8,in front of,Where is 0.8 meters in front of the Louis Vuitton box?
+00410-v7DzfFFEpsD,1,I need to find my Louis Vuitton box.,Louis Vuitton box,2.6,in front of,Where is 2.6 meters in front of the Louis Vuitton box?
+00410-v7DzfFFEpsD,1,I need to find my Louis Vuitton box.,Louis Vuitton box,3.8,below,Where is 3.8 meters below the Louis Vuitton box?
+00410-v7DzfFFEpsD,1,I need to find my Louis Vuitton box.,Louis Vuitton box,4.0,in front of,Where is 4.0 meters in front of the Louis Vuitton box?
+00410-v7DzfFFEpsD,1,Which pillow is there on the armchair in the main bedroom?,pillow,1.4,above,Where is 1.4 meters above the pillow?
+00410-v7DzfFFEpsD,1,Which pillow is there on the armchair in the main bedroom?,pillow,3.0,right of,Where is 3.0 meters right of the pillow?
+00410-v7DzfFFEpsD,1,Which pillow is there on the armchair in the main bedroom?,pillow,1.6,in front of,Where is 1.6 meters in front of the pillow?
+00410-v7DzfFFEpsD,1,Which pillow is there on the armchair in the main bedroom?,pillow,1.2,left of,Where is 1.2 meters left of the pillow?
+00410-v7DzfFFEpsD,1,Which pillow is there on the armchair in the main bedroom?,pillow,3.6,behind,Where is 3.6 meters behind the pillow?
+00410-v7DzfFFEpsD,1,Which pillow is there on the armchair in the main bedroom?,pillow,0.8,in front of,Where is 0.8 meters in front of the pillow?
+00410-v7DzfFFEpsD,1,Which pillow is there on the armchair in the main bedroom?,pillow,0.6,right of,Where is 0.6 meters right of the pillow?
+00410-v7DzfFFEpsD,1,Which pillow is there on the armchair in the main bedroom?,pillow,1.0,above,Where is 1.0 meters above the pillow?
+00414-77mMEyxhs44,0,Is the monitor left on?,monitor,3.4,right of,Where is 3.4 meters right of the monitor?
+00414-77mMEyxhs44,0,Is the monitor left on?,monitor,1.6,behind,Where is 1.6 meters behind the monitor?
+00414-77mMEyxhs44,0,Is the monitor left on?,monitor,0.8,in front of,Where is 0.8 meters in front of the monitor?
+00414-77mMEyxhs44,0,Is the monitor left on?,monitor,3.0,left of,Where is 3.0 meters left of the monitor?
+00414-77mMEyxhs44,0,Is the monitor left on?,monitor,0.4,in front of,Where is 0.4 meters in front of the monitor?
+00414-77mMEyxhs44,0,Is the monitor left on?,monitor,3.2,right of,Where is 3.2 meters right of the monitor?
+00414-77mMEyxhs44,0,Is the monitor left on?,monitor,0.2,left of,Where is 0.2 meters left of the monitor?
+00414-77mMEyxhs44,0,Is the monitor left on?,monitor,3.8,left of,Where is 3.8 meters left of the monitor?
+00414-77mMEyxhs44,1,I'm looking for my blue check-patterned blanket. Where is it?,blue check-patterned blanket,1.4,behind,Where is 1.4 meters behind the blue check-patterned blanket?
+00414-77mMEyxhs44,1,I'm looking for my blue check-patterned blanket. Where is it?,blue check-patterned blanket,3.8,above,Where is 3.8 meters above the blue check-patterned blanket?
+00414-77mMEyxhs44,1,I'm looking for my blue check-patterned blanket. Where is it?,blue check-patterned blanket,4.0,in front of,Where is 4.0 meters in front of the blue check-patterned blanket?
+00414-77mMEyxhs44,1,I'm looking for my blue check-patterned blanket. Where is it?,blue check-patterned blanket,0.6,below,Where is 0.6 meters below the blue check-patterned blanket?
+00414-77mMEyxhs44,1,I'm looking for my blue check-patterned blanket. Where is it?,blue check-patterned blanket,2.4,left of,Where is 2.4 meters left of the blue check-patterned blanket?
+00414-77mMEyxhs44,1,I'm looking for my blue check-patterned blanket. Where is it?,blue check-patterned blanket,1.8,left of,Where is 1.8 meters left of the blue check-patterned blanket?
+00414-77mMEyxhs44,1,I'm looking for my blue check-patterned blanket. Where is it?,blue check-patterned blanket,2.8,below,Where is 2.8 meters below the blue check-patterned blanket?
+00414-77mMEyxhs44,1,I'm looking for my blue check-patterned blanket. Where is it?,blue check-patterned blanket,3.4,above,Where is 3.4 meters above the blue check-patterned blanket?
+00440-wPLokgvCnuk,1,How many towels are there at the oven?,towels,4.0,right of,Where is 4.0 meters right of the towels?
+00440-wPLokgvCnuk,1,How many towels are there at the oven?,towels,2.4,in front of,Where is 2.4 meters in front of the towels?
+00440-wPLokgvCnuk,1,How many towels are there at the oven?,towels,1.4,left of,Where is 1.4 meters left of the towels?
+00440-wPLokgvCnuk,1,How many towels are there at the oven?,towels,0.4,above,Where is 0.4 meters above the towels?
+00440-wPLokgvCnuk,1,How many towels are there at the oven?,towels,3.8,below,Where is 3.8 meters below the towels?
+00440-wPLokgvCnuk,1,How many towels are there at the oven?,towels,1.2,below,Where is 1.2 meters below the towels?
+00440-wPLokgvCnuk,1,How many towels are there at the oven?,towels,0.6,right of,Where is 0.6 meters right of the towels?
+00440-wPLokgvCnuk,1,How many towels are there at the oven?,towels,0.2,left of,Where is 0.2 meters left of the towels?
+00440-wPLokgvCnuk,1,What did I leave on the coffee table?,coffee table,2.2,behind,Where is 2.2 meters behind the coffee table?
+00440-wPLokgvCnuk,1,What did I leave on the coffee table?,coffee table,2.8,above,Where is 2.8 meters above the coffee table?
+00440-wPLokgvCnuk,1,What did I leave on the coffee table?,coffee table,2.4,behind,Where is 2.4 meters behind the coffee table?
+00440-wPLokgvCnuk,1,What did I leave on the coffee table?,coffee table,1.2,left of,Where is 1.2 meters left of the coffee table?
+00440-wPLokgvCnuk,1,What did I leave on the coffee table?,coffee table,2.0,behind,Where is 2.0 meters behind the coffee table?
+00440-wPLokgvCnuk,1,What did I leave on the coffee table?,coffee table,0.4,left of,Where is 0.4 meters left of the coffee table?
+00440-wPLokgvCnuk,1,What did I leave on the coffee table?,coffee table,0.8,behind,Where is 0.8 meters behind the coffee table?
+00440-wPLokgvCnuk,1,What did I leave on the coffee table?,coffee table,0.2,below,Where is 0.2 meters below the coffee table?
+00444-sX9xad6ULKc,0,How many sets of utensils are there on the dining table?,dining table,3.6,behind,Where is 3.6 meters behind the dining table?
+00444-sX9xad6ULKc,0,How many sets of utensils are there on the dining table?,dining table,1.0,in front of,Where is 1.0 meters in front of the dining table?
+00444-sX9xad6ULKc,0,How many sets of utensils are there on the dining table?,dining table,4.0,below,Where is 4.0 meters below the dining table?
+00444-sX9xad6ULKc,0,How many sets of utensils are there on the dining table?,dining table,0.6,in front of,Where is 0.6 meters in front of the dining table?
+00444-sX9xad6ULKc,0,How many sets of utensils are there on the dining table?,dining table,1.2,behind,Where is 1.2 meters behind the dining table?
+00444-sX9xad6ULKc,0,How many sets of utensils are there on the dining table?,dining table,1.4,left of,Where is 1.4 meters left of the dining table?
+00444-sX9xad6ULKc,0,How many sets of utensils are there on the dining table?,dining table,2.4,in front of,Where is 2.4 meters in front of the dining table?
+00444-sX9xad6ULKc,0,How many sets of utensils are there on the dining table?,dining table,3.8,below,Where is 3.8 meters below the dining table?
+00444-sX9xad6ULKc,0,Are the curtains in the office closed?,curtains,3.8,in front of,Where is 3.8 meters in front of the curtains?
+00444-sX9xad6ULKc,0,Are the curtains in the office closed?,curtains,2.4,below,Where is 2.4 meters below the curtains?
+00444-sX9xad6ULKc,0,Are the curtains in the office closed?,curtains,2.8,right of,Where is 2.8 meters right of the curtains?
+00444-sX9xad6ULKc,0,Are the curtains in the office closed?,curtains,3.6,behind,Where is 3.6 meters behind the curtains?
+00444-sX9xad6ULKc,0,Are the curtains in the office closed?,curtains,0.2,below,Where is 0.2 meters below the curtains?
+00444-sX9xad6ULKc,0,Are the curtains in the office closed?,curtains,3.4,behind,Where is 3.4 meters behind the curtains?
+00444-sX9xad6ULKc,0,Are the curtains in the office closed?,curtains,2.6,right of,Where is 2.6 meters right of the curtains?
+00444-sX9xad6ULKc,0,Are the curtains in the office closed?,curtains,3.0,left of,Where is 3.0 meters left of the curtains?
+00466-xAHnY3QzFUN,0,Is the bathroom door fully closed?,bathroom door,2.8,behind,Where is 2.8 meters behind the bathroom door?
+00466-xAHnY3QzFUN,0,Is the bathroom door fully closed?,bathroom door,1.2,right of,Where is 1.2 meters right of the bathroom door?
+00466-xAHnY3QzFUN,0,Is the bathroom door fully closed?,bathroom door,4.0,right of,Where is 4.0 meters right of the bathroom door?
+00466-xAHnY3QzFUN,0,Is the bathroom door fully closed?,bathroom door,0.8,left of,Where is 0.8 meters left of the bathroom door?
+00466-xAHnY3QzFUN,0,Is the bathroom door fully closed?,bathroom door,0.6,left of,Where is 0.6 meters left of the bathroom door?
+00466-xAHnY3QzFUN,0,Is the bathroom door fully closed?,bathroom door,1.4,above,Where is 1.4 meters above the bathroom door?
+00466-xAHnY3QzFUN,0,Is the bathroom door fully closed?,bathroom door,2.0,right of,Where is 2.0 meters right of the bathroom door?
+00466-xAHnY3QzFUN,0,Is the bathroom door fully closed?,bathroom door,3.8,below,Where is 3.8 meters below the bathroom door?
+00506-QVAA6zecMHu,0,Which pillows are there on the bed right now?,pillows,2.6,right of,Where is 2.6 meters right of the pillows?
+00506-QVAA6zecMHu,0,Which pillows are there on the bed right now?,pillows,0.6,above,Where is 0.6 meters above the pillows?
+00506-QVAA6zecMHu,0,Which pillows are there on the bed right now?,pillows,2.4,right of,Where is 2.4 meters right of the pillows?
+00506-QVAA6zecMHu,0,Which pillows are there on the bed right now?,pillows,3.4,left of,Where is 3.4 meters left of the pillows?
+00506-QVAA6zecMHu,0,Which pillows are there on the bed right now?,pillows,1.2,left of,Where is 1.2 meters left of the pillows?
+00506-QVAA6zecMHu,0,Which pillows are there on the bed right now?,pillows,3.8,behind,Where is 3.8 meters behind the pillows?
+00506-QVAA6zecMHu,0,Which pillows are there on the bed right now?,pillows,3.2,behind,Where is 3.2 meters behind the pillows?
+00506-QVAA6zecMHu,0,Which pillows are there on the bed right now?,pillows,1.0,right of,Where is 1.0 meters right of the pillows?
+00525-iKFn6fzyRqs,0,I am trying to remember where I left the dog food plates.,dog food plates,2.0,behind,Where is 2.0 meters behind the dog food plates?
+00525-iKFn6fzyRqs,0,I am trying to remember where I left the dog food plates.,dog food plates,1.0,left of,Where is 1.0 meters left of the dog food plates?
+00525-iKFn6fzyRqs,0,I am trying to remember where I left the dog food plates.,dog food plates,0.4,below,Where is 0.4 meters below the dog food plates?
+00525-iKFn6fzyRqs,0,I am trying to remember where I left the dog food plates.,dog food plates,3.2,above,Where is 3.2 meters above the dog food plates?
+00525-iKFn6fzyRqs,0,I am trying to remember where I left the dog food plates.,dog food plates,2.2,below,Where is 2.2 meters below the dog food plates?
+00525-iKFn6fzyRqs,0,I am trying to remember where I left the dog food plates.,dog food plates,0.2,right of,Where is 0.2 meters right of the dog food plates?
+00525-iKFn6fzyRqs,0,I am trying to remember where I left the dog food plates.,dog food plates,4.0,below,Where is 4.0 meters below the dog food plates?
+00525-iKFn6fzyRqs,0,I am trying to remember where I left the dog food plates.,dog food plates,3.4,right of,Where is 3.4 meters right of the dog food plates?
+00525-iKFn6fzyRqs,0,Is the floor lamp next to the piano left on?,floor lamp,4.0,behind,Where is 4.0 meters behind the floor lamp?
+00525-iKFn6fzyRqs,0,Is the floor lamp next to the piano left on?,floor lamp,2.6,above,Where is 2.6 meters above the floor lamp?
+00525-iKFn6fzyRqs,0,Is the floor lamp next to the piano left on?,floor lamp,1.4,right of,Where is 1.4 meters right of the floor lamp?
+00525-iKFn6fzyRqs,0,Is the floor lamp next to the piano left on?,floor lamp,3.2,behind,Where is 3.2 meters behind the floor lamp?
+00525-iKFn6fzyRqs,0,Is the floor lamp next to the piano left on?,floor lamp,1.2,in front of,Where is 1.2 meters in front of the floor lamp?
+00525-iKFn6fzyRqs,0,Is the floor lamp next to the piano left on?,floor lamp,2.0,left of,Where is 2.0 meters left of the floor lamp?
+00525-iKFn6fzyRqs,0,Is the floor lamp next to the piano left on?,floor lamp,0.8,right of,Where is 0.8 meters right of the floor lamp?
+00525-iKFn6fzyRqs,0,Is the floor lamp next to the piano left on?,floor lamp,0.2,right of,Where is 0.2 meters right of the floor lamp?
+00525-iKFn6fzyRqs,1,I want to take a shower. Are there some towels by the bathrub?,towels,1.4,behind,Where is 1.4 meters behind the towels?
+00525-iKFn6fzyRqs,1,I want to take a shower. Are there some towels by the bathrub?,towels,0.4,above,Where is 0.4 meters above the towels?
+00525-iKFn6fzyRqs,1,I want to take a shower. Are there some towels by the bathrub?,towels,3.6,below,Where is 3.6 meters below the towels?
+00525-iKFn6fzyRqs,1,I want to take a shower. Are there some towels by the bathrub?,towels,3.8,in front of,Where is 3.8 meters in front of the towels?
+00525-iKFn6fzyRqs,1,I want to take a shower. Are there some towels by the bathrub?,towels,2.2,below,Where is 2.2 meters below the towels?
+00525-iKFn6fzyRqs,1,I want to take a shower. Are there some towels by the bathrub?,towels,3.4,behind,Where is 3.4 meters behind the towels?
+00525-iKFn6fzyRqs,1,I want to take a shower. Are there some towels by the bathrub?,towels,4.0,in front of,Where is 4.0 meters in front of the towels?
+00525-iKFn6fzyRqs,1,I want to take a shower. Are there some towels by the bathrub?,towels,2.0,above,Where is 2.0 meters above the towels?
+00529-W9YAR9qcuvN,0,Is the bottom drawer of the refrigerator left open?,refrigerator bottom drawer,1.6,left of,Where is 1.6 meters left of the refrigerator bottom drawer?
+00529-W9YAR9qcuvN,0,Is the bottom drawer of the refrigerator left open?,refrigerator bottom drawer,2.8,left of,Where is 2.8 meters left of the refrigerator bottom drawer?
+00529-W9YAR9qcuvN,0,Is the bottom drawer of the refrigerator left open?,refrigerator bottom drawer,2.6,above,Where is 2.6 meters above the refrigerator bottom drawer?
+00529-W9YAR9qcuvN,0,Is the bottom drawer of the refrigerator left open?,refrigerator bottom drawer,2.4,behind,Where is 2.4 meters behind the refrigerator bottom drawer?
+00529-W9YAR9qcuvN,0,Is the bottom drawer of the refrigerator left open?,refrigerator bottom drawer,3.0,behind,Where is 3.0 meters behind the refrigerator bottom drawer?
+00529-W9YAR9qcuvN,0,Is the bottom drawer of the refrigerator left open?,refrigerator bottom drawer,1.8,right of,Where is 1.8 meters right of the refrigerator bottom drawer?
+00529-W9YAR9qcuvN,0,Is the bottom drawer of the refrigerator left open?,refrigerator bottom drawer,4.0,behind,Where is 4.0 meters behind the refrigerator bottom drawer?
+00529-W9YAR9qcuvN,0,Is the bottom drawer of the refrigerator left open?,refrigerator bottom drawer,0.6,above,Where is 0.6 meters above the refrigerator bottom drawer?
+00534-DBBESbk4Y3k,1,Is the laptop left on the coffee table?,laptop,3.0,behind,Where is 3.0 meters behind the laptop?
+00534-DBBESbk4Y3k,1,Is the laptop left on the coffee table?,laptop,1.2,in front of,Where is 1.2 meters in front of the laptop?
+00534-DBBESbk4Y3k,1,Is the laptop left on the coffee table?,laptop,3.2,left of,Where is 3.2 meters left of the laptop?
+00534-DBBESbk4Y3k,1,Is the laptop left on the coffee table?,laptop,2.6,behind,Where is 2.6 meters behind the laptop?
+00534-DBBESbk4Y3k,1,Is the laptop left on the coffee table?,laptop,0.8,above,Where is 0.8 meters above the laptop?
+00534-DBBESbk4Y3k,1,Is the laptop left on the coffee table?,laptop,0.4,above,Where is 0.4 meters above the laptop?
+00534-DBBESbk4Y3k,1,Is the laptop left on the coffee table?,laptop,0.6,below,Where is 0.6 meters below the laptop?
+00534-DBBESbk4Y3k,1,Is the laptop left on the coffee table?,laptop,3.8,left of,Where is 3.8 meters left of the laptop?
+00534-DBBESbk4Y3k,2,Is the closet door next to the bed with yellow pillow left open?,closet door,0.4,behind,Where is 0.4 meters behind the closet door?
+00534-DBBESbk4Y3k,2,Is the closet door next to the bed with yellow pillow left open?,closet door,1.0,below,Where is 1.0 meters below the closet door?
+00534-DBBESbk4Y3k,2,Is the closet door next to the bed with yellow pillow left open?,closet door,0.6,right of,Where is 0.6 meters right of the closet door?
+00534-DBBESbk4Y3k,2,Is the closet door next to the bed with yellow pillow left open?,closet door,2.2,left of,Where is 2.2 meters left of the closet door?
+00534-DBBESbk4Y3k,2,Is the closet door next to the bed with yellow pillow left open?,closet door,3.6,left of,Where is 3.6 meters left of the closet door?
+00534-DBBESbk4Y3k,2,Is the closet door next to the bed with yellow pillow left open?,closet door,0.2,above,Where is 0.2 meters above the closet door?
+00534-DBBESbk4Y3k,2,Is the closet door next to the bed with yellow pillow left open?,closet door,2.6,below,Where is 2.6 meters below the closet door?
+00534-DBBESbk4Y3k,2,Is the closet door next to the bed with yellow pillow left open?,closet door,1.8,below,Where is 1.8 meters below the closet door?
+00537-oahi4u45xMf,0,Is there any pot left on the stove?,pot,0.8,below,Where is 0.8 meters below the pot?
+00537-oahi4u45xMf,0,Is there any pot left on the stove?,pot,1.4,below,Where is 1.4 meters below the pot?
+00537-oahi4u45xMf,0,Is there any pot left on the stove?,pot,1.0,right of,Where is 1.0 meters right of the pot?
+00537-oahi4u45xMf,0,Is there any pot left on the stove?,pot,3.2,left of,Where is 3.2 meters left of the pot?
+00537-oahi4u45xMf,0,Is there any pot left on the stove?,pot,2.0,in front of,Where is 2.0 meters in front of the pot?
+00537-oahi4u45xMf,0,Is there any pot left on the stove?,pot,2.6,above,Where is 2.6 meters above the pot?
+00537-oahi4u45xMf,0,Is there any pot left on the stove?,pot,3.0,in front of,Where is 3.0 meters in front of the pot?
+00537-oahi4u45xMf,0,Is there any pot left on the stove?,pot,0.6,right of,Where is 0.6 meters right of the pot?
+00547-9h5JJxM6E5S,0,How many umbrellas are there in the ceramic vase near the staircase?,umbrellas,2.2,above,Where is 2.2 meters above the umbrellas?
+00547-9h5JJxM6E5S,0,How many umbrellas are there in the ceramic vase near the staircase?,umbrellas,1.8,in front of,Where is 1.8 meters in front of the umbrellas?
+00547-9h5JJxM6E5S,0,How many umbrellas are there in the ceramic vase near the staircase?,umbrellas,3.0,above,Where is 3.0 meters above the umbrellas?
+00547-9h5JJxM6E5S,0,How many umbrellas are there in the ceramic vase near the staircase?,umbrellas,1.0,above,Where is 1.0 meters above the umbrellas?
+00547-9h5JJxM6E5S,0,How many umbrellas are there in the ceramic vase near the staircase?,umbrellas,3.8,right of,Where is 3.8 meters right of the umbrellas?
+00547-9h5JJxM6E5S,0,How many umbrellas are there in the ceramic vase near the staircase?,umbrellas,3.2,in front of,Where is 3.2 meters in front of the umbrellas?
+00547-9h5JJxM6E5S,0,How many umbrellas are there in the ceramic vase near the staircase?,umbrellas,1.6,in front of,Where is 1.6 meters in front of the umbrellas?
+00547-9h5JJxM6E5S,0,How many umbrellas are there in the ceramic vase near the staircase?,umbrellas,0.8,left of,Where is 0.8 meters left of the umbrellas?
+00547-9h5JJxM6E5S,0,Guest is coming. Is the fruit bowl on the kitchen island already?,fruit bowl,1.4,right of,Where is 1.4 meters right of the fruit bowl?
+00547-9h5JJxM6E5S,0,Guest is coming. Is the fruit bowl on the kitchen island already?,fruit bowl,1.2,in front of,Where is 1.2 meters in front of the fruit bowl?
+00547-9h5JJxM6E5S,0,Guest is coming. Is the fruit bowl on the kitchen island already?,fruit bowl,2.6,left of,Where is 2.6 meters left of the fruit bowl?
+00547-9h5JJxM6E5S,0,Guest is coming. Is the fruit bowl on the kitchen island already?,fruit bowl,3.8,above,Where is 3.8 meters above the fruit bowl?
+00547-9h5JJxM6E5S,0,Guest is coming. Is the fruit bowl on the kitchen island already?,fruit bowl,1.8,left of,Where is 1.8 meters left of the fruit bowl?
+00547-9h5JJxM6E5S,0,Guest is coming. Is the fruit bowl on the kitchen island already?,fruit bowl,2.2,below,Where is 2.2 meters below the fruit bowl?
+00547-9h5JJxM6E5S,0,Guest is coming. Is the fruit bowl on the kitchen island already?,fruit bowl,3.4,in front of,Where is 3.4 meters in front of the fruit bowl?
+00547-9h5JJxM6E5S,0,Guest is coming. Is the fruit bowl on the kitchen island already?,fruit bowl,4.0,behind,Where is 4.0 meters behind the fruit bowl?
+00557-fRZhp6vWGw7,1,I'm trying to remember where I placed the decorative wicker basket. Where is it?,decorative wicker basket,3.6,in front of,Where is 3.6 meters in front of the decorative wicker basket?
+00557-fRZhp6vWGw7,1,I'm trying to remember where I placed the decorative wicker basket. Where is it?,decorative wicker basket,3.4,behind,Where is 3.4 meters behind the decorative wicker basket?
+00557-fRZhp6vWGw7,1,I'm trying to remember where I placed the decorative wicker basket. Where is it?,decorative wicker basket,0.8,in front of,Where is 0.8 meters in front of the decorative wicker basket?
+00557-fRZhp6vWGw7,1,I'm trying to remember where I placed the decorative wicker basket. Where is it?,decorative wicker basket,1.8,above,Where is 1.8 meters above the decorative wicker basket?
+00557-fRZhp6vWGw7,1,I'm trying to remember where I placed the decorative wicker basket. Where is it?,decorative wicker basket,2.6,right of,Where is 2.6 meters right of the decorative wicker basket?
+00557-fRZhp6vWGw7,1,I'm trying to remember where I placed the decorative wicker basket. Where is it?,decorative wicker basket,2.4,in front of,Where is 2.4 meters in front of the decorative wicker basket?
+00557-fRZhp6vWGw7,1,I'm trying to remember where I placed the decorative wicker basket. Where is it?,decorative wicker basket,3.2,in front of,Where is 3.2 meters in front of the decorative wicker basket?
+00557-fRZhp6vWGw7,1,I'm trying to remember where I placed the decorative wicker basket. Where is it?,decorative wicker basket,1.2,left of,Where is 1.2 meters left of the decorative wicker basket?
+00557-fRZhp6vWGw7,1,Is there any box in the hallway needs to be moved? Guest is coming.,box,3.0,in front of,Where is 3.0 meters in front of the box?
+00557-fRZhp6vWGw7,1,Is there any box in the hallway needs to be moved? Guest is coming.,box,1.6,below,Where is 1.6 meters below the box?
+00557-fRZhp6vWGw7,1,Is there any box in the hallway needs to be moved? Guest is coming.,box,1.2,above,Where is 1.2 meters above the box?
+00557-fRZhp6vWGw7,1,Is there any box in the hallway needs to be moved? Guest is coming.,box,0.4,below,Where is 0.4 meters below the box?
+00557-fRZhp6vWGw7,1,Is there any box in the hallway needs to be moved? Guest is coming.,box,2.0,in front of,Where is 2.0 meters in front of the box?
+00557-fRZhp6vWGw7,1,Is there any box in the hallway needs to be moved? Guest is coming.,box,2.8,below,Where is 2.8 meters below the box?
+00557-fRZhp6vWGw7,1,Is there any box in the hallway needs to be moved? Guest is coming.,box,1.8,left of,Where is 1.8 meters left of the box?
+00557-fRZhp6vWGw7,1,Is there any box in the hallway needs to be moved? Guest is coming.,box,1.0,below,Where is 1.0 meters below the box?
+00567-KjZrPggnHm8,0,Where did my husband leave the coffee machine at in the kitchen?,coffee machine,0.4,left of,Where is 0.4 meters left of the coffee machine?
+00567-KjZrPggnHm8,0,Where did my husband leave the coffee machine at in the kitchen?,coffee machine,1.6,right of,Where is 1.6 meters right of the coffee machine?
+00567-KjZrPggnHm8,0,Where did my husband leave the coffee machine at in the kitchen?,coffee machine,1.0,behind,Where is 1.0 meters behind the coffee machine?
+00567-KjZrPggnHm8,0,Where did my husband leave the coffee machine at in the kitchen?,coffee machine,2.0,right of,Where is 2.0 meters right of the coffee machine?
+00567-KjZrPggnHm8,0,Where did my husband leave the coffee machine at in the kitchen?,coffee machine,2.8,above,Where is 2.8 meters above the coffee machine?
+00567-KjZrPggnHm8,0,Where did my husband leave the coffee machine at in the kitchen?,coffee machine,1.4,below,Where is 1.4 meters below the coffee machine?
+00567-KjZrPggnHm8,0,Where did my husband leave the coffee machine at in the kitchen?,coffee machine,1.8,left of,Where is 1.8 meters left of the coffee machine?
+00567-KjZrPggnHm8,0,Where did my husband leave the coffee machine at in the kitchen?,coffee machine,1.2,left of,Where is 1.2 meters left of the coffee machine?
+00569-YJDUB7hWg9h,0,I'm expecting a package and I think it might have been left by the door. Is there a package near the main entrance?,package,0.4,right of,Where is 0.4 meters right of the package?
+00569-YJDUB7hWg9h,0,I'm expecting a package and I think it might have been left by the door. Is there a package near the main entrance?,package,0.2,behind,Where is 0.2 meters behind the package?
+00569-YJDUB7hWg9h,0,I'm expecting a package and I think it might have been left by the door. Is there a package near the main entrance?,package,2.4,above,Where is 2.4 meters above the package?
+00569-YJDUB7hWg9h,0,I'm expecting a package and I think it might have been left by the door. Is there a package near the main entrance?,package,2.0,in front of,Where is 2.0 meters in front of the package?
+00569-YJDUB7hWg9h,0,I'm expecting a package and I think it might have been left by the door. Is there a package near the main entrance?,package,0.8,above,Where is 0.8 meters above the package?
+00569-YJDUB7hWg9h,0,I'm expecting a package and I think it might have been left by the door. Is there a package near the main entrance?,package,1.8,right of,Where is 1.8 meters right of the package?
+00569-YJDUB7hWg9h,0,I'm expecting a package and I think it might have been left by the door. Is there a package near the main entrance?,package,1.2,right of,Where is 1.2 meters right of the package?
+00569-YJDUB7hWg9h,0,I'm expecting a package and I think it might have been left by the door. Is there a package near the main entrance?,package,3.0,in front of,Where is 3.0 meters in front of the package?
+00569-YJDUB7hWg9h,0,How many sets of utensils are there on the dining table?,utensils,4.0,below,Where is 4.0 meters below the utensils?
+00569-YJDUB7hWg9h,0,How many sets of utensils are there on the dining table?,utensils,3.2,right of,Where is 3.2 meters right of the utensils?
+00569-YJDUB7hWg9h,0,How many sets of utensils are there on the dining table?,utensils,1.2,behind,Where is 1.2 meters behind the utensils?
+00569-YJDUB7hWg9h,0,How many sets of utensils are there on the dining table?,utensils,1.0,left of,Where is 1.0 meters left of the utensils?
+00569-YJDUB7hWg9h,0,How many sets of utensils are there on the dining table?,utensils,0.2,left of,Where is 0.2 meters left of the utensils?
+00569-YJDUB7hWg9h,0,How many sets of utensils are there on the dining table?,utensils,3.0,below,Where is 3.0 meters below the utensils?
+00569-YJDUB7hWg9h,0,How many sets of utensils are there on the dining table?,utensils,2.6,right of,Where is 2.6 meters right of the utensils?
+00569-YJDUB7hWg9h,0,How many sets of utensils are there on the dining table?,utensils,0.8,below,Where is 0.8 meters below the utensils?
+00582-TYDavTf8oyy,1,How many potted plants are on the kitchen windowsill?,potted plants,1.8,in front of,Where is 1.8 meters in front of the potted plants?
+00582-TYDavTf8oyy,1,How many potted plants are on the kitchen windowsill?,potted plants,2.6,above,Where is 2.6 meters above the potted plants?
+00582-TYDavTf8oyy,1,How many potted plants are on the kitchen windowsill?,potted plants,4.0,below,Where is 4.0 meters below the potted plants?
+00582-TYDavTf8oyy,1,How many potted plants are on the kitchen windowsill?,potted plants,0.2,above,Where is 0.2 meters above the potted plants?
+00582-TYDavTf8oyy,1,How many potted plants are on the kitchen windowsill?,potted plants,0.4,behind,Where is 0.4 meters behind the potted plants?
+00582-TYDavTf8oyy,1,How many potted plants are on the kitchen windowsill?,potted plants,2.2,above,Where is 2.2 meters above the potted plants?
+00582-TYDavTf8oyy,1,How many potted plants are on the kitchen windowsill?,potted plants,2.8,above,Where is 2.8 meters above the potted plants?
+00582-TYDavTf8oyy,1,How many potted plants are on the kitchen windowsill?,potted plants,3.6,below,Where is 3.6 meters below the potted plants?
+00582-TYDavTf8oyy,1,I'm trying to remember where I placed the candle holder. Where is it in the dining room?,candle holder,3.2,behind,Where is 3.2 meters behind the candle holder?
+00582-TYDavTf8oyy,1,I'm trying to remember where I placed the candle holder. Where is it in the dining room?,candle holder,1.6,right of,Where is 1.6 meters right of the candle holder?
+00582-TYDavTf8oyy,1,I'm trying to remember where I placed the candle holder. Where is it in the dining room?,candle holder,1.2,right of,Where is 1.2 meters right of the candle holder?
+00582-TYDavTf8oyy,1,I'm trying to remember where I placed the candle holder. Where is it in the dining room?,candle holder,0.2,right of,Where is 0.2 meters right of the candle holder?
+00582-TYDavTf8oyy,1,I'm trying to remember where I placed the candle holder. Where is it in the dining room?,candle holder,0.4,left of,Where is 0.4 meters left of the candle holder?
+00582-TYDavTf8oyy,1,I'm trying to remember where I placed the candle holder. Where is it in the dining room?,candle holder,3.4,left of,Where is 3.4 meters left of the candle holder?
+00582-TYDavTf8oyy,1,I'm trying to remember where I placed the candle holder. Where is it in the dining room?,candle holder,1.8,left of,Where is 1.8 meters left of the candle holder?
+00582-TYDavTf8oyy,1,I'm trying to remember where I placed the candle holder. Where is it in the dining room?,candle holder,3.0,above,Where is 3.0 meters above the candle holder?
+00582-TYDavTf8oyy,2,How many laundry baskets are in the bedroom with the white bedspread?,laundry baskets,3.6,above,Where is 3.6 meters above the laundry baskets?
+00582-TYDavTf8oyy,2,How many laundry baskets are in the bedroom with the white bedspread?,laundry baskets,1.4,below,Where is 1.4 meters below the laundry baskets?
+00582-TYDavTf8oyy,2,How many laundry baskets are in the bedroom with the white bedspread?,laundry baskets,1.0,below,Where is 1.0 meters below the laundry baskets?
+00582-TYDavTf8oyy,2,How many laundry baskets are in the bedroom with the white bedspread?,laundry baskets,2.8,behind,Where is 2.8 meters behind the laundry baskets?
+00582-TYDavTf8oyy,2,How many laundry baskets are in the bedroom with the white bedspread?,laundry baskets,3.8,above,Where is 3.8 meters above the laundry baskets?
+00582-TYDavTf8oyy,2,How many laundry baskets are in the bedroom with the white bedspread?,laundry baskets,1.8,right of,Where is 1.8 meters right of the laundry baskets?
+00582-TYDavTf8oyy,2,How many laundry baskets are in the bedroom with the white bedspread?,laundry baskets,2.0,above,Where is 2.0 meters above the laundry baskets?
+00582-TYDavTf8oyy,2,How many laundry baskets are in the bedroom with the white bedspread?,laundry baskets,2.2,in front of,Where is 2.2 meters in front of the laundry baskets?
+00591-JptJPosx1Z6,0,How many kitchen bar stools are there right now?,kitchen bar stools,0.6,below,Where is 0.6 meters below the kitchen bar stools?
+00591-JptJPosx1Z6,0,How many kitchen bar stools are there right now?,kitchen bar stools,2.0,behind,Where is 2.0 meters behind the kitchen bar stools?
+00591-JptJPosx1Z6,0,How many kitchen bar stools are there right now?,kitchen bar stools,0.4,left of,Where is 0.4 meters left of the kitchen bar stools?
+00591-JptJPosx1Z6,0,How many kitchen bar stools are there right now?,kitchen bar stools,3.2,below,Where is 3.2 meters below the kitchen bar stools?
+00591-JptJPosx1Z6,0,How many kitchen bar stools are there right now?,kitchen bar stools,0.2,below,Where is 0.2 meters below the kitchen bar stools?
+00591-JptJPosx1Z6,0,How many kitchen bar stools are there right now?,kitchen bar stools,1.4,behind,Where is 1.4 meters behind the kitchen bar stools?
+00591-JptJPosx1Z6,0,How many kitchen bar stools are there right now?,kitchen bar stools,2.8,right of,Where is 2.8 meters right of the kitchen bar stools?
+00591-JptJPosx1Z6,0,How many kitchen bar stools are there right now?,kitchen bar stools,3.0,right of,Where is 3.0 meters right of the kitchen bar stools?
+00592-CthA7sQNTPK,2,Which hand towel is at the right side of the bathroom counter?,hand towel,0.8,in front of,Where is 0.8 meters in front of the hand towel?
+00592-CthA7sQNTPK,2,Which hand towel is at the right side of the bathroom counter?,hand towel,1.8,below,Where is 1.8 meters below the hand towel?
+00592-CthA7sQNTPK,2,Which hand towel is at the right side of the bathroom counter?,hand towel,1.6,left of,Where is 1.6 meters left of the hand towel?
+00592-CthA7sQNTPK,2,Which hand towel is at the right side of the bathroom counter?,hand towel,0.4,in front of,Where is 0.4 meters in front of the hand towel?
+00592-CthA7sQNTPK,2,Which hand towel is at the right side of the bathroom counter?,hand towel,4.0,below,Where is 4.0 meters below the hand towel?
+00592-CthA7sQNTPK,2,Which hand towel is at the right side of the bathroom counter?,hand towel,1.2,above,Where is 1.2 meters above the hand towel?
+00592-CthA7sQNTPK,2,Which hand towel is at the right side of the bathroom counter?,hand towel,2.4,below,Where is 2.4 meters below the hand towel?
+00592-CthA7sQNTPK,2,Which hand towel is at the right side of the bathroom counter?,hand towel,2.8,behind,Where is 2.8 meters behind the hand towel?
+00606-W16Bm4ysK8v,0,Is the garage door open or closed?,garage door,3.4,right of,Where is 3.4 meters right of the garage door?
+00606-W16Bm4ysK8v,0,Is the garage door open or closed?,garage door,1.8,in front of,Where is 1.8 meters in front of the garage door?
+00606-W16Bm4ysK8v,0,Is the garage door open or closed?,garage door,2.0,right of,Where is 2.0 meters right of the garage door?
+00606-W16Bm4ysK8v,0,Is the garage door open or closed?,garage door,1.4,below,Where is 1.4 meters below the garage door?
+00606-W16Bm4ysK8v,0,Is the garage door open or closed?,garage door,0.6,right of,Where is 0.6 meters right of the garage door?
+00606-W16Bm4ysK8v,0,Is the garage door open or closed?,garage door,3.0,right of,Where is 3.0 meters right of the garage door?
+00606-W16Bm4ysK8v,0,Is the garage door open or closed?,garage door,3.8,below,Where is 3.8 meters below the garage door?
+00606-W16Bm4ysK8v,0,Is the garage door open or closed?,garage door,0.2,in front of,Where is 0.2 meters in front of the garage door?
+00606-W16Bm4ysK8v,2,Which rug is there in the bathroom?,rug,1.4,below,Where is 1.4 meters below the rug?
+00606-W16Bm4ysK8v,2,Which rug is there in the bathroom?,rug,2.6,below,Where is 2.6 meters below the rug?
+00606-W16Bm4ysK8v,2,Which rug is there in the bathroom?,rug,2.2,above,Where is 2.2 meters above the rug?
+00606-W16Bm4ysK8v,2,Which rug is there in the bathroom?,rug,1.6,behind,Where is 1.6 meters behind the rug?
+00606-W16Bm4ysK8v,2,Which rug is there in the bathroom?,rug,3.8,behind,Where is 3.8 meters behind the rug?
+00606-W16Bm4ysK8v,2,Which rug is there in the bathroom?,rug,3.0,above,Where is 3.0 meters above the rug?
+00606-W16Bm4ysK8v,2,Which rug is there in the bathroom?,rug,2.8,below,Where is 2.8 meters below the rug?
+00606-W16Bm4ysK8v,2,Which rug is there in the bathroom?,rug,3.6,left of,Where is 3.6 meters left of the rug?
+00669-DNWbUAJYsPy,0,I wanna shower now. Is there any towel there?,towel,0.2,left of,Where is 0.2 meters left of the towel?
+00669-DNWbUAJYsPy,0,I wanna shower now. Is there any towel there?,towel,2.8,above,Where is 2.8 meters above the towel?
+00669-DNWbUAJYsPy,0,I wanna shower now. Is there any towel there?,towel,1.6,right of,Where is 1.6 meters right of the towel?
+00669-DNWbUAJYsPy,0,I wanna shower now. Is there any towel there?,towel,2.0,right of,Where is 2.0 meters right of the towel?
+00669-DNWbUAJYsPy,0,I wanna shower now. Is there any towel there?,towel,1.4,left of,Where is 1.4 meters left of the towel?
+00669-DNWbUAJYsPy,0,I wanna shower now. Is there any towel there?,towel,3.2,left of,Where is 3.2 meters left of the towel?
+00669-DNWbUAJYsPy,0,I wanna shower now. Is there any towel there?,towel,3.4,left of,Where is 3.4 meters left of the towel?
+00669-DNWbUAJYsPy,0,I wanna shower now. Is there any towel there?,towel,3.8,left of,Where is 3.8 meters left of the towel?
+00688-SgkmkWjjmDJ,0,Which fruit are on the kitchen island?,fruit,4.0,below,Where is 4.0 meters below the fruit?
+00688-SgkmkWjjmDJ,0,Which fruit are on the kitchen island?,fruit,1.2,below,Where is 1.2 meters below the fruit?
+00688-SgkmkWjjmDJ,0,Which fruit are on the kitchen island?,fruit,2.4,below,Where is 2.4 meters below the fruit?
+00688-SgkmkWjjmDJ,0,Which fruit are on the kitchen island?,fruit,1.0,left of,Where is 1.0 meters left of the fruit?
+00688-SgkmkWjjmDJ,0,Which fruit are on the kitchen island?,fruit,0.2,below,Where is 0.2 meters below the fruit?
+00688-SgkmkWjjmDJ,0,Which fruit are on the kitchen island?,fruit,3.2,left of,Where is 3.2 meters left of the fruit?
+00688-SgkmkWjjmDJ,0,Which fruit are on the kitchen island?,fruit,3.0,below,Where is 3.0 meters below the fruit?
+00688-SgkmkWjjmDJ,0,Which fruit are on the kitchen island?,fruit,0.6,left of,Where is 0.6 meters left of the fruit?
+00706-YHmAkqgwe2p,0,I am looking for the broom.,broom,0.6,below,Where is 0.6 meters below the broom?
+00706-YHmAkqgwe2p,0,I am looking for the broom.,broom,3.8,behind,Where is 3.8 meters behind the broom?
+00706-YHmAkqgwe2p,0,I am looking for the broom.,broom,2.4,left of,Where is 2.4 meters left of the broom?
+00706-YHmAkqgwe2p,0,I am looking for the broom.,broom,1.4,right of,Where is 1.4 meters right of the broom?
+00706-YHmAkqgwe2p,0,I am looking for the broom.,broom,4.0,right of,Where is 4.0 meters right of the broom?
+00706-YHmAkqgwe2p,0,I am looking for the broom.,broom,3.0,right of,Where is 3.0 meters right of the broom?
+00706-YHmAkqgwe2p,0,I am looking for the broom.,broom,2.8,left of,Where is 2.8 meters left of the broom?
+00706-YHmAkqgwe2p,0,I am looking for the broom.,broom,2.6,left of,Where is 2.6 meters left of the broom?
+00712-HZ2iMMBsBQ9,0,Which throw pillows are on the bed? I shall replace them.,throw pillows,0.4,below,Where is 0.4 meters below the throw pillows?
+00712-HZ2iMMBsBQ9,0,Which throw pillows are on the bed? I shall replace them.,throw pillows,0.6,right of,Where is 0.6 meters right of the throw pillows?
+00712-HZ2iMMBsBQ9,0,Which throw pillows are on the bed? I shall replace them.,throw pillows,2.0,in front of,Where is 2.0 meters in front of the throw pillows?
+00712-HZ2iMMBsBQ9,0,Which throw pillows are on the bed? I shall replace them.,throw pillows,3.2,in front of,Where is 3.2 meters in front of the throw pillows?
+00712-HZ2iMMBsBQ9,0,Which throw pillows are on the bed? I shall replace them.,throw pillows,0.8,in front of,Where is 0.8 meters in front of the throw pillows?
+00712-HZ2iMMBsBQ9,0,Which throw pillows are on the bed? I shall replace them.,throw pillows,3.8,behind,Where is 3.8 meters behind the throw pillows?
+00712-HZ2iMMBsBQ9,0,Which throw pillows are on the bed? I shall replace them.,throw pillows,4.0,in front of,Where is 4.0 meters in front of the throw pillows?
+00712-HZ2iMMBsBQ9,0,Which throw pillows are on the bed? I shall replace them.,throw pillows,2.6,left of,Where is 2.6 meters left of the throw pillows?
+00720-8B43pG641ff,0,Did my daughter remember to put the piano lid down?,piano lid,2.4,above,Where is 2.4 meters above the piano lid?
+00720-8B43pG641ff,0,Did my daughter remember to put the piano lid down?,piano lid,1.8,above,Where is 1.8 meters above the piano lid?
+00720-8B43pG641ff,0,Did my daughter remember to put the piano lid down?,piano lid,2.0,behind,Where is 2.0 meters behind the piano lid?
+00720-8B43pG641ff,0,Did my daughter remember to put the piano lid down?,piano lid,0.4,in front of,Where is 0.4 meters in front of the piano lid?
+00720-8B43pG641ff,0,Did my daughter remember to put the piano lid down?,piano lid,4.0,above,Where is 4.0 meters above the piano lid?
+00720-8B43pG641ff,0,Did my daughter remember to put the piano lid down?,piano lid,3.0,below,Where is 3.0 meters below the piano lid?
+00720-8B43pG641ff,0,Did my daughter remember to put the piano lid down?,piano lid,1.2,left of,Where is 1.2 meters left of the piano lid?
+00720-8B43pG641ff,0,Did my daughter remember to put the piano lid down?,piano lid,2.6,behind,Where is 2.6 meters behind the piano lid?
+00720-8B43pG641ff,0,How many chairs do we have around the outdoor dining table?,chairs,0.2,above,Where is 0.2 meters above the chairs?
+00720-8B43pG641ff,0,How many chairs do we have around the outdoor dining table?,chairs,2.8,above,Where is 2.8 meters above the chairs?
+00720-8B43pG641ff,0,How many chairs do we have around the outdoor dining table?,chairs,3.4,right of,Where is 3.4 meters right of the chairs?
+00720-8B43pG641ff,0,How many chairs do we have around the outdoor dining table?,chairs,0.8,below,Where is 0.8 meters below the chairs?
+00720-8B43pG641ff,0,How many chairs do we have around the outdoor dining table?,chairs,2.4,left of,Where is 2.4 meters left of the chairs?
+00720-8B43pG641ff,0,How many chairs do we have around the outdoor dining table?,chairs,1.6,above,Where is 1.6 meters above the chairs?
+00720-8B43pG641ff,0,How many chairs do we have around the outdoor dining table?,chairs,3.2,in front of,Where is 3.2 meters in front of the chairs?
+00720-8B43pG641ff,0,How many chairs do we have around the outdoor dining table?,chairs,4.0,right of,Where is 4.0 meters right of the chairs?
+00745-yX5efd48dLf,0,I'm trying to remember where I placed my zebra-striped armchair. Where is it?,zebra-striped armchair,2.8,left of,Where is 2.8 meters left of the zebra-striped armchair?
+00745-yX5efd48dLf,0,I'm trying to remember where I placed my zebra-striped armchair. Where is it?,zebra-striped armchair,0.2,in front of,Where is 0.2 meters in front of the zebra-striped armchair?
+00745-yX5efd48dLf,0,I'm trying to remember where I placed my zebra-striped armchair. Where is it?,zebra-striped armchair,3.4,behind,Where is 3.4 meters behind the zebra-striped armchair?
+00745-yX5efd48dLf,0,I'm trying to remember where I placed my zebra-striped armchair. Where is it?,zebra-striped armchair,1.4,left of,Where is 1.4 meters left of the zebra-striped armchair?
+00745-yX5efd48dLf,0,I'm trying to remember where I placed my zebra-striped armchair. Where is it?,zebra-striped armchair,2.0,behind,Where is 2.0 meters behind the zebra-striped armchair?
+00745-yX5efd48dLf,0,I'm trying to remember where I placed my zebra-striped armchair. Where is it?,zebra-striped armchair,2.6,below,Where is 2.6 meters below the zebra-striped armchair?
+00745-yX5efd48dLf,0,I'm trying to remember where I placed my zebra-striped armchair. Where is it?,zebra-striped armchair,3.0,right of,Where is 3.0 meters right of the zebra-striped armchair?
+00745-yX5efd48dLf,0,I'm trying to remember where I placed my zebra-striped armchair. Where is it?,zebra-striped armchair,3.8,behind,Where is 3.8 meters behind the zebra-striped armchair?
+00757-LVgQNuK8vtv,0,I'm trying to remember where I placed my decorative zebra-patterned stool. Where is it?,zebra-patterned stool,3.8,below,Where is 3.8 meters below the zebra-patterned stool?
+00757-LVgQNuK8vtv,0,I'm trying to remember where I placed my decorative zebra-patterned stool. Where is it?,zebra-patterned stool,2.4,right of,Where is 2.4 meters right of the zebra-patterned stool?
+00757-LVgQNuK8vtv,0,I'm trying to remember where I placed my decorative zebra-patterned stool. Where is it?,zebra-patterned stool,3.4,behind,Where is 3.4 meters behind the zebra-patterned stool?
+00757-LVgQNuK8vtv,0,I'm trying to remember where I placed my decorative zebra-patterned stool. Where is it?,zebra-patterned stool,1.8,right of,Where is 1.8 meters right of the zebra-patterned stool?
+00757-LVgQNuK8vtv,0,I'm trying to remember where I placed my decorative zebra-patterned stool. Where is it?,zebra-patterned stool,1.2,left of,Where is 1.2 meters left of the zebra-patterned stool?
+00757-LVgQNuK8vtv,0,I'm trying to remember where I placed my decorative zebra-patterned stool. Where is it?,zebra-patterned stool,1.0,below,Where is 1.0 meters below the zebra-patterned stool?
+00757-LVgQNuK8vtv,0,I'm trying to remember where I placed my decorative zebra-patterned stool. Where is it?,zebra-patterned stool,2.8,left of,Where is 2.8 meters left of the zebra-patterned stool?
+00757-LVgQNuK8vtv,0,I'm trying to remember where I placed my decorative zebra-patterned stool. Where is it?,zebra-patterned stool,0.8,behind,Where is 0.8 meters behind the zebra-patterned stool?
+00757-LVgQNuK8vtv,0,How many pairs of long boots are in the coat closet?,long boots,3.6,left of,Where is 3.6 meters left of the long boots?
+00757-LVgQNuK8vtv,0,How many pairs of long boots are in the coat closet?,long boots,0.8,behind,Where is 0.8 meters behind the long boots?
+00757-LVgQNuK8vtv,0,How many pairs of long boots are in the coat closet?,long boots,2.2,below,Where is 2.2 meters below the long boots?
+00757-LVgQNuK8vtv,0,How many pairs of long boots are in the coat closet?,long boots,2.4,left of,Where is 2.4 meters left of the long boots?
+00757-LVgQNuK8vtv,0,How many pairs of long boots are in the coat closet?,long boots,3.8,in front of,Where is 3.8 meters in front of the long boots?
+00757-LVgQNuK8vtv,0,How many pairs of long boots are in the coat closet?,long boots,1.4,right of,Where is 1.4 meters right of the long boots?
+00757-LVgQNuK8vtv,0,How many pairs of long boots are in the coat closet?,long boots,3.0,in front of,Where is 3.0 meters in front of the long boots?
+00757-LVgQNuK8vtv,0,How many pairs of long boots are in the coat closet?,long boots,3.4,in front of,Where is 3.4 meters in front of the long boots?
+00757-LVgQNuK8vtv,2,"What did I leave on the toilet, the one with flower painting?",toilet,2.8,behind,Where is 2.8 meters behind the toilet?
+00757-LVgQNuK8vtv,2,"What did I leave on the toilet, the one with flower painting?",toilet,3.6,right of,Where is 3.6 meters right of the toilet?
+00757-LVgQNuK8vtv,2,"What did I leave on the toilet, the one with flower painting?",toilet,3.4,above,Where is 3.4 meters above the toilet?
+00757-LVgQNuK8vtv,2,"What did I leave on the toilet, the one with flower painting?",toilet,1.2,above,Where is 1.2 meters above the toilet?
+00757-LVgQNuK8vtv,2,"What did I leave on the toilet, the one with flower painting?",toilet,2.6,below,Where is 2.6 meters below the toilet?
+00757-LVgQNuK8vtv,2,"What did I leave on the toilet, the one with flower painting?",toilet,3.0,above,Where is 3.0 meters above the toilet?
+00757-LVgQNuK8vtv,2,"What did I leave on the toilet, the one with flower painting?",toilet,2.2,below,Where is 2.2 meters below the toilet?
+00757-LVgQNuK8vtv,2,"What did I leave on the toilet, the one with flower painting?",toilet,0.8,left of,Where is 0.8 meters left of the toilet?

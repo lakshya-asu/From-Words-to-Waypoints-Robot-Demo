@@ -2,15 +2,32 @@ version: "3.9"
 
 services:
   grapheqa:
-    image: grapheqa_habitat_swagat:20250909-2330
+    image: swagatpradhan/grapheqa_habitat_swagat:v1
     container_name: grapheqa_dev
     runtime: nvidia
     environment:
       - NVIDIA_VISIBLE_DEVICES=all
       - NVIDIA_DRIVER_CAPABILITIES=compute,utility,graphics
+      - DISPLAY=${DISPLAY}
+      - QT_X11_NO_MITSHM=1
+      - QT_QPA_PLATFORM=xcb
+      - GOOGLE_API_KEY="{GOOGLE_API_KEY}"
+      - OPENAI_API_KEY="{OPENAI_API_KEY}"
+#      - MSP_MODEL_DIR=/models/msp
+#      - MSP_METRIC_RUN=bnn_metric_albertville_20251001-083040
+#      - MSP_SEMANTIC_RUN=bnn_semantic_albertville_20251001-143232
+#      - MSP_PREDICATE_RUN=bnn_predicate_albertville_20251002-205018
+#      - MSP_SEM_OHE=/models/msp/bnn_semantic_albertville_20251001-143232.ohe_columns.json
+      
     volumes:
-      - /home/artemis/project/datasets:/datasets
-      - /home/artemis/project/graph_eqa_swagat:/root/graph_eqa
+      - /home/flux/graph_eqa_swagat/datasets:/datasets
+      - /home/flux/graph_eqa_swagat:/root/graph_eqa
+      # mount ONLY the needed MSP runs + OHE json
+#      - /home/artemis/project/final_msp/data/models/bnn_metric_albertville_20251001-083040:/models/msp/bnn_metric_albertville_20251001-083040:ro
+#      - /home/artemis/project/final_msp/data/models/bnn_semantic_albertville_20251001-143232:/models/msp/bnn_semantic_albertville_20251001-143232:ro
+#      - /home/artemis/project/final_msp/data/models/bnn_predicate_albertville_20251002-205018:/models/msp/bnn_predicate_albertville_20251002-205018:ro
+#      - /home/artemis/project/final_msp/data/models/bnn_semantic_albertville_20251001-143232.ohe_columns.json:/models/msp/bnn_semantic_albertville_20251001-143232.ohe_columns.json:ro
+#      - /tmp/.X11-unix:/tmp/.X11-unix:rw
     working_dir: /root/graph_eqa
     tty: true
     stdin_open: true

@@ -1,0 +1,51 @@
+scene,floor,source_question,primary_object,distance_m,predicate,msp_question,ann_ok,ann_ts,ann_pos_x,ann_pos_y,ann_pos_z,ann_yaw_rad,ann_m,ann_n,ann_scale_x,ann_scale_y,ann_scale_z,ann_aabb_min_x,ann_aabb_min_y,ann_aabb_min_z,ann_aabb_max_x,ann_aabb_max_y,ann_aabb_max_z,ann_volume
+00410-v7DzfFFEpsD,0,Which side of the front door is the plant now?,plant,2.0,right of,Where is 2.0 meters right of the plant?,1,1770081255.263822,0.584619,-2.116675,-1.255733,-0.253024,2.000000,2.000000,0.150000,0.150000,0.150000,0.434899,-2.266594,-1.405718,0.734077,-1.966830,-1.105768,0.01418652
+00262-1xGrZPxG1Hz,1,Are the candles by the entrace put out?,candles,1.8,below,Where is 1.8 meters below the candles?,1,1769495737.579699,-9.180333,2.548743,0.256528,2.810025,10.200000,2.400000,0.130000,0.130000,0.130000,-9.336498,2.413228,0.098957,-9.023980,2.684092,0.414063,0.01432385
+00149-UuwwmrTsfBN,1,I am waiting for the guests. Have I put utensils on the dining table?,utensils,1.0,right of,Where is 1.0 meters right of the utensils?,1,1769496159.587543,5.383806,1.484879,-0.529837,-1.675463,10.200000,8.300000,0.450000,0.450000,0.450000,4.903290,1.025724,-1.018553,5.864338,1.943713,-0.041058,0.69676842
+00256-92vYG1q49FY,0,Is the air conditioning at the entrance turned off?,air conditioning,2.6,in front of,Where is 2.6 meters in front of the air conditioning?,1,1769496311.860495,-0.782082,-0.265694,-0.175682,1.963545,2.000000,2.000000,0.150000,0.150000,0.150000,-0.932023,-0.415402,-0.325631,-0.632100,-0.115712,-0.025811,0.01418652
+00525-iKFn6fzyRqs,1,I want to take a shower. Are there some towels by the bathrub?,towels,2.2,below,Where is 2.2 meters below the towels?,1,1769496478.461188,4.650120,0.058479,-1.914409,0.148406,2.000000,2.000000,0.160000,0.160000,0.160000,4.490248,-0.101319,-2.074381,4.809696,0.218443,-1.754539,0.01721718
+00410-v7DzfFFEpsD,1,I need to find my Louis Vuitton box.,Louis Vuitton box,3.0,above,Where is 3.0 meters above the Louis Vuitton box?,1,1769496926.582617,5.762955,2.328950,-6.656312,-0.357738,2.000000,2.000000,0.160000,0.160000,0.160000,5.603107,2.169037,-6.816096,5.922533,2.488652,-6.496503,0.01721718
+00592-CthA7sQNTPK,2,Which hand towel is at the right side of the bathroom counter?,hand towel,2.8,behind,Where is 2.8 meters behind the hand towel?,1,1769497163.262185,1.967006,4.041617,3.765285,-0.427557,2.000000,2.000000,0.160000,0.160000,0.160000,1.807018,3.881891,3.605642,2.126744,4.201520,3.924973,0.01721718
+00386-b3WpMbPFB6q,0,Is my jacket left on the staircase?,jacket,0.8,above,Where is 0.8 meters above the jacket?,1,1769497742.499122,-11.173107,1.921680,4.193016,1.256684,2.000000,2.000000,0.160000,0.160000,0.160000,-11.332792,1.761887,4.033155,-11.013446,2.081554,4.352963,0.01721718
+00366-fxbzYAGkrtm,0,I am looking for my boots. Are they on the stairs by the entrance door?,boots,1.6,right of,Where is 1.6 meters right of the boots?,1,1769498108.503849,-0.482108,-2.932436,8.795238,2.103172,2.000000,2.000000,0.400000,0.400000,0.400000,-0.881746,-3.331556,8.395267,-0.082285,-2.532974,9.194731,0.26901847
+00388-pcpn6mFqFCg,0,Is the kettle on the coffee table?,kettle,0.8,right of,Where is 0.8 meters right of the kettle?,,,,,,,,,,,,,,,,,,
+00706-YHmAkqgwe2p,0,I am looking for the broom.,broom,3.0,right of,Where is 3.0 meters right of the broom?,,,,,,,,,,,,,,,,,,
+00582-TYDavTf8oyy,2,How many laundry baskets are in the bedroom with the white bedspread?,laundry baskets,3.6,above,Where is 3.6 meters above the laundry baskets?,,,,,,,,,,,,,,,,,,
+00606-W16Bm4ysK8v,2,Which rug is there in the bathroom?,rug,1.6,behind,Where is 1.6 meters behind the rug?,,,,,,,,,,,,,,,,,,
+00557-fRZhp6vWGw7,1,I'm trying to remember where I placed the decorative wicker basket. Where is it?,decorative wicker basket,3.6,in front of,Where is 3.6 meters in front of the decorative wicker basket?,,,,,,,,,,,,,,,,,,
+00025-ixTj1aTMup2,1,Did I leave the fruit bowl next to the microwave?,fruit bowl,1.2,left of,Where is 1.2 meters left of the fruit bowl?,,,,,,,,,,,,,,,,,,
+00217-qz3829g1Lzf,0,Did I leave any pot on the stove?,pot,2.2,left of,Where is 2.2 meters left of the pot?,,,,,,,,,,,,,,,,,,
+00207-FRQ75PjD278,0,I need to find my large red storage bag. Where did I put it last?,large red storage bag,3.8,below,Where is 3.8 meters below the large red storage bag?,,,,,,,,,,,,,,,,,,
+00025-ixTj1aTMup2,1,Did I leave the fruit bowl next to the microwave?,fruit bowl,2.6,above,Where is 2.6 meters above the fruit bowl?,,,,,,,,,,,,,,,,,,
+00757-LVgQNuK8vtv,0,I'm trying to remember where I placed my decorative zebra-patterned stool. Where is it?,zebra-patterned stool,3.4,behind,Where is 3.4 meters behind the zebra-patterned stool?,,,,,,,,,,,,,,,,,,
+00217-qz3829g1Lzf,0,Did I leave any pot on the stove?,pot,2.0,left of,Where is 2.0 meters left of the pot?,,,,,,,,,,,,,,,,,,
+00245-741Fdj7NLF9,0,Can you check if I left the lamps on in the bedroom with gray bedding?,bedroom lamps,2.2,in front of,Where is 2.2 meters in front of the bedroom lamps?,,,,,,,,,,,,,,,,,,
+00313-PE6kVEtrxtj,0,I am looking for the stack of magazines I left somewhere in the living room.,stack of magazines,1.6,below,Where is 1.6 meters below the stack of magazines?,,,,,,,,,,,,,,,,,,
+00327-xgLmjqzoAzF,0,Where did I leave the black suitcases?,black suitcases,1.8,left of,Where is 1.8 meters left of the black suitcases?,,,,,,,,,,,,,,,,,,
+00135-HeSYRw7eMtG,1,What time is it now?,clock,3.0,right of,Where is 3.0 meters right of the clock?,,,,,,,,,,,,,,,,,,
+00062-ACZZiU6BXLz,0,I'm expecting guests and need to confirm the seating. How many dining chairs are around the dining table?,dining chairs,2.0,in front of,Where is 2.0 meters in front of the dining chairs?,,,,,,,,,,,,,,,,,,
+00720-8B43pG641ff,0,How many chairs do we have around the outdoor dining table?,chairs,1.6,above,Where is 1.6 meters above the chairs?,,,,,,,,,,,,,,,,,,
+00149-UuwwmrTsfBN,1,Is the patio door next to the dining table open?,patio door,3.4,left of,Where is 3.4 meters left of the patio door?,,,,,,,,,,,,,,,,,,
+00023-zepmXAdrpjR,1,Where did I leave the silver trash can at,silver trash can,3.8,above,Where is 3.8 meters above the silver trash can?,,,,,,,,,,,,,,,,,,
+00025-ixTj1aTMup2,1,Where did I leave the standing fan at? I moved it last week.,standing fan,0.4,left of,Where is 0.4 meters left of the standing fan?,,,,,,,,,,,,,,,,,,
+00062-ACZZiU6BXLz,0,I'm trying to remember where I placed the wall clock. Where it is in the kitchen?,wall clock,1.4,behind,Where is 1.4 meters behind the wall clock?,,,,,,,,,,,,,,,,,,
+00262-1xGrZPxG1Hz,0,Is the wooden chair left in a room?,wooden chair,2.6,left of,Where is 2.6 meters left of the wooden chair?,,,,,,,,,,,,,,,,,,
+00440-wPLokgvCnuk,1,How many towels are there at the oven?,towels,0.2,left of,Where is 0.2 meters left of the towels?,,,,,,,,,,,,,,,,,,
+00203-VoVGtfYrpuQ,0,I'm trying to remember where I placed the decorative wooden bowl. Is it on the dining table?,decorative wooden bowl,2.4,above,Where is 2.4 meters above the decorative wooden bowl?,,,,,,,,,,,,,,,,,,
+00745-yX5efd48dLf,0,I'm trying to remember where I placed my zebra-striped armchair. Where is it?,zebra-striped armchair,3.4,behind,Where is 3.4 meters behind the zebra-striped armchair?,,,,,,,,,,,,,,,,,,
+00525-iKFn6fzyRqs,0,I am trying to remember where I left the dog food plates.,dog food plates,3.2,above,Where is 3.2 meters above the dog food plates?,,,,,,,,,,,,,,,,,,
+00720-8B43pG641ff,0,Did my daughter remember to put the piano lid down?,piano lid,4.0,above,Where is 4.0 meters above the piano lid?,,,,,,,,,,,,,,,,,,
+00258-2Pc8W48bu21,1,Which channel is being shown on the TV?,TV,2.4,behind,Where is 2.4 meters behind the TV?,,,,,,,,,,,,,,,,,,
+00109-GTV2Y73Sn5t,0,I need to water the plants. How many potted plants are on the kitchen island?,potted plants,1.6,behind,Where is 1.6 meters behind the potted plants?,,,,,,,,,,,,,,,,,,
+00217-qz3829g1Lzf,0,Did I leave any pot on the stove?,pot,0.2,right of,Where is 0.2 meters right of the pot?,,,,,,,,,,,,,,,,,,
+00057-1UnKg1rAb8A,0,Is the kitchen sink currently free of dishes?,kitchen sink,3.4,in front of,Where is 3.4 meters in front of the kitchen sink?,,,,,,,,,,,,,,,,,,
+00525-iKFn6fzyRqs,1,I want to take a shower. Are there some towels by the bathrub?,towels,3.8,in front of,Where is 3.8 meters in front of the towels?,,,,,,,,,,,,,,,,,,
+00326-u9rPN5cHWBg,0,Are the bedroom lamps on?,bedroom lamps,0.4,below,Where is 0.4 meters below the bedroom lamps?,,,,,,,,,,,,,,,,,,
+00366-fxbzYAGkrtm,1,How many pillows I put on the bed with red bedding?,pillows,0.4,right of,Where is 0.4 meters right of the pillows?,,,,,,,,,,,,,,,,,,
+00323-yHLr6bvWsVm,0,Does the dining table have any fruit bowl on it?,fruit bowl,3.4,behind,Where is 3.4 meters behind the fruit bowl?,,,,,,,,,,,,,,,,,,
+00444-sX9xad6ULKc,0,Are the curtains in the office closed?,curtains,2.8,right of,Where is 2.8 meters right of the curtains?,,,,,,,,,,,,,,,,,,
+00035-3XYAD64HpDr,0,Are there more than twenty books by the window next to the dining table?,books,0.4,above,Where is 0.4 meters above the books?,,,,,,,,,,,,,,,,,,
+00591-JptJPosx1Z6,0,How many kitchen bar stools are there right now?,kitchen bar stools,2.8,right of,Where is 2.8 meters right of the kitchen bar stools?,,,,,,,,,,,,,,,,,,
+00330-WhNyDTnd9g5,0,Are the pillows left on the porch chair?,pillows,0.6,left of,Where is 0.6 meters left of the pillows?,,,,,,,,,,,,,,,,,,
+00720-8B43pG641ff,0,Did my daughter remember to put the piano lid down?,piano lid,0.4,in front of,Where is 0.4 meters in front of the piano lid?,,,,,,,,,,,,,,,,,,
+00062-ACZZiU6BXLz,1,I need to find my painting of the ocean. Where is it?,painting of the ocean,1.8,in front of,Where is 1.8 meters in front of the painting of the ocean?,,,,,,,,,,,,,,,,,,
