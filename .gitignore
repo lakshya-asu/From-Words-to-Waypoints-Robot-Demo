@@ -49,6 +49,9 @@ media
 wandb
 
 STARTUP.md
-spatial_experiment/outputs
+
 spatial_experiment/data
 spatial_experiment/outputs_v2.env
+spatial_experiment/evals
+spatial_experiment/outputs*/
+spatial_experiment/**/outputs*/

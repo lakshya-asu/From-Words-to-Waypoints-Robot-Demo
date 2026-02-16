@@ -14,30 +14,30 @@ from typing import Optional, Any, Dict, List, Tuple
 import numpy as np
 import google.generativeai as genai
 
-# Graph EQA / Habitat Imports
+# Graph EQA / Habitat imports
 from graph_eqa.envs.utils import pos_normal_to_habitat
 from graph_eqa.utils.data_utils import get_latest_image
 
-# MSP Imports
+# MSP imports
 from spatial_experiment.msp.pdf import combined_logpdf as _combined_logpdf
 
-# -----------------------------------------------------------------------------
-# Configuration & Setup
-# -----------------------------------------------------------------------------
+
+# =============================================================================
+# Config / Setup
+# =============================================================================
 
 if "GOOGLE_API_KEY" not in os.environ:
-    raise RuntimeError("GOOGLE_API_KEY must be set.")
+    raise RuntimeError("GOOGLE_API_KEY must be set in the environment.")
 
 genai.configure(api_key=os.environ["GOOGLE_API_KEY"])
 
-# IMPORTANT: keep a single global model instance
-gemini_model = genai.GenerativeModel(
-    model_name="models/gemini-2.5-pro",
-)
+# Keep a single global model instance
+gemini_model = genai.GenerativeModel(model_name="models/gemini-2.5-pro")
 
-# -----------------------------------------------------------------------------
-# IO Helpers
-# -----------------------------------------------------------------------------
+
+# =============================================================================
+# IO helpers
+# =============================================================================
 
 def encode_image(image_path: str) -> str:
     with open(image_path, "rb") as f:
@@ -67,9 +67,9 @@ def _write_json(path: Path, obj: Any) -> None:
         print(f"[MSP] Failed to write json {path}: {e}")
 
 
-# -----------------------------------------------------------------------------
-# TRACE HELPERS (NEW)
-# -----------------------------------------------------------------------------
+# =============================================================================
+# Trace helpers
+# =============================================================================
 
 def _write_trace_step(out_dir: Path, t: int, trace: Dict[str, Any]) -> None:
     _write_json(out_dir / f"trace_step_{t:03d}.json", trace)
@@ -94,9 +94,8 @@ def _shorten(s: str, n: int = 260) -> str:
 
 def _summarize_rank_delta(scored: List[Dict[str, Any]], k: int = 5) -> Dict[str, Any]:
     top = scored[:k]
-    if len(top) < 2:
-        gap = None
-    else:
+    gap = None
+    if len(top) >= 2:
         gap = float(top[0]["msp_score"] - top[1]["msp_score"])
     return {
         "topk": [
@@ -112,9 +111,9 @@ def _summarize_rank_delta(scored: List[Dict[str, Any]], k: int = 5) -> Dict[str,
     }
 
 
-# -----------------------------------------------------------------------------
-# Math / Geometry Helpers (V8-style)
-# -----------------------------------------------------------------------------
+# =============================================================================
+# Math / geometry helpers
+# =============================================================================
 
 def _wrap_angle(angle: float) -> float:
     """Wrap angle to [0, 2π)."""
@@ -122,65 +121,17 @@ def _wrap_angle(angle: float) -> float:
     return (angle % two_pi + two_pi) % two_pi
 
 
-def _circular_blend(theta_a: float, theta_b: float, w_b: float) -> float:
-    """
-    Blend angles on the unit circle.
-    Returns angle close to weighted sum of unit vectors:
-      (1-w_b)*a + w_b*b
-    """
-    w_b = float(np.clip(w_b, 0.0, 1.0))
-    w_a = 1.0 - w_b
-    x = w_a * math.cos(theta_a) + w_b * math.cos(theta_b)
-    y = w_a * math.sin(theta_a) + w_b * math.sin(theta_b)
-    return _wrap_angle(math.atan2(y, x))
-
-
 def _camera_theta_to_world(vlm_theta: float, agent_yaw: float) -> float:
     """
-    Camera / agent frame (egocentric):
+    Egocentric camera frame:
       0.0 rad = straight ahead (center of image)
       +π/2    = left of image
       -π/2    = right of image
-      π       = behind (opposite of forward)
+      π       = behind
 
-    The VLM now returns θ in this egocentric frame.
-    We convert to world by simply adding the agent yaw.
+    Convert to world by adding agent yaw.
     """
-    theta_world = agent_yaw + vlm_theta
-    return _wrap_angle(theta_world)
-
-
-def _estimate_object_front_yaw_from_agent(anchor_pos_hab: np.ndarray, agent_pos_hab: np.ndarray) -> float:
-    """
-    Fallback heuristic (NOT intrinsic):
-      - Compute yaw(object -> agent)
-      - Assume object functional front points roughly toward open space / agent,
-        so yaw_front = yaw_obj_to_agent + π
-    """
-    anchor = np.asarray(anchor_pos_hab, dtype=np.float32)
-    agent = np.asarray(agent_pos_hab, dtype=np.float32)
-    dx = agent[0] - anchor[0]
-    dz = agent[2] - anchor[2]
-    yaw_obj_to_agent = math.atan2(dz, dx)
-    return _wrap_angle(yaw_obj_to_agent + math.pi)
-
-
-def _predicate_offset(question_or_predicate: str) -> float:
-#     """
-#     Map linguistic predicate to offset in object-front frame:
-#       0 rad  = in front (along functional front)
-#       +π/2   = left of front
-#       -π/2   = right of front
-#       π      = behind
-#     """
-#     q = (question_or_predicate or "").lower()
-#     if "left" in q:
-#         return +math.pi / 2.0
-#     if "right" in q:
-#         return -math.pi / 2.0
-#     if "behind" in q or "back of" in q or "backside" in q:
-#         return math.pi
-    return 0.0  # in front / front of
+    return _wrap_angle(agent_yaw + float(vlm_theta))
 
 
 def _parse_q_dist(question: str) -> float:
@@ -191,24 +142,24 @@ def _parse_q_dist(question: str) -> float:
 
 def _unit_dir_from_theta_phi(theta: float, phi: float) -> np.ndarray:
     """
-    Convert spherical (theta azimuth, phi elevation) to unit vector in habitat/world:
-        x = cos(theta)*sin(phi)
-        y = cos(phi)
-        z = sin(theta)*sin(phi)
+    Spherical -> unit vector (Hab/world):
+      x = cos(theta)*sin(phi)
+      y = cos(phi)
+      z = sin(theta)*sin(phi)
     With phi=pi/2 -> level plane (y=0).
     """
     st = math.sin(phi)
-    x = math.cos(theta) * st
-    y = math.cos(phi)
-    z = math.sin(theta) * st
-    v = np.array([x, y, z], dtype=np.float32)
+    v = np.array(
+        [math.cos(theta) * st, math.cos(phi), math.sin(theta) * st],
+        dtype=np.float32,
+    )
     n = float(np.linalg.norm(v) + 1e-8)
     return v / n
 
 
-# -----------------------------------------------------------------------------
-# STEP 1: Spatial kernel (VLM + intrinsic/front prior)
-# -----------------------------------------------------------------------------
+# =============================================================================
+# STEP 1: Spatial kernel (VLM ONLY; no fallback priors)
+# =============================================================================
 
 def get_vlm_spatial_kernel_params(
     image_path: Optional[str],
@@ -217,96 +168,49 @@ def get_vlm_spatial_kernel_params(
     anchor_pos_hab: np.ndarray,
     agent_pos_hab: np.ndarray,
     agent_yaw: float,
-    anchor_front_yaw_world: Optional[float] = None,
+    anchor_front_yaw_world: Optional[float] = None,  # kept for logging only
     log_jsonl_path: Optional[Path] = None,
     step_t: Optional[int] = None,
 ) -> Dict[str, Any]:
     """
-    Returns:
-      theta_world, phi, kappa, reasoning, debug
+    VLM-only kernel.
 
-    CHANGE:
-      - No predicate_offset heuristic.
-      - No fusion/blending.
-      - When VLM succeeds, we trust VLM direction entirely.
-      - We keep an intrinsic-yaw prior ONLY as fallback (no image / VLM failure).
+    Returns dict:
+      ok: bool
+      (if ok) theta, phi, kappa, reasoning, debug
+      (if not ok) error, debug
     """
-    anchor_pos_hab = np.asarray(anchor_pos_hab, dtype=np.float32)
-    agent_pos_hab = np.asarray(agent_pos_hab, dtype=np.float32)
+    # normalize (kept to avoid accidental type issues)
+    _ = np.asarray(anchor_pos_hab, dtype=np.float32)
+    _ = np.asarray(agent_pos_hab, dtype=np.float32)
 
-    # Fallback PRIOR (ONLY for when VLM can't run)
-    if anchor_front_yaw_world is not None:
-        yaw_front_world = _wrap_angle(float(anchor_front_yaw_world))
-        front_source = "csv_anchor_yaw"
-    else:
-        yaw_front_world = _estimate_object_front_yaw_from_agent(anchor_pos_hab, agent_pos_hab)
-        front_source = "heuristic_obj_to_agent"
-
-    theta_prior = _wrap_angle(yaw_front_world)
-    phi_prior = math.pi / 2.0  # level
-
-    # If no image -> fallback prior only
+    # Hard fail if no image
     if not image_path or not os.path.exists(str(image_path)):
         out = {
-            "theta": theta_prior,
-            "phi": phi_prior,
-            "kappa": 6.0 if anchor_front_yaw_world is None else 10.0,
-            "reasoning": (
-                "No image available; used intrinsic/front prior ONLY as fallback. "
-                f"(front_source={front_source})"
-            ),
+            "ok": False,
+            "error": "No image available for VLM kernel; no fallback allowed.",
             "debug": {
-                "theta_prior": theta_prior,
-                "yaw_front_world": yaw_front_world,
-                "front_source": front_source,
                 "used_vlm": False,
+                "image_path": image_path,
+                "anchor_front_yaw_world": (
+                    float(anchor_front_yaw_world) if anchor_front_yaw_world is not None else None
+                ),
             },
         }
         if log_jsonl_path:
-            _write_jsonl(log_jsonl_path, {
-                "type": "kernel",
-                "t": step_t,
-                "image_path": image_path,
-                "question": question,
-                "anchor_name": anchor_name,
-                "used_image": False,
-                "result": out,
-            })
+            _write_jsonl(
+                log_jsonl_path,
+                {
+                    "type": "kernel_fail_no_image",
+                    "t": step_t,
+                    "image_path": image_path,
+                    "question": question,
+                    "anchor_name": anchor_name,
+                    "result": out,
+                },
+            )
         return out
 
-    # VLM prompt: still enforce "intrinsic front" concept
-#     sys_prompt = """
-# SYSTEM: You are a Spatial Affordance Reasoning Engine.
-
-# CRITICAL RULE:
-# - "Functional front" is INTRINSIC to the REFERENCE OBJECT, NOT camera-relative.
-# - Do NOT define front as "toward right of image" or "toward camera".
-# - The camera pose can be arbitrary; the object's intrinsic front stays the same.
-
-# Examples of intrinsic front:
-# - Sofa/chair: direction a seated person faces (out from seating surface).
-# - Fridge: door-facing side is the front.
-# - TV/monitor: screen-facing side is the front.
-# - Sink: side you stand at to use it.
-
-# Your job:
-# Given the question and the reference object in the image, output the direction
-# (for the queried location relative to the object) in CAMERA coordinates.
-
-# CAMERA COORDS (Unit Circle from Top-Down):
-# THETA (azimuth):
-#   0.0 rad  = Right side of image
-#   1.57 rad = CENTER of image (Forward / Deep into scene)
-#   3.14 rad = Left side of image
-#   4.71 rad = Behind camera
-
-# PHI (elevation):
-#   1.57 rad = level
-#   0.0 rad  = above / on top
-#   3.14 rad = below / under
-
-# Return JSON only.
-# """
     sys_prompt = """
 SYSTEM: You are a Geometric Orientation Engine.
 
@@ -314,30 +218,26 @@ YOUR GOAL:
 Identify the **INTRINSIC FRONT VECTOR** of the Reference Object relative to the Camera.
 
 CRITICAL RULES:
-1. **IGNORE THE DISTANCE** (e.g., "3 meters"). Your job is ONLY orientation (Angle), not destination.
-2. **DO NOT LOOK FOR THE TARGET.** If the user asks "what is 3 meters in front", DO NOT look for objects 3 meters away.
-3. **ONLY OUTPUT THE FACE ORIENTATION.** Just tell me which direction the object is "facing" (its functional front).
+1. IGNORE DISTANCE (e.g., "3 meters"). Only orientation.
+2. DO NOT look for the target point. Only object-facing direction.
+3. Output only face orientation (functional front) of the object.
 
-DEFINITION OF "INTRINSIC FRONT":
-- Sofa/Chair: The direction your knees point when you sit on it.
-- TV/Monitor: The direction the screen is projecting light.
-- Cabinet: The direction the drawers open.
+INTRINSIC FRONT examples:
+- Sofa/Chair: direction your knees point when seated.
+- TV/Monitor: screen-facing direction.
+- Fridge/Cabinet: door/drawer opening face.
 
 CAMERA COORDINATES (Egocentric, top-down):
 THETA (azimuth):
-  0.00 rad  = Straight ahead (center of the image)
-  +1.57 rad = To the LEFT side of the image
-  -1.57 rad (or 4.71) = To the RIGHT side of the image
-  3.14 rad = Directly behind the camera (opposite of forward)
+  0.00 rad  = Straight ahead (center of image)
+  +1.57 rad = LEFT of image
+  -1.57 rad (or 4.71) = RIGHT of image
+  3.14 rad  = behind camera
 
 PHI (elevation):
   1.57 rad = level
-  0.0 rad  = above / on top
+  0.00 rad = above / on top
   3.14 rad = below / under
-
-IMPORTANT:
-- Use this θ definition. Do NOT revert to any other convention.
-- You are only deciding orientation, not distance.
 
 Return JSON only.
 """
@@ -355,42 +255,15 @@ Return JSON only.
 
     mime = mimetypes.guess_type(str(image_path))[0] or "image/png"
 
+    # IMPORTANT: we intentionally do NOT show the full question to avoid distance bias.
+    sanitized_query = f"Where is the intrinsic front of the {anchor_name}?"
+
     prior_hint = ""
     if anchor_front_yaw_world is not None:
         prior_hint = (
-            f"\nNOTE: Intrinsic anchor-front yaw in WORLD coords is available: "
-            f"{float(anchor_front_yaw_world):.4f} rad. "
-            f"Use this as an intrinsic-front cue if the object is visible.\n"
+            f"\nNOTE (for reference only): dataset provides anchor-front yaw (WORLD rad): "
+            f"{float(anchor_front_yaw_world):.4f}\n"
         )
-
-    # messages = [
-    #     {
-    #         "role": "user",
-    #         "parts": [
-    #             {
-    #                 "text": (
-    #                     f"{sys_prompt}\n{prior_hint}\n"
-    #                     f"Query: {question}\n"
-    #                     f"Reference Object: {anchor_name}\n"
-    #                     f"Task: Output Theta/Phi/Kappa in CAMERA frame as JSON."
-    #                 )
-    #             },
-    #             {
-    #                 "inline_data": {
-    #                     "mime_type": mime,
-    #                     "data": encode_image(str(image_path)),
-    #                 }
-    #             },
-    #         ],
-    #     }
-    # ]
-
-        sanitized_query = f"Where is the intrinsic front of the {anchor_name}?"
-    
-    # If your system supports "Left/Right", you can map it dynamically:
-    # if "left" in question.lower(): sanitized_query = f"Where is the Left side of {anchor_name}?"
-    # elif "right" in question.lower(): sanitized_query = f"Where is the Right side of {anchor_name}?"
-    # else: sanitized_query = f"Where is the Intrinsic Front of {anchor_name}?"
 
     messages = [
         {
@@ -398,12 +271,11 @@ Return JSON only.
             "parts": [
                 {
                     "text": (
-                        f"{sys_prompt}\n{prior_hint}\n"
+                        f"{sys_prompt}\n"
+                        f"{prior_hint}\n"
                         f"Reference Object: {anchor_name}\n"
-                        # CRITICAL CHANGE: Don't show the full question.
-                        # Show a request for pure orientation.
-                        f"Task: {sanitized_query}\n" 
-                        f"Instruction: Output the Theta/Phi direction of that face relative to the camera."
+                        f"Task: {sanitized_query}\n"
+                        "Instruction: Output Theta/Phi direction of that face relative to the camera."
                     )
                 },
                 {
@@ -433,89 +305,90 @@ Return JSON only.
         phi = float(d["phi_radians"])
         kappa = float(d["kappa"])
         reasoning = d.get("reasoning", "")
-        # Enforce a meaningful directional concentration:
-        # - If model gives 0 or nonsense, fall back to a reasonable default.
+
         if not math.isfinite(kappa) or kappa <= 0.1:
             kappa = 5.0
-            
-        # Trust VLM: convert camera theta to world theta and return directly
+
         theta_world = _camera_theta_to_world(theta_cam, agent_yaw)
+
         print(
-            f"[MSP-VLM-ANGLE] question='{question}', "
-            f"anchor='{anchor_name}', "
-            f"agent_yaw={agent_yaw:.3f}, "
-            f"theta_cam={theta_cam:.3f}, "
-            f"theta_world={theta_world:.3f}, "
-            f"phi={phi:.3f}, kappa={kappa:.3f}"
+            f"[MSP-VLM-ANGLE] question='{question}', anchor='{anchor_name}', "
+            f"agent_yaw={agent_yaw:.3f}, theta_cam={theta_cam:.3f}, "
+            f"theta_world={theta_world:.3f}, phi={phi:.3f}, kappa={kappa:.3f}"
         )
 
-
         out = {
+            "ok": True,
             "theta": float(theta_world),
             "phi": float(phi),
             "kappa": float(kappa),
             "reasoning": reasoning,
             "debug": {
-                "theta_cam": theta_cam,
-                "theta_world": theta_world,
+                "theta_cam": float(theta_cam),
+                "theta_world": float(theta_world),
                 "agent_yaw": float(agent_yaw),
-                "front_source": front_source,
-                "anchor_front_yaw_world": (float(anchor_front_yaw_world) if anchor_front_yaw_world is not None else None),
-                "theta_prior_fallback_only": theta_prior,
                 "used_vlm": True,
+                "anchor_front_yaw_world": (
+                    float(anchor_front_yaw_world) if anchor_front_yaw_world is not None else None
+                ),
             },
         }
 
         if log_jsonl_path:
-            _write_jsonl(log_jsonl_path, {
-                "type": "kernel",
-                "t": step_t,
-                "image_path": image_path,
-                "question": question,
-                "anchor_name": anchor_name,
-                "used_image": True,
-                "messages": messages[0]["parts"][0]["text"],
-                "raw_response_text": raw_text,
-                "parsed": d,
-                "result": out,
-            })
+            _write_jsonl(
+                log_jsonl_path,
+                {
+                    "type": "kernel",
+                    "t": step_t,
+                    "image_path": image_path,
+                    "question": question,
+                    "anchor_name": anchor_name,
+                    "used_image": True,
+                    "messages": messages[0]["parts"][0]["text"],
+                    "raw_response_text": raw_text,
+                    "parsed": d,
+                    "result": out,
+                },
+            )
 
         return out
 
     except Exception as e:
-        # Fallback to prior (still no predicate_offset)
         out = {
-            "theta": theta_prior,
-            "phi": phi_prior,
-            "kappa": 6.0 if anchor_front_yaw_world is None else 10.0,
-            "reasoning": f"VLM call failed; fallback to intrinsic/front prior ONLY. Error: {e}",
+            "ok": False,
+            "error": f"VLM kernel call failed; no fallback allowed. Error: {e}",
             "debug": {
-                "theta_prior": theta_prior,
-                "yaw_front_world": yaw_front_world,
-                "front_source": front_source,
                 "used_vlm": False,
+                "raw_response_text": raw_text,
+                "image_path": image_path,
+                "anchor_front_yaw_world": (
+                    float(anchor_front_yaw_world) if anchor_front_yaw_world is not None else None
+                ),
             },
         }
         if log_jsonl_path:
-            _write_jsonl(log_jsonl_path, {
-                "type": "kernel_error",
-                "t": step_t,
-                "image_path": image_path,
-                "question": question,
-                "anchor_name": anchor_name,
-                "raw_response_text": raw_text,
-                "error": str(e),
-                "result": out,
-            })
+            _write_jsonl(
+                log_jsonl_path,
+                {
+                    "type": "kernel_fail_vlm_error",
+                    "t": step_t,
+                    "image_path": image_path,
+                    "question": question,
+                    "anchor_name": anchor_name,
+                    "raw_response_text": raw_text,
+                    "error": str(e),
+                    "result": out,
+                },
+            )
         return out
 
 
-# -----------------------------------------------------------------------------
+# =============================================================================
 # STEP 2: MSP scoring core
-# -----------------------------------------------------------------------------
+# =============================================================================
 
 class MSPEngineSmart:
-    def __init__(self):
+    def __init__(self) -> None:
         pass
 
     def _get_metric_semantic_params(
@@ -535,11 +408,9 @@ class MSPEngineSmart:
             "mu_y": float(pos[1]),
             "mu_z": float(pos[2]),
             "sigma_s": 0.5 * max_dim,
-
             "x0": float(anchor_pos_hab[0]),
             "y0": float(anchor_pos_hab[1]),
             "z0": float(anchor_pos_hab[2]),
-
             "d0": float(distance_m),
             "sigma_m": 0.3 * max_dim,
         }
@@ -554,6 +425,7 @@ class MSPEngineSmart:
     ) -> float:
         point_hab = np.asarray(point_hab, dtype=np.float32)
         anchor_pos_hab = np.asarray(anchor_pos_hab, dtype=np.float32)
+
         params = {
             **self._get_metric_semantic_params(
                 anchor_pos_hab=anchor_pos_hab,
@@ -565,6 +437,7 @@ class MSPEngineSmart:
             "phi0": float(kernel_params["phi"]),
             "kappa": float(kernel_params["kappa"]),
         }
+
         logp = float(
             _combined_logpdf(
                 np.array([point_hab[0]]),
@@ -583,7 +456,6 @@ class MSPEngineSmart:
         kernel_params: Dict[str, Any],
         question_dist: float,
     ) -> Tuple[List[Dict[str, Any]], List[Dict[str, Any]]]:
-
         anchor_pos_hab = np.asarray(anchor_pos_hab, dtype=np.float32)
 
         scored_objects: List[Dict[str, Any]] = []
@@ -597,7 +469,10 @@ class MSPEngineSmart:
             }
             logp = float(
                 _combined_logpdf(
-                    np.array([pos[0]]), np.array([pos[1]]), np.array([pos[2]]), params
+                    np.array([pos[0]]),
+                    np.array([pos[1]]),
+                    np.array([pos[2]]),
+                    params,
                 )[0]
             )
             scored_objects.append({**obj, "msp_score": logp})
@@ -613,7 +488,10 @@ class MSPEngineSmart:
             }
             logp = float(
                 _combined_logpdf(
-                    np.array([pos[0]]), np.array([pos[1]]), np.array([pos[2]]), params
+                    np.array([pos[0]]),
+                    np.array([pos[1]]),
+                    np.array([pos[2]]),
+                    params,
                 )[0]
             )
             scored_frontiers.append({**fr, "msp_score": logp})
@@ -623,9 +501,9 @@ class MSPEngineSmart:
         return scored_objects, scored_frontiers
 
 
-# -----------------------------------------------------------------------------
+# =============================================================================
 # STEP 3: Planner — VLM sees scored candidates + point guess, logs everything
-# -----------------------------------------------------------------------------
+# =============================================================================
 
 class VLMPlannerMSP_Smart:
     def __init__(self, cfg, sg_sim, question, gt=None, out_path=".", **kwargs):
@@ -637,20 +515,14 @@ class VLMPlannerMSP_Smart:
         self._history = ""
         self._outputs_to_save = [f"Question: {question}\n"]
 
-        # MODE RESOLUTION (robust):
-        # Support legacy graph_eqa values: "msp_point", "msp_object"
-        # Support new values: "where", "which"
-        # Prefer vlm.msp_nobnn.mode when present.
         raw_answer_mode = str(getattr(cfg, "answer_mode", "") or "").lower().strip()
 
-        # 1) Prefer nested MSP config if present
         nested_mode = ""
         try:
             nested_mode = str(getattr(getattr(cfg, "msp_nobnn", None), "mode", "") or "").lower().strip()
         except Exception:
             nested_mode = ""
 
-        # normalize mapping
         def _normalize_mode(m: str) -> str:
             m = (m or "").lower().strip()
             mapping = {
@@ -658,40 +530,31 @@ class VLMPlannerMSP_Smart:
                 "msp_where": "where",
                 "point": "where",
                 "where": "where",
-
                 "msp_object": "which",
                 "msp_which": "which",
                 "object": "which",
                 "which": "which",
-
-                # some older configs used "eqa" for object-choice behavior
                 "eqa": "which",
             }
             return mapping.get(m, m)
 
         resolved = _normalize_mode(nested_mode) if nested_mode else _normalize_mode(raw_answer_mode)
-
-        # final guard (do NOT hard-crash on legacy values)
         if resolved not in ["where", "which"]:
-            # last fallback: if they used "msp_*" but unknown, default to where
             resolved = "where"
-
         self.answer_mode: str = resolved
 
-        # Runner-provided hints from CSV:
         self._anchor_label: Optional[str] = kwargs.get("anchor_label", None)
         self._anchor_center_hab: Optional[np.ndarray] = kwargs.get("anchor_center_hab", None)
         if self._anchor_center_hab is not None:
             self._anchor_center_hab = np.asarray(self._anchor_center_hab, dtype=np.float32)
 
-        # NEW: intrinsic anchor front yaw (world) from dataset (e.g., ann_yaw_rad)
+        # kept for logging / cues only (kernel will NOT fallback to this)
         self._anchor_front_yaw_world: Optional[float] = kwargs.get("anchor_front_yaw_world", None)
         if self._anchor_front_yaw_world is not None:
             self._anchor_front_yaw_world = float(self._anchor_front_yaw_world)
 
         self.msp_engine = MSPEngineSmart()
 
-        # Logging paths
         self._vlm_calls_path = self._out_path / "vlm_calls.jsonl"
 
         print(f"\n[MSP SMART INIT] mode={self.answer_mode} Q: {self._question}")
@@ -699,17 +562,20 @@ class VLMPlannerMSP_Smart:
         print(f"  - Anchor center hint (hab): {self._anchor_center_hab}")
         print(f"  - Anchor front yaw world (intrinsic): {self._anchor_front_yaw_world}")
 
-        _write_jsonl(self._vlm_calls_path, {
-            "type": "planner_init",
-            "mode": self.answer_mode,
-            "question": self._question,
-            "anchor_label_hint": self._anchor_label,
-            "anchor_center_hint": (self._anchor_center_hab.tolist() if self._anchor_center_hab is not None else None),
-            "anchor_front_yaw_world": self._anchor_front_yaw_world,
-        })
+        _write_jsonl(
+            self._vlm_calls_path,
+            {
+                "type": "planner_init",
+                "mode": self.answer_mode,
+                "question": self._question,
+                "anchor_label_hint": self._anchor_label,
+                "anchor_center_hint": (
+                    self._anchor_center_hab.tolist() if self._anchor_center_hab is not None else None
+                ),
+                "anchor_front_yaw_world": self._anchor_front_yaw_world,
+            },
+        )
 
-        # Ensure llm_outputs_smart exists and starts cleanly for the run directory.
-        # (We still append per step; this makes the file more readable.)
         try:
             with open(self._out_path / "llm_outputs_smart.txt", "w") as f:
                 f.write(f"Question: {self._question}\n\n")
@@ -717,7 +583,7 @@ class VLMPlannerMSP_Smart:
             pass
 
     @property
-    def t(self):
+    def t(self) -> int:
         return self._t
 
     def _get_scene_data(self) -> Tuple[List[Dict[str, Any]], List[Dict[str, Any]]]:
@@ -727,10 +593,7 @@ class VLMPlannerMSP_Smart:
                 pos_norm = self.sg_sim.get_position_from_id(oid)
                 if pos_norm is None:
                     continue
-                pos_hab = np.asarray(
-                    pos_normal_to_habitat(np.asarray(pos_norm, dtype=np.float32)),
-                    dtype=np.float32,
-                )
+                pos_hab = np.asarray(pos_normal_to_habitat(np.asarray(pos_norm, dtype=np.float32)), dtype=np.float32)
                 objects.append(
                     {
                         "id": str(oid),
@@ -749,10 +612,7 @@ class VLMPlannerMSP_Smart:
                 pos_norm = self.sg_sim.get_position_from_id(fid)
                 if pos_norm is None:
                     continue
-                pos_hab = np.asarray(
-                    pos_normal_to_habitat(np.asarray(pos_norm, dtype=np.float32)),
-                    dtype=np.float32,
-                )
+                pos_hab = np.asarray(pos_normal_to_habitat(np.asarray(pos_norm, dtype=np.float32)), dtype=np.float32)
                 frontiers.append(
                     {
                         "id": str(fid),
@@ -767,22 +627,18 @@ class VLMPlannerMSP_Smart:
 
         return objects, frontiers
 
-    # -------------------------
-    # NEW: Anchor resolution with debug trace
-    # -------------------------
+    # -------------------------------------------------------------------------
+    # Anchor resolution + debug trace
+    # -------------------------------------------------------------------------
 
     def _resolve_anchor(
         self, objects: List[Dict[str, Any]]
     ) -> Tuple[Optional[Dict[str, Any]], str, Dict[str, Any]]:
-        """
-        Resolve anchor when multiple instances exist:
-          1) filter by label substring match (case-insensitive)
-          2) choose closest to anchor_center_hab (from dataset CSV)
-        Returns (anchor_obj, anchor_name, debug_dict)
-        """
         dbg: Dict[str, Any] = {
             "anchor_label_hint": self._anchor_label,
-            "anchor_center_hab_hint": (self._anchor_center_hab.tolist() if self._anchor_center_hab is not None else None),
+            "anchor_center_hab_hint": (
+                self._anchor_center_hab.tolist() if self._anchor_center_hab is not None else None
+            ),
             "match_strategy": None,
             "num_objects": len(objects),
             "candidates": [],
@@ -806,21 +662,16 @@ class VLMPlannerMSP_Smart:
             dbg["match_strategy"] = str(dbg["match_strategy"]) + "_no_match"
             return None, label, dbg
 
-        # log candidate list (cap for file size)
         for o in candidates[:30]:
-            dbg["candidates"].append({
-                "id": str(o.get("id","")),
-                "name": o.get("name",""),
-                "pos_hab": o.get("position", None),
-            })
+            dbg["candidates"].append(
+                {"id": str(o.get("id", "")), "name": o.get("name", ""), "pos_hab": o.get("position", None)}
+            )
 
-        # If no center hint, pick first (stable)
         if self._anchor_center_hab is None:
             best = candidates[0]
-            dbg["chosen"] = {"id": str(best.get("id","")), "name": best.get("name",""), "pos_hab": best.get("position")}
+            dbg["chosen"] = {"id": str(best.get("id", "")), "name": best.get("name", ""), "pos_hab": best.get("position")}
             return best, best.get("name", label), dbg
 
-        # Otherwise pick closest to csv center
         c0 = np.asarray(self._anchor_center_hab, dtype=np.float32)
         best = None
         best_d = 1e9
@@ -833,16 +684,16 @@ class VLMPlannerMSP_Smart:
 
         dbg["match_strategy"] = str(dbg["match_strategy"]) + "_closest_to_csv_center"
         dbg["chosen"] = {
-            "id": str(best.get("id","")) if best else "",
-            "name": best.get("name","") if best else "",
+            "id": str(best.get("id", "")) if best else "",
+            "name": best.get("name", "") if best else "",
             "pos_hab": best.get("position") if best else None,
             "dist_to_center": float(best_d) if best else None,
         }
         return best, best.get("name", label) if best else label, dbg
 
-    # -------------------------
-    # Selector VLM (unchanged behavior, better guardrails + better prompt)
-    # -------------------------
+    # -------------------------------------------------------------------------
+    # Selector prompt / call
+    # -------------------------------------------------------------------------
 
     def _build_selector_prompt(
         self,
@@ -855,13 +706,6 @@ class VLMPlannerMSP_Smart:
         top_frontiers: List[Dict[str, Any]],
         point_guess: Optional[Dict[str, Any]],
     ) -> str:
-        """
-        Build a prompt that shows:
-          - kernel info
-          - top objects w/ scores and center coords
-          - top frontiers w/ scores and coords
-          - optional point guess (WHERE mode)
-        """
         if self.answer_mode == "where":
             mode_rules = (
                 "MODE=WHERE: You may choose a coordinate point (POINT_GUESS) OR an object id.\n"
@@ -943,7 +787,7 @@ Output STRICT JSON only:
     * WHERE: "POINT_GUESS" or an object id (from TOP OBJECTS)
     * WHICH: must be an object id from TOP OBJECTS
 - target_xyz_hab: [x,y,z] only if chosen_id=="POINT_GUESS", else []
-- answer_text: string (what you would say)
+- answer_text: string
 - confidence: float in [0,1]
 """
 
@@ -978,24 +822,16 @@ Output STRICT JSON only:
         )
         return json.loads(resp.text), resp.text
 
-    # -------------------------
-    # Optional: room constraint hook (safe placeholder)
-    # -------------------------
+    # -------------------------------------------------------------------------
+    # Room constraint hook (placeholder)
+    # -------------------------------------------------------------------------
 
     def _get_anchor_room_id(self, anchor_object_id: str) -> Optional[str]:
-        """
-        If sg_sim exposes room mapping, plug it here.
-        Current safe behavior: return None and log that room constraint is not enforced.
-        """
-        # Example (if you add this later):
-        # fn = getattr(self.sg_sim, "get_room_for_object_id", None)
-        # if callable(fn):
-        #     return fn(anchor_object_id)
         return None
 
-    # -------------------------
+    # -------------------------------------------------------------------------
     # Main step
-    # -------------------------
+    # -------------------------------------------------------------------------
 
     def get_next_action(self, agent_yaw_rad: float = 0.0, agent_pos_hab: Optional[np.ndarray] = None):
         if agent_pos_hab is None:
@@ -1003,26 +839,26 @@ Output STRICT JSON only:
         else:
             agent_pos_hab = np.asarray(agent_pos_hab, dtype=np.float32)
 
-        # 1) Gather scene data
         objects, frontiers = self._get_scene_data()
         img_path = _safe_latest_image(self._out_path)
 
-        # 2) Resolve anchor (+debug)
         anchor_obj, anchor_name, anchor_dbg = self._resolve_anchor(objects)
 
-        # Default fallback if no anchor
+        # Anchor missing => explore
         if anchor_obj is None:
-            _write_jsonl(self._vlm_calls_path, {
-                "type": "no_anchor",
-                "t": self._t,
-                "question": self._question,
-                "mode": self.answer_mode,
-                "anchor_resolution": anchor_dbg,
-                "num_objects": len(objects),
-                "num_frontiers": len(frontiers),
-            })
+            _write_jsonl(
+                self._vlm_calls_path,
+                {
+                    "type": "no_anchor",
+                    "t": self._t,
+                    "question": self._question,
+                    "mode": self.answer_mode,
+                    "anchor_resolution": anchor_dbg,
+                    "num_objects": len(objects),
+                    "num_frontiers": len(frontiers),
+                },
+            )
 
-            # Trace + txt narration for no-anchor
             trace = {
                 "t": int(self._t),
                 "mode": self.answer_mode,
@@ -1084,7 +920,6 @@ Output STRICT JSON only:
 
         anchor_pos = np.asarray(anchor_obj["position"], dtype=np.float32)
 
-        # 2.5) Room constraint hook (currently not enforced)
         anchor_room_id = self._get_anchor_room_id(str(anchor_obj.get("id", "")))
         room_trace = {
             "anchor_room_id": anchor_room_id,
@@ -1092,7 +927,9 @@ Output STRICT JSON only:
             "note": "Room constraint not enforced in this build (no room mapping available).",
         }
 
-        # 3) Kernel VLM (logged) — uses intrinsic yaw if provided
+        # ---------------------------------------------------------------------
+        # Kernel (VLM-only). Hard fail if it fails.
+        # ---------------------------------------------------------------------
         kernel = get_vlm_spatial_kernel_params(
             image_path=img_path,
             question=self._question,
@@ -1105,9 +942,63 @@ Output STRICT JSON only:
             step_t=self._t,
         )
 
+        if not kernel.get("ok", False):
+            _write_jsonl(
+                self._vlm_calls_path,
+                {
+                    "type": "planner_kernel_failed",
+                    "t": self._t,
+                    "mode": self.answer_mode,
+                    "question": self._question,
+                    "kernel": kernel,
+                },
+            )
+
+            trace = {
+                "t": int(self._t),
+                "mode": self.answer_mode,
+                "question": self._question,
+                "agent": {"pos_hab": agent_pos_hab.tolist(), "yaw_world_rad": float(agent_yaw_rad)},
+                "anchor_resolution": anchor_dbg,
+                "anchor": {"id": str(anchor_obj.get("id", "")), "name": anchor_name, "pos_hab": anchor_pos.tolist()},
+                "kernel": kernel,
+                "scoring": None,
+                "selector_output": None,
+                "guardrails": None,
+                "decision_rationale": {"recommended": "fail", "note": kernel.get("error", "")},
+                "room_constraint": room_trace,
+            }
+            _write_trace_step(self._out_path, self._t, trace)
+
+            _append_trace_txt(
+                self._out_path,
+                [
+                    f"--- STEP {self._t} ---",
+                    f"Q: {self._question}",
+                    f"Mode: {self.answer_mode}",
+                    f"KERNEL FAILED: {kernel.get('error','unknown error')}",
+                    "Decision: fail step (no fallback).",
+                ],
+            )
+
+            plan = {
+                "thought": f"Kernel failed; no fallback allowed. error={kernel.get('error','')}",
+                "action_type": "answer",
+                "chosen_id": "",
+                "target_xyz_hab": [],
+                "answer_text": "",
+                "confidence": 0.0,
+            }
+
+            self._history += f"[t={self._t}] kernel_failed error={kernel.get('error','')}\n"
+            self._t += 1
+            return None, None, False, 0.0, plan
+
         dist_m = _parse_q_dist(self._question)
 
-        # 4) MSP score objects + frontiers
+        # ---------------------------------------------------------------------
+        # MSP scoring
+        # ---------------------------------------------------------------------
         msp_objects, msp_frontiers = self.msp_engine.score_candidates(
             objects=objects,
             frontiers=frontiers,
@@ -1116,7 +1007,7 @@ Output STRICT JSON only:
             question_dist=dist_m,
         )
 
-        # 5) Point guess (WHERE mode): anchor + dist * direction (always computed/logged)
+        # WHERE point guess always computed/logged (selector can ignore)
         dir_world = _unit_dir_from_theta_phi(float(kernel["theta"]), float(kernel["phi"]))
         point_xyz = (anchor_pos + float(dist_m) * dir_world).astype(np.float32)
 
@@ -1128,27 +1019,18 @@ Output STRICT JSON only:
             candidate_size=[0.5, 0.5, 0.5],
         )
 
-        point_guess = {
-            "id": "POINT_GUESS",
-            "target_xyz_hab": point_xyz.tolist(),
-            "msp_score": float(point_logp),
-        }
+        point_guess = {"id": "POINT_GUESS", "target_xyz_hab": point_xyz.tolist(), "msp_score": float(point_logp)}
 
-        # Top-K candidates to show VLM
         K_OBJ = int(getattr(self.cfg, "selector_topk_objects", 12))
-        K_FR  = int(getattr(self.cfg, "selector_topk_frontiers", 8))
+        K_FR = int(getattr(self.cfg, "selector_topk_frontiers", 8))
         top_objects = msp_objects[:K_OBJ]
         top_frontiers = msp_frontiers[:K_FR]
 
-        # Save exact selector context for auditing
         selector_context = {
             "t": self._t,
             "mode": self.answer_mode,
             "question": self._question,
-            "agent": {
-                "pos_hab": agent_pos_hab.tolist(),
-                "yaw_world_rad": float(agent_yaw_rad),
-            },
+            "agent": {"pos_hab": agent_pos_hab.tolist(), "yaw_world_rad": float(agent_yaw_rad)},
             "anchor_resolution": anchor_dbg,
             "anchor": {
                 "id": anchor_obj["id"],
@@ -1161,18 +1043,20 @@ Output STRICT JSON only:
             "dist_m": dist_m,
             "point_guess": point_guess,
             "top_objects": [
-                {"id": o["id"], "name": o.get("name",""), "msp_score": float(o.get("msp_score",0.0)), "pos_hab": o.get("position")}
+                {"id": o["id"], "name": o.get("name", ""), "msp_score": float(o.get("msp_score", 0.0)), "pos_hab": o.get("position")}
                 for o in top_objects
             ],
             "top_frontiers": [
-                {"id": f["id"], "msp_score": float(f.get("msp_score",0.0)), "pos_hab": f.get("position")}
+                {"id": f["id"], "msp_score": float(f.get("msp_score", 0.0)), "pos_hab": f.get("position")}
                 for f in top_frontiers
             ],
         }
         selector_context_path = self._out_path / f"selector_context_step_{self._t}.json"
         _write_json(selector_context_path, selector_context)
 
-        # 6) Selector VLM call (logged)
+        # ---------------------------------------------------------------------
+        # Selector VLM
+        # ---------------------------------------------------------------------
         agent_state_str = self.sg_sim.get_current_semantic_state_str()
         prompt = self._build_selector_prompt(
             agent_state=agent_state_str,
@@ -1182,30 +1066,23 @@ Output STRICT JSON only:
             dist_m=dist_m,
             top_objects=top_objects,
             top_frontiers=top_frontiers,
-            point_guess=point_guess,  # show it always; WHICH prompt explicitly forbids selecting it
+            point_guess=point_guess,
         )
 
         raw_text = ""
         try:
             plan, raw_text = self._call_selector_llm(prompt)
-            _write_jsonl(self._vlm_calls_path, {
-                "type": "selector",
-                "t": self._t,
-                "mode": self.answer_mode,
-                "prompt": prompt,
-                "raw_response_text": raw_text,
-                "parsed": plan,
-            })
+            _write_jsonl(
+                self._vlm_calls_path,
+                {"type": "selector", "t": self._t, "mode": self.answer_mode, "prompt": prompt, "raw_response_text": raw_text, "parsed": plan},
+            )
         except Exception as e:
-            _write_jsonl(self._vlm_calls_path, {
-                "type": "selector_error",
-                "t": self._t,
-                "mode": self.answer_mode,
-                "error": str(e),
-                "raw_response_text": raw_text,
-            })
+            _write_jsonl(
+                self._vlm_calls_path,
+                {"type": "selector_error", "t": self._t, "mode": self.answer_mode, "error": str(e), "raw_response_text": raw_text},
+            )
 
-            # fallback: choose best object (or frontier if none)
+            # Selector fallback (kept) — kernel fallback removed, selector fallback still OK.
             if len(top_objects) > 0:
                 plan = {
                     "thought": f"Selector failed; fallback to best object. Error={e}",
@@ -1234,40 +1111,39 @@ Output STRICT JSON only:
                     "confidence": 0.0,
                 }
 
-        # 7) Enforce mode constraints (hard guardrail)
+        # ---------------------------------------------------------------------
+        # Guardrails
+        # ---------------------------------------------------------------------
         chosen_id = str(plan.get("chosen_id", "")).strip()
         action = str(plan.get("action_type", "goto_frontier")).strip()
 
-        allowed_object_ids = set([str(o["id"]) for o in top_objects])
-        allowed_frontier_ids = set([str(f["id"]) for f in top_frontiers])
+        allowed_object_ids = {str(o["id"]) for o in top_objects}
+        allowed_frontier_ids = {str(f["id"]) for f in top_frontiers}
 
         if self.answer_mode == "which":
-            # POINT_GUESS is forbidden; chosen_id must be in object ids
             if chosen_id == "POINT_GUESS" or chosen_id not in allowed_object_ids:
                 if len(top_objects) > 0:
                     forced = top_objects[0]
-                    plan["thought"] = f"[guardrail WHICH] Forced to best object because chosen_id={chosen_id} invalid. " + plan.get("thought","")
+                    plan["thought"] = f"[guardrail WHICH] Forced to best object because chosen_id={chosen_id} invalid. " + plan.get("thought", "")
                     plan["chosen_id"] = str(forced["id"])
                     plan["target_xyz_hab"] = []
                     chosen_id = str(forced["id"])
                     if action == "answer":
-                        plan["answer_text"] = plan.get("answer_text","") or f"{forced.get('name','object')} (id={forced['id']})"
+                        plan["answer_text"] = plan.get("answer_text", "") or f"{forced.get('name','object')} (id={forced['id']})"
                     else:
                         plan["action_type"] = "goto_object"
                         action = "goto_object"
                 else:
-                    plan["thought"] = f"[guardrail WHICH] No objects available; switching to lookaround."
+                    plan["thought"] = "[guardrail WHICH] No objects available; switching to lookaround."
                     plan["action_type"] = "lookaround"
                     plan["chosen_id"] = ""
                     plan["target_xyz_hab"] = []
                     action = "lookaround"
                     chosen_id = ""
         else:
-            # WHERE mode: if chosen_id is POINT_GUESS, ensure target_xyz_hab is filled
             if chosen_id == "POINT_GUESS":
                 plan["target_xyz_hab"] = point_guess["target_xyz_hab"]
             else:
-                # if it chose a non-existent id, snap to best frontier
                 if chosen_id and (chosen_id not in allowed_object_ids) and (chosen_id not in allowed_frontier_ids):
                     if len(top_frontiers) > 0:
                         plan["thought"] = f"[guardrail WHERE] Invalid chosen_id={chosen_id}. Forced to best frontier."
@@ -1277,69 +1153,55 @@ Output STRICT JSON only:
                         action = "goto_frontier"
                         chosen_id = str(top_frontiers[0]["id"])
 
-        # 8) Convert chosen to target_pose (for goto actions)
+        # ---------------------------------------------------------------------
+        # Convert chosen to target_pose
+        # ---------------------------------------------------------------------
         target_pose = None
         target_id = None
 
-        if action == "goto_object":
+        if action in ("goto_object", "goto_frontier"):
             target_id = chosen_id
             if target_id:
                 try:
                     target_pose = self.sg_sim.get_position_from_id(target_id)
                 except Exception as e:
-                    print(f"[MSP] Failed to get pose for object {target_id}: {e}")
+                    print(f"[MSP] Failed to get pose for id {target_id}: {e}")
 
-        elif action == "goto_frontier":
-            target_id = chosen_id
-            if target_id:
-                try:
-                    target_pose = self.sg_sim.get_position_from_id(target_id)
-                except Exception as e:
-                    print(f"[MSP] Failed to get pose for frontier {target_id}: {e}")
-
-        # 9) Decide confidence / termination
+        # ---------------------------------------------------------------------
+        # Confidence / traces
+        # ---------------------------------------------------------------------
         conf = float(plan.get("confidence", 0.0))
         is_answer = (action == "answer")
 
         best_obj = top_objects[0] if len(top_objects) > 0 else None
+
+        # Keep selector introspection (useful for debugging)
         plan["selector"] = {
             "mode": self.answer_mode,
             "chosen_id": plan.get("chosen_id", ""),
-            "answer_type": ("point" if plan.get("chosen_id","") == "POINT_GUESS" else "object"),
+            "answer_type": ("point" if plan.get("chosen_id", "") == "POINT_GUESS" else "object"),
             "confidence": conf,
             "point_guess": point_guess,
             "best_object": (
                 {
                     "id": str(best_obj["id"]),
-                    "name": best_obj.get("name",""),
-                    "msp_score": float(best_obj.get("msp_score",0.0)),
+                    "name": best_obj.get("name", ""),
+                    "msp_score": float(best_obj.get("msp_score", 0.0)),
                     "target_xyz_hab": best_obj.get("position"),
                 } if best_obj else None
             ),
             "topk_objects": [
-                {
-                    "id": str(o["id"]),
-                    "name": o.get("name",""),
-                    "msp_score": float(o.get("msp_score",0.0)),
-                    "target_xyz_hab": o.get("position"),
-                } for o in top_objects[:8]
+                {"id": str(o["id"]), "name": o.get("name", ""), "msp_score": float(o.get("msp_score", 0.0)), "target_xyz_hab": o.get("position")}
+                for o in top_objects[:8]
             ],
             "topk_frontiers": [
-                {
-                    "id": str(f["id"]),
-                    "msp_score": float(f.get("msp_score",0.0)),
-                    "target_xyz_hab": f.get("position"),
-                } for f in top_frontiers[:6]
+                {"id": str(f["id"]), "msp_score": float(f.get("msp_score", 0.0)), "target_xyz_hab": f.get("position")}
+                for f in top_frontiers[:6]
             ],
         }
 
-        # -------------------------
-        # NEW: Comprehensive step trace (JSON + readable txt)
-        # -------------------------
-
         kernel_trace = {
-            "used_intrinsic_front": (self._anchor_front_yaw_world is not None),
-            "anchor_front_yaw_world": self._anchor_front_yaw_world,
+            "ok": True,
             "kernel_theta_world": float(kernel.get("theta", 0.0)),
             "kernel_phi": float(kernel.get("phi", math.pi / 2.0)),
             "kappa": float(kernel.get("kappa", 0.0)),
@@ -1368,29 +1230,14 @@ Output STRICT JSON only:
             "t": int(self._t),
             "mode": self.answer_mode,
             "question": self._question,
-            "agent": {
-                "pos_hab": agent_pos_hab.tolist(),
-                "yaw_world_rad": float(agent_yaw_rad),
-            },
+            "agent": {"pos_hab": agent_pos_hab.tolist(), "yaw_world_rad": float(agent_yaw_rad)},
             "anchor_resolution": anchor_dbg,
-            "anchor": {
-                "id": str(anchor_obj.get("id", "")),
-                "name": anchor_name,
-                "pos_hab": anchor_pos.tolist(),
-            },
+            "anchor": {"id": str(anchor_obj.get("id", "")), "name": anchor_name, "pos_hab": anchor_pos.tolist()},
             "kernel": kernel_trace,
             "scoring": score_trace,
             "selector_prompt_path": str(selector_context_path),
-            "selector_output": {
-                "action_type": action,
-                "chosen_id": chosen_id,
-                "confidence": conf,
-                "answer_text": plan.get("answer_text", ""),
-            },
-            "guardrails": {
-                "applied": bool(guardrail_applied),
-                "thought": plan.get("thought", ""),
-            },
+            "selector_output": {"action_type": action, "chosen_id": chosen_id, "confidence": conf, "answer_text": plan.get("answer_text", "")},
+            "guardrails": {"applied": bool(guardrail_applied), "thought": plan.get("thought", "")},
             "decision_rationale": decision_rationale,
             "room_constraint": room_trace,
         }
@@ -1398,15 +1245,17 @@ Output STRICT JSON only:
 
         # Readable narration
         kdbg = kernel_trace.get("debug", {}) or {}
-        txt: List[str] = []
-        txt.append(f"--- STEP {self._t} ---")
-        txt.append(f"Q: {self._question}")
-        txt.append(f"Mode: {self.answer_mode}")
-        txt.append(f"Agent: pos_hab={agent_pos_hab.tolist()} yaw={float(agent_yaw_rad):.3f} rad")
 
-        txt.append("Anchor resolution:")
-        txt.append(f"- label_hint={anchor_dbg.get('anchor_label_hint')}")
-        txt.append(f"- strategy={anchor_dbg.get('match_strategy')}")
+        txt: List[str] = [
+            f"--- STEP {self._t} ---",
+            f"Q: {self._question}",
+            f"Mode: {self.answer_mode}",
+            f"Agent: pos_hab={agent_pos_hab.tolist()} yaw={float(agent_yaw_rad):.3f} rad",
+            "Anchor resolution:",
+            f"- label_hint={anchor_dbg.get('anchor_label_hint')}",
+            f"- strategy={anchor_dbg.get('match_strategy')}",
+        ]
+
         cand_list = anchor_dbg.get("candidates", []) or []
         if cand_list:
             txt.append(f"- candidates_found={len(cand_list)} (showing up to 5):")
@@ -1414,30 +1263,34 @@ Output STRICT JSON only:
                 txt.append(f"  * {c.get('id')} name={c.get('name')} pos={c.get('pos_hab')}")
         txt.append(f"- chosen={anchor_dbg.get('chosen')}")
 
-        txt.append("Kernel:")
-        txt.append(f"- used_intrinsic_front={kernel_trace['used_intrinsic_front']} front_yaw_world={kernel_trace['anchor_front_yaw_world']}")
-        txt.append(f"- front_source={kdbg.get('front_source')}")
-        txt.append(f"- theta_prior={kdbg.get('theta_prior')} yaw_front_world={kdbg.get('yaw_front_world')}")
-        txt.append(f"- theta_final(world)={kernel_trace['kernel_theta_world']:.4f} phi={kernel_trace['kernel_phi']:.4f} kappa={kernel_trace['kappa']:.2f}")
-        if "theta_vlm_world" in kdbg:
-            txt.append(f"- vlm_theta_world={kdbg.get('theta_vlm_world'):.4f} fusion_weight={kdbg.get('fusion_weight'):.3f}")
-        txt.append(f"- vlm_reasoning: {_shorten(kernel_trace.get('reasoning',''), 260)}")
+        txt.extend(
+            [
+                "Kernel:",
+                f"- theta_final(world)={kernel_trace['kernel_theta_world']:.4f} phi={kernel_trace['kernel_phi']:.4f} kappa={kernel_trace['kappa']:.2f}",
+                f"- theta_cam={kdbg.get('theta_cam')} agent_yaw={kdbg.get('agent_yaw')}",
+                f"- vlm_reasoning: {_shorten(kernel_trace.get('reasoning',''), 260)}",
+                "MSP scoring:",
+                f"- point_guess xyz={score_trace['point_guess']['xyz_hab']} score={score_trace['point_guess']['score']:.3f}",
+                f"- top object gap(1-2)={obj_gap}",
+            ]
+        )
 
-        txt.append("MSP scoring:")
-        txt.append(f"- point_guess xyz={score_trace['point_guess']['xyz_hab']} score={score_trace['point_guess']['score']:.3f}")
-        txt.append(f"- top object gap(1-2)={obj_gap}")
         for r in score_trace["objects"]["topk"][:3]:
             txt.append(f"  * obj {r['id']} name={r['name']} score={r['score']:.3f} pos={r['pos_hab']}")
         for r in score_trace["frontiers"]["topk"][:2]:
             txt.append(f"  * frontier {r['id']} score={r['score']:.3f} pos={r['pos_hab']}")
 
-        txt.append("Room constraint:")
-        txt.append(f"- anchor_room_id={room_trace.get('anchor_room_id')} enforced={room_trace.get('room_constraint_enforced')}")
-        txt.append(f"- note={room_trace.get('note')}")
+        txt.extend(
+            [
+                "Room constraint:",
+                f"- anchor_room_id={room_trace.get('anchor_room_id')} enforced={room_trace.get('room_constraint_enforced')}",
+                f"- note={room_trace.get('note')}",
+                "Decision:",
+                f"- heuristic_recommendation={decision_rationale.get('recommended')} (gap={obj_gap})",
+                f"- selector_action={action} chosen_id={chosen_id} conf={conf:.2f}",
+            ]
+        )
 
-        txt.append("Decision:")
-        txt.append(f"- heuristic_recommendation={decision_rationale.get('recommended')} (gap={obj_gap})")
-        txt.append(f"- selector_action={action} chosen_id={chosen_id} conf={conf:.2f}")
         if plan.get("answer_text"):
             txt.append(f"- answer_text: {plan.get('answer_text')}")
         if guardrail_applied:
@@ -1447,17 +1300,14 @@ Output STRICT JSON only:
 
         _append_trace_txt(self._out_path, txt)
 
-        # Keep your compact history line as well (nice for quick greps)
         self._history += (
             f"[t={self._t}] mode={self.answer_mode} action={action} chosen={plan.get('chosen_id','')} "
             f"conf={conf:.2f} kernel(theta={kernel['theta']:.2f},kappa={kernel['kappa']:.1f}) "
-            f"front_yaw_world={self._anchor_front_yaw_world} "
             f"pg_score={point_guess['msp_score']:.2f} "
             f"best_obj={(best_obj.get('name','') if best_obj else 'none')} "
             f"best_obj_score={(best_obj.get('msp_score',0.0) if best_obj else 0.0):.2f}\n"
         )
 
-        # Also keep the previous consolidated file writer (harmless, but now we also append)
         self._outputs_to_save.append(self._history)
         try:
             with open(self._out_path / "llm_outputs_smart_compact.txt", "w") as f:
