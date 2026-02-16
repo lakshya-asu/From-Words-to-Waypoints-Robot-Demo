@@ -181,6 +181,7 @@ services:
 
       # Put secrets in a .env file, do not hardcode them here
       - GOOGLE_API_KEY=${GOOGLE_API_KEY}
+      - OPENAI_API_KEY=${API KEY}
 
     volumes:
       # Portable mounts: relative to the repo root

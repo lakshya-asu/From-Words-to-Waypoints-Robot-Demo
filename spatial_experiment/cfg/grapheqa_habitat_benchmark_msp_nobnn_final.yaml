@@ -1,7 +1,7 @@
 # General
 seed: 42
-exp_name: msp_nobnn_final_${vlm.msp_nobnn.mode}
-output_path: outputs_msp_nobnn_final_which6/${exp_name}
+exp_name: msp${vlm.msp_nobnn.mode}
+output_path: outputs_msp2/${exp_name}
 results_filename: results_${vlm.msp_nobnn.mode}
 gpu: 0
 sim_gpu: 0
@@ -47,7 +47,7 @@ vlm:
 
   # >>> MSP No-BNN final config
   msp_nobnn:
-    mode: "which"          # "which" or "where"
+    mode: "where"          # "which" or "where"
     top_k: 5
     confidence_threshold: 0.80
 
