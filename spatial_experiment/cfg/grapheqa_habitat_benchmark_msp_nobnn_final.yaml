@@ -1,7 +1,7 @@
 # General
 seed: 42
 exp_name: msp${vlm.msp_nobnn.mode}
-output_path: outputs_msp2/${exp_name}
+output_path: outputs_msp_multiagent/${exp_name}
 results_filename: results_${vlm.msp_nobnn.mode}
 gpu: 0
 sim_gpu: 0

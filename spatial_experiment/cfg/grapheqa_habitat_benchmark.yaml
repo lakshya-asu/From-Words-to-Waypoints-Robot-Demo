@@ -1,7 +1,7 @@
 # General
 seed: 42
 exp_name: grapheqa_spatial_${vlm.name}_habitat_benchmark
-output_path: outputs_benchmark_object/${exp_name}
+output_path: outputs_benchmark_object_2/${exp_name}
 results_filename: ${vlm.name}_images_${vlm.use_image}
 gpu: 0 
 sim_gpu: 0

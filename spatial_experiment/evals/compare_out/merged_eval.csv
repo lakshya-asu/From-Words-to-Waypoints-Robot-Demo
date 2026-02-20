@@ -1,0 +1,45 @@
+qid,msp_point__Success,msp_point__error_m,msp_point__vlm_steps,msp_point__overall_steps,msp_point__traj_length,msp_point__confidence_level,msp_point__is_confident,msp_point__mode,msp_point__answer_mode,msp_point__pred_kind,msp_point__scene,msp_point__floor,msp_point__predicate,msp_point__distance_m,msp_object__Success,msp_object__error_m,msp_object__vlm_steps,msp_object__overall_steps,msp_object__traj_length,msp_object__confidence_level,msp_object__is_confident,msp_object__mode,msp_object__answer_mode,msp_object__pred_kind,msp_object__scene,msp_object__floor,msp_object__predicate,msp_object__distance_m
+0_00410-v7DzfFFEpsD_1,True,1.789548397064209,0.0,0.0,0.0,1.0,True,msp,msp_point,point,00410-v7DzfFFEpsD,1,in front of,3.0,True,,2.0,2.0,5.389305764104917,0.9,True,msp,msp_object,missing,00410-v7DzfFFEpsD,1,in front of,3.0
+10_00217-qz3829g1Lzf_0,,,,,,,,,,missing,00217-qz3829g1Lzf,0,above,1.0,False,,3.0,2.0,7.337522592807399,0.0,False,msp,msp_object,missing,00217-qz3829g1Lzf,0,above,1.0
+11_00207-FRQ75PjD278_0,,,,,,,,,,missing,00207-FRQ75PjD278,0,in front of,3.8,False,,3.0,2.0,9.640118629567672,0.0,False,msp,msp_object,missing,00207-FRQ75PjD278,0,in front of,3.8
+12_00757-LVgQNuK8vtv_0,,,,,,,,,,missing,00757-LVgQNuK8vtv,0,right of,0.5,,,,,,,,,,missing,00757-LVgQNuK8vtv,0,right of,0.5
+13_00217-qz3829g1Lzf_0,,,,,,,,,,missing,00217-qz3829g1Lzf,0,right of,2.0,,,,,,,,,,missing,00217-qz3829g1Lzf,0,right of,2.0
+14_00245-741Fdj7NLF9_0,,,,,,,,,,missing,00245-741Fdj7NLF9,0,behind,0.5,,,,,,,,,,missing,00245-741Fdj7NLF9,0,behind,0.5
+15_00313-PE6kVEtrxtj_0,,,,,,,,,,missing,00313-PE6kVEtrxtj,0,in front of,1.0,,,,,,,,,,missing,00313-PE6kVEtrxtj,0,in front of,1.0
+16_00327-xgLmjqzoAzF_0,,,,,,,,,,missing,00327-xgLmjqzoAzF,0,in front of,2.0,,,,,,,,,,missing,00327-xgLmjqzoAzF,0,in front of,2.0
+17_00135-HeSYRw7eMtG_1,,,,,,,,,,missing,00135-HeSYRw7eMtG,1,behind,1.0,,,,,,,,,,missing,00135-HeSYRw7eMtG,1,behind,1.0
+18_00062-ACZZiU6BXLz_0,,,,,,,,,,missing,00062-ACZZiU6BXLz,0,in front of,2.0,,,,,,,,,,missing,00062-ACZZiU6BXLz,0,in front of,2.0
+19_00720-8B43pG641ff_0,,,,,,,,,,missing,00720-8B43pG641ff,0,above,1.6,,,,,,,,,,missing,00720-8B43pG641ff,0,above,1.6
+1_00262-1xGrZPxG1Hz_0,False,,3.0,2.0,5.500643576443034,0.0,False,msp,msp_point,missing,00262-1xGrZPxG1Hz,0,in front of,1.8,True,,0.0,0.0,0.0,0.9,True,msp,msp_object,missing,00262-1xGrZPxG1Hz,0,in front of,1.8
+20_00149-UuwwmrTsfBN_1,,,,,,,,,,missing,00149-UuwwmrTsfBN,1,left of,3.4,,,,,,,,,,missing,00149-UuwwmrTsfBN,1,left of,3.4
+21_00023-zepmXAdrpjR_1,,,,,,,,,,missing,00023-zepmXAdrpjR,1,above,3.8,,,,,,,,,,missing,00023-zepmXAdrpjR,1,above,3.8
+22_00025-ixTj1aTMup2_1,,,,,,,,,,missing,00025-ixTj1aTMup2,1,left of,0.4,,,,,,,,,,missing,00025-ixTj1aTMup2,1,left of,0.4
+23_00062-ACZZiU6BXLz_0,,,,,,,,,,missing,00062-ACZZiU6BXLz,0,behind,1.4,,,,,,,,,,missing,00062-ACZZiU6BXLz,0,behind,1.4
+24_00262-1xGrZPxG1Hz_0,,,,,,,,,,missing,00262-1xGrZPxG1Hz,0,left of,2.6,,,,,,,,,,missing,00262-1xGrZPxG1Hz,0,left of,2.6
+25_00440-wPLokgvCnuk_1,,,,,,,,,,missing,00440-wPLokgvCnuk,1,left of,0.2,,,,,,,,,,missing,00440-wPLokgvCnuk,1,left of,0.2
+26_00203-VoVGtfYrpuQ_0,,,,,,,,,,missing,00203-VoVGtfYrpuQ,0,above,2.4,,,,,,,,,,missing,00203-VoVGtfYrpuQ,0,above,2.4
+27_00745-yX5efd48dLf_0,,,,,,,,,,missing,00745-yX5efd48dLf,0,behind,3.4,,,,,,,,,,missing,00745-yX5efd48dLf,0,behind,3.4
+28_00525-iKFn6fzyRqs_0,,,,,,,,,,missing,00525-iKFn6fzyRqs,0,above,3.2,,,,,,,,,,missing,00525-iKFn6fzyRqs,0,above,3.2
+29_00720-8B43pG641ff_0,,,,,,,,,,missing,00720-8B43pG641ff,0,above,4.0,,,,,,,,,,missing,00720-8B43pG641ff,0,above,4.0
+2_00256-92vYG1q49FY_0,False,,3.0,2.0,1.6279796545042735,0.0,False,msp,msp_point,missing,00256-92vYG1q49FY,0,in front of,2.0,True,,1.0,1.0,0.0,0.8,True,msp,msp_object,missing,00256-92vYG1q49FY,0,in front of,2.0
+30_00258-2Pc8W48bu21_1,,,,,,,,,,missing,00258-2Pc8W48bu21,1,behind,2.4,,,,,,,,,,missing,00258-2Pc8W48bu21,1,behind,2.4
+31_00109-GTV2Y73Sn5t_0,,,,,,,,,,missing,00109-GTV2Y73Sn5t,0,behind,1.6,,,,,,,,,,missing,00109-GTV2Y73Sn5t,0,behind,1.6
+32_00217-qz3829g1Lzf_0,,,,,,,,,,missing,00217-qz3829g1Lzf,0,right of,0.2,,,,,,,,,,missing,00217-qz3829g1Lzf,0,right of,0.2
+33_00057-1UnKg1rAb8A_0,,,,,,,,,,missing,00057-1UnKg1rAb8A,0,in front of,3.4,,,,,,,,,,missing,00057-1UnKg1rAb8A,0,in front of,3.4
+34_00525-iKFn6fzyRqs_1,,,,,,,,,,missing,00525-iKFn6fzyRqs,1,in front of,3.8,,,,,,,,,,missing,00525-iKFn6fzyRqs,1,in front of,3.8
+35_00326-u9rPN5cHWBg_0,,,,,,,,,,missing,00326-u9rPN5cHWBg,0,below,0.4,,,,,,,,,,missing,00326-u9rPN5cHWBg,0,below,0.4
+36_00366-fxbzYAGkrtm_1,,,,,,,,,,missing,00366-fxbzYAGkrtm,1,right of,0.4,,,,,,,,,,missing,00366-fxbzYAGkrtm,1,right of,0.4
+37_00323-yHLr6bvWsVm_0,,,,,,,,,,missing,00323-yHLr6bvWsVm,0,behind,3.4,,,,,,,,,,missing,00323-yHLr6bvWsVm,0,behind,3.4
+38_00444-sX9xad6ULKc_0,,,,,,,,,,missing,00444-sX9xad6ULKc,0,right of,2.8,,,,,,,,,,missing,00444-sX9xad6ULKc,0,right of,2.8
+39_00035-3XYAD64HpDr_0,,,,,,,,,,missing,00035-3XYAD64HpDr,0,above,0.4,,,,,,,,,,missing,00035-3XYAD64HpDr,0,above,0.4
+3_00525-iKFn6fzyRqs_1,True,1.830155849456787,0.0,0.0,0.0,1.0,True,msp,msp_point,point,00525-iKFn6fzyRqs,1,right of,2.2,False,,3.0,2.0,2.61510443993224,0.0,False,msp,msp_object,missing,00525-iKFn6fzyRqs,1,right of,2.2
+40_00591-JptJPosx1Z6_0,,,,,,,,,,missing,00591-JptJPosx1Z6,0,right of,2.8,,,,,,,,,,missing,00591-JptJPosx1Z6,0,right of,2.8
+41_00330-WhNyDTnd9g5_0,,,,,,,,,,missing,00330-WhNyDTnd9g5,0,left of,0.6,,,,,,,,,,missing,00330-WhNyDTnd9g5,0,left of,0.6
+42_00720-8B43pG641ff_0,,,,,,,,,,missing,00720-8B43pG641ff,0,in front of,0.4,,,,,,,,,,missing,00720-8B43pG641ff,0,in front of,0.4
+43_00062-ACZZiU6BXLz_1,,,,,,,,,,missing,00062-ACZZiU6BXLz,1,in front of,1.8,,,,,,,,,,missing,00062-ACZZiU6BXLz,1,in front of,1.8
+4_00366-fxbzYAGkrtm_1,True,14.639863014221191,1.0,1.0,0.0,1.0,True,msp,msp_point,point,00366-fxbzYAGkrtm,1,right of,1.0,True,,0.0,0.0,0.0,0.9,True,msp,msp_object,missing,00366-fxbzYAGkrtm,1,right of,1.0
+5_00388-pcpn6mFqFCg_0,True,4.831632614135742,0.0,0.0,0.0,1.0,True,msp,msp_point,point,00388-pcpn6mFqFCg,0,behind,2.0,False,,3.0,2.0,0.0,0.0,False,msp,msp_object,missing,00388-pcpn6mFqFCg,0,behind,2.0
+6_00706-YHmAkqgwe2p_0,True,3.270817518234253,0.0,0.0,0.0,1.0,True,msp,msp_point,point,00706-YHmAkqgwe2p,0,above,1.0,True,,1.0,1.0,0.5119126276637626,0.9,True,msp,msp_object,missing,00706-YHmAkqgwe2p,0,above,1.0
+7_00582-TYDavTf8oyy_0,True,10.751083374023438,0.0,0.0,0.0,1.0,True,msp,msp_point,point,00582-TYDavTf8oyy,0,behind,1.5,False,,3.0,2.0,5.596834838165036,0.0,False,msp,msp_object,missing,00582-TYDavTf8oyy,0,behind,1.5
+8_00557-fRZhp6vWGw7_1,False,,3.0,2.0,0.0,0.0,False,msp,msp_point,missing,00557-fRZhp6vWGw7,1,left of,0.5,False,,3.0,2.0,0.0,0.0,False,msp,msp_object,missing,00557-fRZhp6vWGw7,1,left of,0.5
+9_00025-ixTj1aTMup2_1,True,4.729349613189697,1.0,1.0,3.372161794645104,1.0,True,msp,msp_point,point,00025-ixTj1aTMup2,1,in front of,3.0,True,,0.0,0.0,0.0,1.0,True,msp,msp_object,missing,00025-ixTj1aTMup2,1,in front of,3.0
