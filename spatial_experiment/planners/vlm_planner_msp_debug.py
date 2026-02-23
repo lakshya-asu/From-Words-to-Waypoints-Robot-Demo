@@ -446,8 +446,10 @@ class MSPEngineSmart:
         if planar:
             phi0 = float(math.pi / 2.0)
 
-        # IMPORTANT: use fixed kappa_factor (anchor-only policy)
-        kappa = float(self.kappa_factor)
+        # Kappa is the concentration parameter (inverse of spread variance).
+        # We want the spread to scale with the object's size.
+        # Larger object -> wider spread -> smaller kappa.
+        kappa = float(max(self.kappa_factor / max(max_dim, 0.1), 0.5))
 
         mu_x, mu_y, mu_z = float(anchor_pos_hab[0]), float(anchor_pos_hab[1]), float(anchor_pos_hab[2])
 

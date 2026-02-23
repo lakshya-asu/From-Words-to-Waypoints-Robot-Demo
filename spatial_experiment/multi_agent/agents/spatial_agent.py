@@ -21,9 +21,8 @@ class SpatialAgent:
                 "reasoning": genai.protos.Schema(type=genai.protos.Type.STRING),
                 "theta_radians": genai.protos.Schema(type=genai.protos.Type.NUMBER),
                 "phi_radians": genai.protos.Schema(type=genai.protos.Type.NUMBER),
-                "kappa": genai.protos.Schema(type=genai.protos.Type.NUMBER),
             },
-            required=["reasoning", "theta_radians", "phi_radians", "kappa"],
+            required=["reasoning", "theta_radians", "phi_radians"],
         )
 
     def process(self, blackboard: Blackboard, anchor_obj: Dict[str, Any]) -> Dict[str, Any]:
@@ -84,7 +83,7 @@ class SpatialAgent:
                 "theta_cam": theta_cam,       # Egocentric coordinate
                 "agent_yaw": blackboard.agent_yaw_rad,
                 "phi": float(d["phi_radians"]),
-                "kappa": float(d["kappa"]),
+                "kappa": 0.0, # Placeholder, Engine calculates this
                 "reasoning": d["reasoning"]
             }
             blackboard.append_event("Spatial", "KernelParams", out, "PASS")

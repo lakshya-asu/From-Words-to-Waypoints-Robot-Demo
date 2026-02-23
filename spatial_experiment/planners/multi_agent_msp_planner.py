@@ -48,6 +48,12 @@ class MultiAgentMSPPlanner:
             sigma_m_factor=float(getattr(self.cfg, "sigma_m_factor", 0.3)),
             kappa_factor=float(getattr(self.cfg, "kappa_factor", 10.0)),
         )
+        
+        # New configurable top_k parameter for returning best objects
+        self.top_k = int(getattr(self.cfg, "top_k_objects", 2))
+        
+        # Persistent context
+        self.locked_anchor_id = None
 
     def _get_room_for_node(self, node_id: str) -> Optional[str]:
         """Traverse the Habitat scene graph hierarchy (Node -> Region -> Room)."""
@@ -139,16 +145,45 @@ class MultiAgentMSPPlanner:
             return target_pose, target_id, is_conf, conf, extra
 
         if ground_out.get("needs_exploration", False) or not ground_out.get("grounded_anchors"):
-            fid = str(frontiers[0]["id"]) if frontiers else ""
-            action = "goto_frontier" if fid else "lookaround"
-            return finalize_step(self.sg_sim.get_position_from_id(fid) if fid else None, fid, False, 0.0, {"action_type": action, "chosen_id": fid, "thought": "Missing anchors. Exploring."})
+            anchor_in_view = False
+        else:
+            anchor_in_view = ground_out["grounded_anchors"][0]["matched_object_id"] != "NONE"
 
-        # Select primary anchor to run geometry on
-        primary_anchor_id = ground_out["grounded_anchors"][0]["matched_object_id"]
-        if primary_anchor_id == "NONE":
-             fid = str(frontiers[0]["id"]) if frontiers else ""
-             return finalize_step(self.sg_sim.get_position_from_id(fid) if fid else None, fid, False, 0.0, {"action_type": "goto_frontier" if fid else "lookaround", "chosen_id": fid, "thought": "Anchor is NONE. Exploring."})
-             
+        if not hasattr(self, "steps_since_anchor_seen"):
+            self.steps_since_anchor_seen = 0
+
+        if not self.locked_anchor_id:
+            if not anchor_in_view:
+                fid = str(frontiers[0]["id"]) if frontiers else ""
+                action = "goto_frontier" if fid else "lookaround"
+                return finalize_step(self.sg_sim.get_position_from_id(fid) if fid else None, fid, False, 0.0, {"action_type": action, "chosen_id": fid, "thought": "Missing anchors. Exploring."})
+
+            # Check primary anchor
+            primary_anchor_id = ground_out["grounded_anchors"][0]["matched_object_id"]
+            if primary_anchor_id == "NONE":
+                 fid = str(frontiers[0]["id"]) if frontiers else ""
+                 return finalize_step(self.sg_sim.get_position_from_id(fid) if fid else None, fid, False, 0.0, {"action_type": "goto_frontier" if fid else "lookaround", "chosen_id": fid, "thought": "Anchor is NONE. Exploring."})
+            
+            # Lock the anchor once found
+            self.locked_anchor_id = primary_anchor_id
+            self.locked_anchor_pos = self.sg_sim.get_position_from_id(self.locked_anchor_id)
+            self.steps_since_anchor_seen = 0
+            click.secho(f"[Anchor Locked] ID: {self.locked_anchor_id}", fg="green", bold=True)
+            # After locking, we navigate near it to verify
+            return finalize_step(self.sg_sim.get_position_from_id(self.locked_anchor_id), self.locked_anchor_id, False, 0.0, {"action_type": "goto_object", "chosen_id": self.locked_anchor_id, "thought": "Anchor locked. Navigating to anchor to cross-reference visual with scene graph."})
+            
+        else:
+            primary_anchor_id = self.locked_anchor_id
+            if anchor_in_view and ground_out["grounded_anchors"][0]["matched_object_id"] == self.locked_anchor_id:
+                self.steps_since_anchor_seen = 0
+            else:
+                self.steps_since_anchor_seen += 1
+                
+            if self.steps_since_anchor_seen > 5:
+                # We haven't seen the anchor in 5 steps. Navigate back to it.
+                self.steps_since_anchor_seen = 0
+                return finalize_step(self.locked_anchor_pos, primary_anchor_id, False, 0.0, {"action_type": "goto_object", "chosen_id": primary_anchor_id, "thought": "Lost sight of anchor for 5 steps. Navigating back to its last known position."})
+            
         primary_anchor_obj = next((o for o in objects if o["id"] == primary_anchor_id), objects[0])
 
         # 4. Agent 3: Spatial Geometry
@@ -190,6 +225,24 @@ class MultiAgentMSPPlanner:
         )
         point_xyz = np.asarray(point_estimate["xyz_chosen_hab"], dtype=np.float32)
 
+        # Extract the continuous PDF parameters from the shared debug trace 
+        # (All candidates share the same anchor-centric pdf params)
+        extracted_pdf_params = {}
+        if msp_objects:
+            extracted_pdf_params = msp_objects[0].get("_msp_debug", {}).get("metric_semantic_params", {})
+            predicates = msp_objects[0].get("_msp_debug", {}).get("predicate_params", {})
+            extracted_pdf_params.update(predicates)
+
+        # Build output structure with PDF, point, and top K objects
+        top_k_objects = []
+        for obj in msp_objects[:self.top_k]:
+             top_k_objects.append({
+                 "id": obj["id"],
+                 "name": obj.get("name", ""),
+                 "position": obj["position"],
+                 "confidence": float(np.exp(obj.get("msp_score", -100.0))) # Convert logpdf roughly to score
+             })
+
         # =====================================================================
         # 7. Final Action Decision (Topological Bounding + PDF Ranking)
         # =====================================================================
@@ -219,49 +272,49 @@ class MultiAgentMSPPlanner:
         room_fully_explored = (len(same_room_frontiers) == 0)
         global_map_exhausted = (len(frontiers) == 0)
         
-        # LOGIC A: If the room is fully explored, trust the PDF rankings.
+        # Format the comprehensive output
+        def build_answer(action_type, chosen_id, conf_score, target_hab, thought):
+             return finalize_step(target_hab, chosen_id, True if conf_score > 0.9 else False, conf_score, {
+                 "action_type": action_type,
+                 "chosen_id": chosen_id,
+                 "confidence": conf_score,
+                 "thought": thought,
+                 "pdf_params": extracted_pdf_params,
+                 "target_location": point_xyz.tolist(),
+                 "top_k_objects": top_k_objects
+             })
+             
+        is_location_target = any(w in orch_out.get("target_entity", "").lower() for w in ["location", "region", "point", "place", "area"])
+
+        # LOGIC A: If the target is explicitly a location, and we calculated the geometry successfully, go there directly!
+        if is_location_target and self.locked_anchor_id:
+             return build_answer("goto_object", "POINT_GUESS", 0.95, point_xyz, "Anchor is locked and spatial geometry is calculated. Navigating directly to the requested continuous location.")
+
+        # LOGIC B: If the room is fully explored, trust the PDF rankings.
         if room_fully_explored or global_map_exhausted:
             if same_room_objects:
                 best_obj = same_room_objects[0]
                 conf_score = 0.95 
-                thought = f"Room {anchor_room_id} fully explored. Selected highest PDF-scoring object in room (score: {best_obj.get('msp_score', 0.0):.2f})."
-                
-                return finalize_step(None, best_obj["id"], True, conf_score, {
-                    "action_type": "answer",
-                    "chosen_id": best_obj["id"],
-                    "confidence": conf_score,
-                    "answer_text": best_obj.get("name", ""),
-                    "thought": thought
-                })
+                thought = f"Room {anchor_room_id} fully explored. Selected highest PDF-scoring object."
+                return build_answer("answer", best_obj["id"], conf_score, None, thought)
             else:
-                return finalize_step(point_xyz, "POINT_GUESS", False, 0.0, {
-                    "action_type": "goto_object", 
-                    "chosen_id": "POINT_GUESS", 
-                    "target_xyz_hab": point_xyz.tolist(),
-                    "thought": "Room explored but target missing. Navigating to the exact center of the combined PDF."
-                })
+                return build_answer("goto_object", "POINT_GUESS", 0.0, point_xyz, "Room explored but target missing. Navigating to raw PDF median target location.")
 
-        # LOGIC B: Room is NOT fully explored, but we found a fantastic match early.
+        # LOGIC C: Room is NOT fully explored, but we found a fantastic match early.
         if same_room_objects and float(same_room_objects[0].get("msp_score", -100.0)) > -1.5:
              best_obj = same_room_objects[0]
-             return finalize_step(None, best_obj["id"], True, 0.95, {
-                    "action_type": "answer",
-                    "chosen_id": best_obj["id"],
-                    "confidence": 0.95,
-                    "answer_text": best_obj.get("name", ""),
-                    "thought": f"Extremely high PDF match ({best_obj.get('msp_score', 0.0):.2f}) found before room was fully explored."
-                })
+             return build_answer("answer", best_obj["id"], 0.95, None, f"Extremely high PDF match found.")
 
-        # LOGIC C: Keep exploring the remaining frontiers in this room.
+        # LOGIC D: Keep exploring the remaining frontiers in this room.
         if same_room_frontiers:
             fid = same_room_frontiers[0]["id"]
             return finalize_step(self.sg_sim.get_position_from_id(fid), fid, False, 0.0, {
                 "action_type": "goto_frontier", 
                 "chosen_id": fid, 
-                "thought": f"Exploring remaining frontiers inside the anchor's room ({anchor_room_id}) to build the object list."
+                "thought": f"Exploring remaining frontiers inside the anchor's room ({anchor_room_id})."
             })
             
-        # Fallback (Should rarely hit this due to logic above)
+        # Fallback
         fid = str(frontiers[0]["id"]) if frontiers else ""
         return finalize_step(self.sg_sim.get_position_from_id(fid) if fid else None, fid, False, 0.0, {
             "action_type": "lookaround" if not fid else "goto_frontier", 

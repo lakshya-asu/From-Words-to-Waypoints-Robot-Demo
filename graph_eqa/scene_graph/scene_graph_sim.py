@@ -416,6 +416,11 @@ class SceneGraphSim:
             sampled_images = useful_imgs[::self.sg_cfg.img_subsample_freq]
 
             padding = True if self.sg_cfg.key_frame_selection.use_clip_for_images else "max_length" # HuggingFace says SigLIP was trained on "max_length"
+            
+            if len(sampled_images) == 0:
+                print("[MSP Sim] Warning: All images were filtered out as black pixels. Falling back to the last original image raw.")
+                sampled_images = imgs_rgb[-1:] # Fallback to at least one image if all were somehow filtered
+
             imgs_embed = self.processor(images=sampled_images, return_tensors="pt", padding=padding).to(self.device)
             with torch.no_grad():
                 outputs = self.model(**self.question_embed_labels, **imgs_embed)
@@ -423,6 +428,11 @@ class SceneGraphSim:
             probs = logits_per_text.softmax(dim=0).squeeze() # we can take the softmax to get the label probabilities
     
             probs, logits_per_text = probs.detach().cpu().numpy(), logits_per_text.squeeze().detach().cpu().numpy()
+            
+            # If probs is a scalar (only 1 image), wrap it into an array
+            if probs.ndim == 0:
+                probs = np.array([probs])
+            
             best = np.argmax(probs)
             top_k_indices = np.argsort(probs)[::-1][:self.sg_cfg.key_frame_selection.topk]
 

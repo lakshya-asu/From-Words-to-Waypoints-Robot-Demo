@@ -11,7 +11,7 @@ data:
   init_pose_data_path: '/datasets/explore-eqa/scene_init_poses_semantic_only.csv'
   semantic_annot_data_path: '/datasets/hm3d/train'
   scene_data_path: '/datasets/hm3d/train'
-  explore_eqa_dataset_enrich_labels: 'cfg/explore_eqa_dataset_enrich_labels.yaml'
+  explore_eqa_dataset_enrich_labels: '/cfg/explore_eqa_dataset_enrich_labels.yaml'
   use_semantic_data: True
 
 logging:
