@@ -36,6 +36,7 @@ class SpatialAgent:
         CRITICAL RULES:
         1. Output only face orientation (functional front) of the object.
         2. IGNORE DISTANCE.
+        3. Check GLOBAL FAILURE HISTORY. If your previous theta/phi values resulted in a rejection, provide an alternative orientation (e.g., perhaps the 'front' is actually a different side).
         
         CAMERA COORDINATES (Egocentric, top-down):
         THETA (azimuth):
@@ -58,6 +59,9 @@ class SpatialAgent:
         
         Anchor Exact Position: {anchor_obj.get("position")}
         Anchor Exact Size: {anchor_obj.get("size")}
+        
+        GLOBAL FAILURE HISTORY (VERIFIER FEEDBACK):
+        {blackboard.global_history}
         """
         
         mime = mimetypes.guess_type(blackboard.current_image_path)[0] or "image/png"

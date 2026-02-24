@@ -53,6 +53,7 @@ class OrchestratorAgent:
         2. Any descriptive words (e.g., '2 seater', 'leather') or spatial hints (e.g., 'next to the wall', 'near the window') MUST go into the 'modifiers' field.
         3. Any explicit distances (e.g., '3.0 meters', '5 feet') MUST go ONLY in the 'metric' field.
         4. If the user presents multiple choices or the question demands an intelligent factual response rather than just a navigation coordinate, set `requires_logical_reasoning` to true.
+        5. CRITICAL: Review the GLOBAL FAILURE HISTORY. If your exact previous parsing resulted in a failure downstream, CHOOSE A DIFFERENT INTERPRETATION (different anchor, modifier, or logic).
         
         Example 1: "Find the apple between the chair next to the wall and the 2 seater sofa."
         Target: apple. Anchors: [{"label": "chair", "modifiers": "next to the wall", "metric": ""}, {"label": "sofa", "modifiers": "2 seater", "metric": ""}]. Logic: between. Logical Reasoning: false.
@@ -72,6 +73,9 @@ class OrchestratorAgent:
         
         Agent Exact Position: {blackboard.agent_pose_hab}
         Agent Yaw (rad): {blackboard.agent_yaw_rad}
+        
+        GLOBAL FAILURE HISTORY (VERIFIER FEEDBACK):
+        {blackboard.global_history}
         
         Previous Execution Ledger (Use this to fix your parsing if the pipeline failed previously):
         {blackboard.get_ledger_str()}

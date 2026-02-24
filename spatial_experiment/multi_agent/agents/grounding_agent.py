@@ -58,7 +58,7 @@ class GroundingAgent:
         Task: 
         1. Find the best matching object ID for each anchor.
         2. Look at the provided image. If an anchor has a modifier (e.g., '2 seater', 'next to the wall'), you MUST use the image to verify which scene graph candidate visually matches that description.
-        3. CRITICAL: Read the GLOBAL FAILURE HISTORY. If the Verifier previously rejected a specific object_id, do not select it again.
+        3. CRITICAL: Read the GLOBAL FAILURE HISTORY carefully. If the Verifier explicitly rejected a specific object_id for an anchor, you MUST BLACKLIST it and choose the next best candidate. Never return a previously failed ID.
         4. If an anchor is completely missing from the scene graph, set matched_object_id to 'NONE' and needs_exploration to true.
         """
         

@@ -36,6 +36,7 @@ class LogicalAgent:
         2. If the user provided multiple choices (e.g., A, B, C), your 'answer' must explicitly select one.
         3. Do not output coordinate navigation instructions. Focus on directly answering the factual or logical question.
         4. If you lack enough information to be certain, state your best logical guess but lower your confidence score.
+        5. Check GLOBAL FAILURE HISTORY. If your exact previous answer was rejected, deduce an alternative answer.
         """
         
         prompt = f"""
@@ -51,6 +52,9 @@ class LogicalAgent:
         
         Current Environment Semantic State:
         {blackboard.semantic_state}
+        
+        GLOBAL FAILURE HISTORY:
+        {blackboard.global_history}
         """
         
         parts = [{"text": prompt}]
