@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 # /home/artemis/project/graph_eqa_swagat/spatial_experiment/planners/vlm_planner_msp.py
+#TODO: Engine needs to be reworked
 
 from __future__ import annotations
 
@@ -398,7 +399,7 @@ class MSPEngineSmart:
         candidate_size: Optional[List[float]],
         distance_m: float,
     ) -> Dict[str, float]:
-        pos = np.asarray(candidate_pos_hab, dtype=np.float32)
+        pos = np.asarray(anchor_pos_hab, dtype=np.float32)
         size = candidate_size or [0.5, 0.5, 0.5]
         w, d, h = [float(x) for x in size[:3]]
         max_dim = max(w, d, h)

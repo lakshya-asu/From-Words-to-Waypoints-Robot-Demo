@@ -25,7 +25,8 @@ class OrchestratorAgent:
                         type=genai.protos.Type.OBJECT,
                         properties={
                             "label": genai.protos.Schema(type=genai.protos.Type.STRING, description="CRITICAL: The base noun ONLY (e.g., 'sofa', 'chair', 'table'). NO ADJECTIVES."),
-                            "modifiers": genai.protos.Schema(type=genai.protos.Type.STRING, description="All adjectives, sizes, colors, and spatial constraints (e.g., '2 seater', 'next to the wall', 'wooden').")
+                            "modifiers": genai.protos.Schema(type=genai.protos.Type.STRING, description="All adjectives, sizes, colors, and spatial hints (e.g., '2 seater', 'next to the wall', 'wooden'). DO NOT put explicit distances here."),
+                            "metric": genai.protos.Schema(type=genai.protos.Type.STRING, description="Explicit distances or metrics (e.g., '3.0 meters'). Leave empty if none.")
                         }
                     )
                 ),
@@ -33,9 +34,13 @@ class OrchestratorAgent:
                     type=genai.protos.Type.STRING,
                     enum=["none", "near", "between", "intrinsic_front", "intrinsic_back", "intrinsic_left", "intrinsic_right"],
                     description="The spatial relationship between the target and the anchors."
+                ),
+                "requires_logical_reasoning": genai.protos.Schema(
+                    type=genai.protos.Type.BOOLEAN, 
+                    description="Set to true if the question is multiple choice, requires complex logical deduction, or asks for a specific factual answer beyond just a target location."
                 )
             },
-            required=["reasoning", "target_entity", "anchors", "composition_logic"]
+            required=["reasoning", "target_entity", "anchors", "composition_logic", "requires_logical_reasoning"]
         )
 
     def process(self, blackboard: Blackboard) -> Dict[str, Any]:
@@ -46,12 +51,17 @@ class OrchestratorAgent:
         CRITICAL RULES:
         1. The 'label' MUST be a single base noun that matches standard indoor scene graph categories (e.g., 'sofa', 'chair', 'bed', 'table').
         2. Any descriptive words (e.g., '2 seater', 'leather') or spatial hints (e.g., 'next to the wall', 'near the window') MUST go into the 'modifiers' field.
+        3. Any explicit distances (e.g., '3.0 meters', '5 feet') MUST go ONLY in the 'metric' field.
+        4. If the user presents multiple choices or the question demands an intelligent factual response rather than just a navigation coordinate, set `requires_logical_reasoning` to true.
         
         Example 1: "Find the apple between the chair next to the wall and the 2 seater sofa."
-        Target: apple. Anchors: [{"label": "chair", "modifiers": "next to the wall"}, {"label": "sofa", "modifiers": "2 seater"}]. Logic: between.
+        Target: apple. Anchors: [{"label": "chair", "modifiers": "next to the wall", "metric": ""}, {"label": "sofa", "modifiers": "2 seater", "metric": ""}]. Logic: between. Logical Reasoning: false.
         
-        Example 2: "Navigate to the functional front of the large TV."
-        Target: TV. Anchors: [{"label": "tv", "modifiers": "large"}]. Logic: intrinsic_front.
+        Example 2: "Where is the location 3.0 meters in front of the large TV?"
+        Target: location. Anchors: [{"label": "tv", "modifiers": "large", "metric": "3.0 meters"}]. Logic: intrinsic_front. Logical Reasoning: false.
+        
+        Example 3: "Based on the items on the table, what room am I in? A) Kitchen B) Bathroom"
+        Target: room identity. Anchors: [{"label": "table", "modifiers": "", "metric": ""}]. Logic: none. Logical Reasoning: true.
         """
         
         prompt = f"""
@@ -59,6 +69,9 @@ class OrchestratorAgent:
         
         Current Question: {blackboard.question}
         Mode: {blackboard.mode}
+        
+        Agent Exact Position: {blackboard.agent_pose_hab}
+        Agent Yaw (rad): {blackboard.agent_yaw_rad}
         
         Previous Execution Ledger (Use this to fix your parsing if the pipeline failed previously):
         {blackboard.get_ledger_str()}

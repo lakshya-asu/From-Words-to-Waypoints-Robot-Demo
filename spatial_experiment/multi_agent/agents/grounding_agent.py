@@ -47,6 +47,9 @@ class GroundingAgent:
         Current Scene Graph Candidates:
         {json.dumps(available_objs, indent=2)}
         
+        Agent Exact Position: {blackboard.agent_pose_hab}
+        Agent Yaw (rad): {blackboard.agent_yaw_rad}
+        
         Agent Current Semantic State: {blackboard.agent_semantic_state}
         
         GLOBAL FAILURE HISTORY:

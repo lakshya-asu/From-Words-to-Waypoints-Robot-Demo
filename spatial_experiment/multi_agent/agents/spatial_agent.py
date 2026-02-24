@@ -52,6 +52,12 @@ class SpatialAgent:
         {sys_prompt}
         Reference Object: {anchor_obj.get("name", "object")} (ID: {anchor_obj.get("id")})
         Task: Where is the intrinsic front of this object in the provided image?
+        
+        Agent Exact Position: {blackboard.agent_pose_hab}
+        Agent Yaw (rad): {blackboard.agent_yaw_rad}
+        
+        Anchor Exact Position: {anchor_obj.get("position")}
+        Anchor Exact Size: {anchor_obj.get("size")}
         """
         
         mime = mimetypes.guess_type(blackboard.current_image_path)[0] or "image/png"
