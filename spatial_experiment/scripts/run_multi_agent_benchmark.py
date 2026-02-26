@@ -136,12 +136,44 @@ def _cfg_get(node, key: str, default):
     except Exception:
         return default
 
-def main(cfg):
-    qpath = cfg.data.question_data_path
-    click.secho("[mode] MULTI-AGENT VLM runner", fg="cyan")
+def main(cfg, dataset_type: str = "spatial"):
+    click.secho(f"[mode] MULTI-AGENT VLM runner | Dataset: {dataset_type}", fg="cyan")
 
-    questions_data = load_questions_msp_csv(qpath)
-    init_pose_data = load_init_poses_csv(cfg.data.init_pose_data_path)
+    import os
+    from pathlib import Path
+    # Dynamically find the repo root (3 levels up from this script: scripts -> spatial_experiment -> root)
+    workspace_root = str(Path(__file__).resolve().parent.parent.parent)
+    
+    if dataset_type == "grapheqa":
+        # Override paths explicitly using the config choice fields or fixed explore-eqa paths
+        rel_qpath = getattr(cfg.data, "question_data_path_choice", "/datasets/explore-eqa/questions.csv").lstrip('/')
+        rel_initpath = getattr(cfg.data, "init_pose_data_path_choice", "/datasets/explore-eqa/scene_init_poses.csv").lstrip('/')
+        
+        cfg.data.question_data_path = os.path.join(workspace_root, rel_qpath)
+        cfg.data.init_pose_data_path = os.path.join(workspace_root, rel_initpath)
+        
+        # Also fix semantic_annot_data_path root for filtering
+        rel_sempath = getattr(cfg.data, "semantic_annot_data_path", "/datasets/hm3d/train").lstrip('/')
+        cfg.data.semantic_annot_data_path = os.path.join(workspace_root, rel_sempath)
+        
+        from graph_eqa.utils.data_utils import load_eqa_data
+        print(f"[debug] calling load_eqa_data with {cfg.data.question_data_path} ...")
+        questions_data_raw, init_pose_data = load_eqa_data(cfg.data)
+        print(f"[debug] loaded {len(questions_data_raw)} raw questions")
+        
+        # Format the loaded data into the exact schema expected below
+        questions_data = []
+        for q in questions_data_raw:
+            # Map 'question_formatted' -> 'msp_question' and extract the raw 'answer'
+            q_mapped = dict(q)
+            q_mapped["msp_question"] = q.get("question_formatted", q.get("question", ""))
+            q_mapped["answer"] = q.get("answer", "")
+            questions_data.append(q_mapped)
+        print(f"[debug] mapped {len(questions_data)} grapheqa questions")
+    else:
+        qpath = cfg.data.question_data_path
+        questions_data = load_questions_msp_csv(qpath)
+        init_pose_data = load_init_poses_csv(cfg.data.init_pose_data_path)
 
     output_path = Path(__file__).resolve().parent.parent / cfg.output_path
     os.makedirs(str(output_path), exist_ok=True)
@@ -383,7 +415,7 @@ def main(cfg):
                 pass
 
             episode_traces_rows.append([
-                question_ind, experiment_id, scene, floor, q.get("msp_question", ""), bool(succ), float(final_conf), blackboard_history, wandb_image,
+                question_ind, experiment_id, scene, floor, q.get("msp_question", ""), q.get("answer", ""), bool(succ), float(final_conf), blackboard_history, wandb_image,
             ])
 
             wandb.log({"episode_trace/question_index": question_ind, "episode_trace/experiment_id": experiment_id, "episode_trace/success": 1.0 if succ else 0.0, "episode_trace/final_confidence": float(final_conf), "episode_trace/blackboard_log": blackboard_history, "episode_trace/image": wandb_image}, step=question_ind)
@@ -402,7 +434,7 @@ def main(cfg):
             log_table("per_episode", per_episode_metrics)
 
             if episode_traces_rows:
-                traces_table = wandb.Table(columns=["question_index", "experiment_id", "scene", "floor", "msp_question", "success", "final_confidence", "blackboard_log", "image"], data=episode_traces_rows)
+                traces_table = wandb.Table(columns=["question_index", "experiment_id", "scene", "floor", "msp_question", "ground_truth", "success", "final_confidence", "blackboard_log", "image"], data=episode_traces_rows)
                 wandb.log({"episode_traces": traces_table})
 
     finally:
@@ -413,7 +445,14 @@ if __name__ == "__main__":
     import argparse
     parser = argparse.ArgumentParser()
     parser.add_argument("-cf", "--cfg_file", required=True)
+    parser.add_argument("--dataset", type=str, choices=["spatial", "grapheqa"], default=None, 
+                        help="Which dataset format to load. Prompted interactively if left blank.")
     args = parser.parse_args()
+    
+    dataset = args.dataset
+    if dataset is None:
+        dataset = click.prompt("Which dataset format to run?", type=click.Choice(["spatial", "grapheqa"]), default="spatial")
+
     cfg = OmegaConf.load(Path(__file__).resolve().parent.parent / "cfg" / f"{args.cfg_file}.yaml")
     OmegaConf.resolve(cfg)
-    main(cfg)
+    main(cfg, dataset_type=dataset)
