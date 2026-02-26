@@ -7,6 +7,7 @@ class Blackboard:
     def __init__(self, question: str, mode: str):
         self.question = question
         self.mode = mode  # "where", "which", or "eqa"
+        self.choices: List[str] = []
         
         # Step context
         self.step_t = 0

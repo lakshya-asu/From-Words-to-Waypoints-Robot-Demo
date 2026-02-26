@@ -136,7 +136,7 @@ def _cfg_get(node, key: str, default):
     except Exception:
         return default
 
-def main(cfg, dataset_type: str = "spatial"):
+def main(cfg, dataset_type: str = "spatial", skip: int = 0, max_steps: int = 25):
     click.secho(f"[mode] MULTI-AGENT VLM runner | Dataset: {dataset_type}", fg="cyan")
 
     import os
@@ -182,7 +182,7 @@ def main(cfg, dataset_type: str = "spatial"):
 
     segmenter = None if cfg.data.use_semantic_data else hydra_python.detection.detic_segmenter.DeticSegmenter(cfg)
 
-    num_steps = _get_num_steps(cfg)
+    num_steps = min(max_steps, _get_num_steps(cfg))
     anchor_warmup_steps = int(_cfg_get(cfg.vlm, "anchor_warmup_steps", 10))
     anchor_warmup_lookaround_every = int(_cfg_get(cfg.vlm, "anchor_warmup_lookaround_every", 2))
     room_warmup_lookaround = bool(_cfg_get(cfg.vlm, "room_warmup_lookaround", True))
@@ -201,6 +201,8 @@ def main(cfg, dataset_type: str = "spatial"):
 
     try:
         for question_ind in tqdm(range(len(questions_data))):
+            if question_ind < skip:
+                continue
             q = questions_data[question_ind]
             scene, floor = q["scene"], str(q["floor"])
             scene_id = scene[6:]
@@ -248,6 +250,7 @@ def main(cfg, dataset_type: str = "spatial"):
                 anchor_label=anchor_label,
                 anchor_center_hab=anchor_center_hab,
                 anchor_front_yaw_world=float(q["ann_yaw_rad"]) if q.get("ann_yaw_rad", None) not in [None, ""] else None,
+                choices=q.get("choices", []),
             )
 
             succ = False
@@ -447,6 +450,8 @@ if __name__ == "__main__":
     parser.add_argument("-cf", "--cfg_file", required=True)
     parser.add_argument("--dataset", type=str, choices=["spatial", "grapheqa"], default=None, 
                         help="Which dataset format to load. Prompted interactively if left blank.")
+    parser.add_argument("--skip", type=int, default=0, help="Number of queries to skip before starting.")
+    parser.add_argument("--max_steps", type=int, default=25, help="Limit number of steps per agent episode.")
     args = parser.parse_args()
     
     dataset = args.dataset
@@ -455,4 +460,4 @@ if __name__ == "__main__":
 
     cfg = OmegaConf.load(Path(__file__).resolve().parent.parent / "cfg" / f"{args.cfg_file}.yaml")
     OmegaConf.resolve(cfg)
-    main(cfg, dataset_type=dataset)
+    main(cfg, dataset_type=dataset, skip=args.skip, max_steps=args.max_steps)

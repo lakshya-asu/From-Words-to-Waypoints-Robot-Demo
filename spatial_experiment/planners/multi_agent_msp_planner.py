@@ -15,6 +15,8 @@ from spatial_experiment.multi_agent.agents.orchestrator_agent import Orchestrato
 from spatial_experiment.multi_agent.agents.grounding_agent import GroundingAgent
 from spatial_experiment.multi_agent.agents.spatial_agent import SpatialAgent
 from spatial_experiment.multi_agent.agents.verifier_agent import VerifierAgent
+from spatial_experiment.multi_agent.agents.logical_agent import LogicalAgent
+from spatial_experiment.multi_agent.agents.qa_agent import QaAgent
 
 def _write_json(path: Path, obj: Any) -> None:
     try:
@@ -41,6 +43,11 @@ class MultiAgentMSPPlanner:
         self.grounder = GroundingAgent()
         self.spatial = SpatialAgent()
         self.verifier = VerifierAgent()
+        self.logical = LogicalAgent()
+        self.qa = QaAgent()
+        
+        if "choices" in kwargs:
+            self.blackboard.choices = kwargs["choices"]
         
         # Keep your existing robust math engine
         self.msp_engine = MSPEngineSmart(
@@ -108,6 +115,7 @@ class MultiAgentMSPPlanner:
         click.secho(f"[Env] Pose: {agent_pos_hab.tolist()} | Yaw: {agent_yaw_rad:.3f} rad", fg="white")
         click.secho(f"[Env] Semantic State: {agent_state_str}", fg="white")
         click.secho(f"[Env] Found {len(objects)} Objects, {len(frontiers)} Frontiers", fg="white")
+        click.secho(f"[Scene Graph]\n{self.sg_sim.scene_graph_str}", fg="blue")
         click.secho("-" * 60, fg="white")
         
         # 1. Update Blackboard
@@ -198,6 +206,17 @@ class MultiAgentMSPPlanner:
             fid = str(frontiers[0]["id"]) if frontiers else ""
             return finalize_step(self.sg_sim.get_position_from_id(fid) if fid else None, fid, False, 0.0, {"action_type": "lookaround", "chosen_id": "", "thought": f"Verifier rejected logic: {verification.get('feedback')}"})
 
+        # 6. Agent 5: QA (Multiple Choice Check)
+        if self.blackboard.choices:
+            qa_out = self.qa.process(self.blackboard)
+            if qa_out.get("ok", False):
+                conf_val = qa_out.get("confidence", 0.0)
+                if conf_val >= float(getattr(self.cfg, "pre_answer_conf_thresh", 0.8)):
+                    return finalize_step(
+                        None, qa_out["answer"], True, conf_val,
+                        {"action_type": "answer", "chosen_id": qa_out["answer"], "thought": qa_out.get("reasoning", "")}
+                    )
+
         # =====================================================================
         # 6. Run MSP Math (Probabilistic Scoring & Point Estimation)
         # =====================================================================
@@ -234,6 +253,54 @@ class MultiAgentMSPPlanner:
             extracted_pdf_params.update(predicates)
 
         # Build output structure with PDF, point, and top K objects
+        
+        # --- NEW: Top-Down 2D Matplotlib Heatmap Export ---
+        if extracted_pdf_params:
+            try:
+                import matplotlib.pyplot as plt
+                from spatial_experiment.msp.pdf import combined_logpdf as _combined_logpdf
+                
+                # Create a 10x10m grid centered around the anchor object
+                grid_res = 0.2
+                x_min, x_max = anchor_pos[0] - 5.0, anchor_pos[0] + 5.0
+                z_min, z_max = anchor_pos[2] - 5.0, anchor_pos[2] + 5.0
+                
+                xx, zz = np.meshgrid(
+                    np.arange(x_min, x_max, grid_res),
+                    np.arange(z_min, z_max, grid_res)
+                )
+                yy = np.full_like(xx, anchor_pos[1]) # Keep Y (elevation) constant
+                
+                # Flatten the grid for logpdf evaluation
+                grid_logps = _combined_logpdf(xx.ravel(), yy.ravel(), zz.ravel(), extracted_pdf_params)
+                grid_logps = grid_logps.reshape(xx.shape)
+                
+                # Plot the heat map
+                fig, ax = plt.subplots(figsize=(8, 8))
+                
+                # We use origin='lower' to match array indexing with Cartesian Y-up (which is Z visually in Habitat topdown)
+                c = ax.pcolormesh(xx, zz, np.exp(grid_logps), shading='auto', cmap='viridis', alpha=0.8)
+                plt.colorbar(c, ax=ax, label='Probability Density')
+                
+                ax.plot(anchor_pos[0], anchor_pos[2], 'r*', markersize=15, label='Anchor Object')
+                ax.plot(agent_pos_hab[0], agent_pos_hab[2], 'b^', markersize=12, label='Agent')
+                ax.plot(point_xyz[0], point_xyz[2], 'gx', markersize=12, label='MSP Target Guess')
+                
+                ax.set_title(f"Step {step_num} Point-Estimation Heatmap")
+                ax.set_xlabel("X (World)")
+                ax.set_ylabel("Z (World) [Top-down Depth]")
+                ax.legend()
+                ax.grid(True, linestyle='--', alpha=0.5)
+                
+                plt.tight_layout()
+                heatmap_file = self.out_path / f"heatmap_step_{step_num:03d}.png"
+                plt.savefig(heatmap_file, dpi=150)
+                plt.close(fig)
+                click.secho(f"[MSP] Exported 2D heatmap to {heatmap_file.name}", fg="cyan")
+            except Exception as e:
+                click.secho(f"[MSP] Failed to generate 2D heatmap: {e}", fg="red")
+
+        top_k_objects = []
         top_k_objects = []
         for obj in msp_objects[:self.top_k]:
              top_k_objects.append({

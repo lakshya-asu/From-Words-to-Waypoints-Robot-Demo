@@ -60,6 +60,9 @@ class SpatialAgent:
         Anchor Exact Position: {anchor_obj.get("position")}
         Anchor Exact Size: {anchor_obj.get("size")}
         
+        Environment Scene Graph (Topological Layout):
+        {blackboard.scene_graph_str}
+        
         GLOBAL FAILURE HISTORY (VERIFIER FEEDBACK):
         {blackboard.global_history}
         """
