@@ -56,3 +56,7 @@ spatial_experiment/outputs_v2.env
 spatial_experiment/outputs*/
 spatial_experiment/**/outputs*/
 datasets/
+
+# ignore experiment outputs
+spatial_experiment/*.zip
+*.zip
