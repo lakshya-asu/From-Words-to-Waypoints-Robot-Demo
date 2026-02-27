@@ -130,6 +130,49 @@ class MultiAgentMSPPlanner:
             frontiers=frontiers
         )
         
+        # =====================================================================
+        # MCQ FAST PATH OVERRIDE
+        # =====================================================================
+        if self.blackboard.choices:
+            click.secho(f"[Planner] Multiple Choice Query detected. Executing QA Fast Path.", fg="cyan")
+            qa_out = self.qa.process(self.blackboard)
+            if qa_out.get("ok", False):
+                action_type = qa_out.get("action_type", "lookaround")
+                chosen_id = qa_out.get("chosen_id", "NONE")
+                ans = qa_out.get("answer", "")
+                conf_val = qa_out.get("confidence", 0.0)
+                
+                # Resolve target pose
+                target_pose = None
+                if action_type in ["goto_object", "goto_frontier"] and chosen_id != "NONE":
+                    target_pose = self.sg_sim.get_position_from_id(chosen_id)
+                
+                # If action is answer, we don't set a target
+                if action_type == "answer":
+                    target_id = ans
+                    is_conf = (conf_val >= float(getattr(self.cfg, "pre_answer_conf_thresh", 0.8)))
+                else:
+                    target_id = chosen_id
+                    is_conf = False
+                    
+                extra = {
+                    "action_type": action_type,
+                    "chosen_id": target_id,
+                    "thought": qa_out.get("reasoning", "")
+                }
+                
+                def fallback_step():
+                    fid = str(frontiers[0]["id"]) if frontiers else ""
+                    fallback_action = "goto_frontier" if fid else "lookaround"
+                    return finalize_step(self.sg_sim.get_position_from_id(fid) if fid else None, fid, False, 0.0, {"action_type": fallback_action, "chosen_id": fid, "thought": "QA Fast Path failed geometry. Fallback exploring."})
+                
+                if action_type in ["goto_object", "goto_frontier"] and target_pose is None:
+                    return fallback_step()
+                    
+                return finalize_step(target_pose, target_id, is_conf, conf_val, extra)
+            else:
+                click.secho(f"[Planner] QA Fast Path crashed. Proceeding with standard fallback.", fg="red")
+        
         # 2. Agent 1: Orchestrate
         orch_out = self.orchestrator.process(self.blackboard)
         
@@ -206,16 +249,7 @@ class MultiAgentMSPPlanner:
             fid = str(frontiers[0]["id"]) if frontiers else ""
             return finalize_step(self.sg_sim.get_position_from_id(fid) if fid else None, fid, False, 0.0, {"action_type": "lookaround", "chosen_id": "", "thought": f"Verifier rejected logic: {verification.get('feedback')}"})
 
-        # 6. Agent 5: QA (Multiple Choice Check)
-        if self.blackboard.choices:
-            qa_out = self.qa.process(self.blackboard)
-            if qa_out.get("ok", False):
-                conf_val = qa_out.get("confidence", 0.0)
-                if conf_val >= float(getattr(self.cfg, "pre_answer_conf_thresh", 0.8)):
-                    return finalize_step(
-                        None, qa_out["answer"], True, conf_val,
-                        {"action_type": "answer", "chosen_id": qa_out["answer"], "thought": qa_out.get("reasoning", "")}
-                    )
+        # (QA Agent call has been moved to the MCQ Fast Path above)
 
         # =====================================================================
         # 6. Run MSP Math (Probabilistic Scoring & Point Estimation)

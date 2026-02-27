@@ -18,44 +18,76 @@ class QaAgent:
     def process(self, blackboard: Blackboard) -> Dict[str, Any]:
         has_image = blackboard.current_image_path and os.path.exists(blackboard.current_image_path)
         
-        if getattr(blackboard, "choices", None):
-            ans_schema = genai.protos.Schema(
+        frontier_ids = [str(f.get("id")) for f in blackboard.available_frontiers]
+        if not frontier_ids:
+            frontier_ids = ["NONE"]
+            
+        object_ids = [str(o.get("id")) for o in blackboard.available_objects]
+        if not object_ids:
+            object_ids = ["NONE"]
+
+        all_ids = list(set(object_ids + frontier_ids + ["NONE"]))
+        
+        is_mcq = bool(getattr(blackboard, "choices", None))
+        
+        properties = {
+            "reasoning": genai.protos.Schema(
                 type=genai.protos.Type.STRING, 
+                description="Break down the query to identify the required target object, map the answer choices to symbols, and deduce the logical next step."
+            ),
+            "action_type": genai.protos.Schema(
+                type=genai.protos.Type.STRING,
+                enum=["goto_object", "goto_frontier", "lookaround", "answer"],
+                description="The action to take. 'goto_object' to go to a known object, 'goto_frontier' to explore for missing context, 'lookaround' to spin, 'answer' if the final answer is definitively known now."
+            ),
+            "chosen_id": genai.protos.Schema(
+                type=genai.protos.Type.STRING, 
+                description="The Node ID of the object or frontier to navigate to. Use 'NONE' if action_type is lookaround or answer.",
+                enum=all_ids
+            ),
+            "confidence": genai.protos.Schema(
+                type=genai.protos.Type.NUMBER,
+                description="Confidence score between 0.0 and 1.0 of the chosen action or answer."
+            )
+        }
+        
+        if is_mcq:
+            properties["answer"] = genai.protos.Schema(
+                type=genai.protos.Type.STRING,
                 enum=blackboard.choices,
-                description="Pick exactly one exact answer from the choices provided."
+                description="Pick exactly the option symbol (e.g. A, B, C) from the choices provided when action_type is 'answer'."
             )
         else:
-            ans_schema = genai.protos.Schema(
-                type=genai.protos.Type.STRING, 
-                description="The final, definitive answer to the user's question."
+            properties["answer"] = genai.protos.Schema(
+                type=genai.protos.Type.STRING,
+                description="The text answer to the question if action_type is 'answer'. Otherwise leave empty."
             )
 
         schema = genai.protos.Schema(
             type=genai.protos.Type.OBJECT,
-            properties={
-                "reasoning": genai.protos.Schema(type=genai.protos.Type.STRING, description="Logical deduction steps to answer the QA question based on the visual evidence and semantic scene graph state."),
-                "answer": ans_schema,
-                "confidence": genai.protos.Schema(type=genai.protos.Type.NUMBER, description="Confidence score between 0.0 and 1.0")
-            },
-            required=["reasoning", "answer", "confidence"],
+            properties=properties,
+            required=["reasoning", "action_type", "chosen_id", "confidence", "answer"]
         )
 
         sys_prompt = """
-        SYSTEM: You are a Question Answering Engine for a robotic spatial reasoning pipeline.
-        YOUR GOAL: Answer a complex logical or multiple-choice query posed by the user based on the environment state and visual clues.
+        SYSTEM: You are an End-to-End QA and Navigation Agent.
+        YOUR GOAL: You are tasked with answering the user's explicit question based on visual input and the topological scene graph.
         
-        CRITICAL RULES:
-        1. Base your answer STRICTLY on the visual clues provided in the image (if available) and the listed semantic state of the room.
-        2. If the user provided multiple choices (e.g., A, B, C), your 'answer' must explicitly select one.
-        3. Do not output coordinate navigation instructions. Focus on directly answering the factual or logical question.
-        4. If you lack enough information to be certain, state your best logical guess but lower your confidence score.
-        5. Check GLOBAL FAILURE HISTORY. If your exact previous answer was rejected, deduce an alternative answer.
+        When faced with a question (especially a multiple choice one):
+        1. Parse the query to figure out what object or area is being referred to.
+        2. Break down the answer choices into variables/symbols (A, B, C...).
+        3. If you do not see the required object in the environment to confidently answer the question, output `action_type="goto_frontier"` and choose the most logical frontier ID to explore.
+        4. If you see the object in the Scene Graph but need a better visual angle, output `action_type="goto_object"`.
+        5. If you have enough visual and semantic context to answer the query definitively, output `action_type="answer"`, and provide EXACTLY the option symbol (e.g., "A") in the `answer` field.
+        6. Check the GLOBAL FAILURE HISTORY to avoid repeating mistakes or looping between the same frontiers.
         """
         
         prompt = f"""
         {sys_prompt}
         
-        Question: {blackboard.question}
+        Current Question: {blackboard.question}
+        Mode: {blackboard.mode}
+        {"Choices: " + json.dumps(blackboard.choices) if getattr(blackboard, "choices", None) else ""}
         
         Agent Exact Position: {blackboard.agent_pose_hab}
         Agent Yaw (rad): {blackboard.agent_yaw_rad}
@@ -63,13 +95,16 @@ class QaAgent:
         Scene Graph Candidates (with exact positions):
         {json.dumps([{{'id': o['id'], 'name': o.get('name', ''), 'position': o.get('position')}} for o in blackboard.available_objects], indent=2)}
         
+        Available Frontiers:
+        {json.dumps([{{'id': f['id'], 'position': f.get('position')}} for f in blackboard.available_frontiers], indent=2)}
+        
         Environment Scene Graph (Topological Layout):
         {blackboard.scene_graph_str}
         
         Current Environment Semantic State (Agent Room Node):
         {blackboard.agent_semantic_state}
         
-        GLOBAL FAILURE HISTORY:
+        GLOBAL FAILURE HISTORY (VERIFIER FEEDBACK):
         {blackboard.global_history}
         """
         
@@ -84,21 +119,24 @@ class QaAgent:
             resp = self.model.generate_content(
                 messages,
                 generation_config=genai.GenerationConfig(
-                    response_mime_type="application/json", 
-                    temperature=0.2, 
-                    response_schema=schema
-                )
+                    response_mime_type="application/json",
+                    temperature=0.1,
+                    response_schema=schema,
+                ),
             )
-            d = json.loads(resp.text)
+            parsed = json.loads(resp.text)
             
             out = {
                 "ok": True,
-                "answer": d["answer"],
-                "confidence": float(d["confidence"]),
-                "reasoning": d["reasoning"]
+                "action_type": parsed.get("action_type", "lookaround"),
+                "chosen_id": parsed.get("chosen_id", "NONE"),
+                "answer": parsed.get("answer", ""),
+                "confidence": float(parsed.get("confidence", 0.0)),
+                "reasoning": parsed.get("reasoning", "")
             }
-            blackboard.append_event("QA", "AnswerQuestion", out, "PASS")
+            blackboard.append_event("QA", out["action_type"], out, "PASS")
             return out
         except Exception as e:
-            blackboard.append_event("QA", "Error", str(e), "FAIL")
-            return {"ok": False, "error": str(e)}
+            error_msg = f"Failed to run QA agent: {e}"
+            blackboard.append_event("QA", "Error", error_msg, "FAIL")
+            return {"ok": False, "error": error_msg}

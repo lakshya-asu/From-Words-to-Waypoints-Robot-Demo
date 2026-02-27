@@ -37,7 +37,7 @@ class OrchestratorAgent:
                 ),
                 "requires_logical_reasoning": genai.protos.Schema(
                     type=genai.protos.Type.BOOLEAN, 
-                    description="Set to true if the question is multiple choice, requires complex logical deduction, or asks for a specific factual answer beyond just a target location."
+                    description="Set to true if the question asks for a specific factual answer/complex deduction beyond just a target navigation location."
                 )
             },
             required=["reasoning", "target_entity", "anchors", "composition_logic", "requires_logical_reasoning"]
@@ -52,7 +52,7 @@ class OrchestratorAgent:
         1. The 'label' MUST be a single base noun that matches standard indoor scene graph categories (e.g., 'sofa', 'chair', 'bed', 'table').
         2. Any descriptive words (e.g., '2 seater', 'leather') or spatial hints (e.g., 'next to the wall', 'near the window') MUST go into the 'modifiers' field.
         3. Any explicit distances (e.g., '3.0 meters', '5 feet') MUST go ONLY in the 'metric' field.
-        4. If the user presents multiple choices or the question demands an intelligent factual response rather than just a navigation coordinate, set `requires_logical_reasoning` to true.
+        4. If the question demands an intelligent factual response or deduction rather than just a navigation coordinate, set `requires_logical_reasoning` to true.
         5. CRITICAL: Review the GLOBAL FAILURE HISTORY. If your exact previous parsing resulted in a failure downstream, CHOOSE A DIFFERENT INTERPRETATION (different anchor, modifier, or logic).
         
         Example 1: "Find the apple between the chair next to the wall and the 2 seater sofa."
