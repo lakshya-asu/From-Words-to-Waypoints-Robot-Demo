@@ -17,6 +17,7 @@ from spatial_experiment.multi_agent.agents.spatial_agent import SpatialAgent
 from spatial_experiment.multi_agent.agents.verifier_agent import VerifierAgent
 from spatial_experiment.multi_agent.agents.logical_agent import LogicalAgent
 from spatial_experiment.multi_agent.agents.qa_agent import QaAgent
+from spatial_experiment.multi_agent.agent_setup import AgentFactory
 
 def _write_json(path: Path, obj: Any) -> None:
     try:
@@ -38,13 +39,24 @@ class MultiAgentMSPPlanner:
         
         self.blackboard = Blackboard(question=question, mode=answer_mode)
         
-        # Initialize Agents
-        self.orchestrator = OrchestratorAgent()
-        self.grounder = GroundingAgent()
-        self.spatial = SpatialAgent()
-        self.verifier = VerifierAgent()
-        self.logical = LogicalAgent()
-        self.qa = QaAgent()
+        # Determine providers
+        providers = kwargs.get("agent_providers", {})
+        o_prov = providers.get("orchestrator", "gemini")
+        g_prov = providers.get("grounding", "gemini")
+        s_prov = providers.get("spatial", "gemini")
+        v_prov = providers.get("verifier", "gemini")
+        l_prov = providers.get("logical", "gemini")
+        q_prov = providers.get("qa", "gemini")
+        
+        click.secho(f"Providers: Orch={o_prov}, Ground={g_prov}, Spatial={s_prov}, Verif={v_prov}, Logic={l_prov}, QA={q_prov}", fg="yellow")
+        
+        # Initialize Agents dynamically
+        self.orchestrator = AgentFactory.create_agent("orchestrator", provider=o_prov)
+        self.grounder = AgentFactory.create_agent("grounding", provider=g_prov)
+        self.spatial = AgentFactory.create_agent("spatial", provider=s_prov)
+        self.verifier = AgentFactory.create_agent("verifier", provider=v_prov)
+        self.logical = AgentFactory.create_agent("logical", provider=l_prov)
+        self.qa = AgentFactory.create_agent("qa", provider=q_prov)
         
         if "choices" in kwargs:
             self.blackboard.choices = kwargs["choices"]
