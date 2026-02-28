@@ -11,7 +11,7 @@ class QaOutput(BaseModel):
     action_type: Literal["goto_object", "goto_frontier", "lookaround", "answer"] = Field(description="The action to take. 'goto_object' to go to a known object, 'goto_frontier' to explore for missing context, 'lookaround' to spin, 'answer' if the final answer is definitively known now.")
     chosen_id: str = Field(description="The Node ID of the object or frontier to navigate to. Use 'NONE' if action_type is lookaround or answer.")
     confidence: float = Field(description="Confidence score between 0.0 and 1.0 of the chosen action or answer.")
-    answer: str = Field(description="If action_type is 'answer', provide EXACTLY the option symbol (e.g. A, B, C) from the choices provided. Otherwise leave empty.")
+    answer: Literal["A", "B", "C", "D", "NONE"] = Field(description="If action_type is 'answer', provide EXACTLY the option symbol (A, B, C, or D) from the choices provided. Otherwise use 'NONE'.")
 
 class OpenAIQaAgent:
     def __init__(self, model_name="gpt-4o"):
@@ -38,7 +38,7 @@ class OpenAIQaAgent:
         2. Break down the answer choices into variables/symbols (A, B, C...).
         3. If you do not see the required object in the environment to confidently answer the question, output `action_type="goto_frontier"` and choose the most logical frontier ID to explore.
         4. If you see the object in the Scene Graph but need a better visual angle, output `action_type="goto_object"`.
-        5. If you have enough visual and semantic context to answer the query definitively, output `action_type="answer"`, and provide EXACTLY the option symbol (e.g., A, B, C) in the `answer` field.
+        5. If you have enough visual and semantic context to answer the query definitively, output `action_type="answer"`, and provide EXACTLY the option symbol (A, B, C, or D) in the `answer` field. Never guess options that are not provided.
         6. Check the GLOBAL FAILURE HISTORY to avoid repeating mistakes or looping between the same frontiers.
         """
         
@@ -51,10 +51,10 @@ class OpenAIQaAgent:
         Agent Yaw (rad): {blackboard.agent_yaw_rad}
         
         Scene Graph Candidates (with exact positions):
-        {json.dumps([{{'id': o['id'], 'name': o.get('name', ''), 'position': o.get('position')}} for o in blackboard.available_objects], indent=2)}
+        {json.dumps([{'id': o.get('id', ''), 'name': o.get('name', ''), 'position': o.get('position')} for o in blackboard.available_objects if isinstance(o, dict)], indent=2)}
         
         Available Frontiers:
-        {json.dumps([{{'id': f['id'], 'position': f.get('position')}} for f in blackboard.available_frontiers], indent=2)}
+        {json.dumps([{'id': f.get('id', ''), 'position': f.get('position')} for f in blackboard.available_frontiers if isinstance(f, dict)], indent=2)}
         
         Environment Scene Graph (Topological Layout):
         {blackboard.scene_graph_str}

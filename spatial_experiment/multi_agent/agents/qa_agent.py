@@ -54,8 +54,8 @@ class QaAgent:
         if is_mcq:
             properties["answer"] = genai.protos.Schema(
                 type=genai.protos.Type.STRING,
-                enum=blackboard.choices,
-                description="Pick exactly the option symbol (e.g. A, B, C) from the choices provided when action_type is 'answer'."
+                enum=["A", "B", "C", "D", "NONE"],
+                description="Pick exactly ONE option symbol (A, B, C, or D) from the choices provided when action_type is 'answer'. Never pick an option that does not exist. Use 'NONE' if no answer yet."
             )
         else:
             properties["answer"] = genai.protos.Schema(
@@ -78,7 +78,7 @@ class QaAgent:
         2. Break down the answer choices into variables/symbols (A, B, C...).
         3. If you do not see the required object in the environment to confidently answer the question, output `action_type="goto_frontier"` and choose the most logical frontier ID to explore.
         4. If you see the object in the Scene Graph but need a better visual angle, output `action_type="goto_object"`.
-        5. If you have enough visual and semantic context to answer the query definitively, output `action_type="answer"`, and provide EXACTLY the option symbol (e.g., "A") in the `answer` field.
+        5. If you have enough visual and semantic context to answer the query definitively, output `action_type="answer"`, and provide EXACTLY the option symbol (A, B, C, or D) in the `answer` field. Never guess options that are not provided. Use 'NONE' for answer if not ready.
         6. Check the GLOBAL FAILURE HISTORY to avoid repeating mistakes or looping between the same frontiers.
         """
         
@@ -93,10 +93,10 @@ class QaAgent:
         Agent Yaw (rad): {blackboard.agent_yaw_rad}
         
         Scene Graph Candidates (with exact positions):
-        {json.dumps([{{'id': o['id'], 'name': o.get('name', ''), 'position': o.get('position')}} for o in blackboard.available_objects], indent=2)}
+        {json.dumps([{'id': o.get('id', ''), 'name': o.get('name', ''), 'position': o.get('position')} for o in blackboard.available_objects if isinstance(o, dict)], indent=2)}
         
         Available Frontiers:
-        {json.dumps([{{'id': f['id'], 'position': f.get('position')}} for f in blackboard.available_frontiers], indent=2)}
+        {json.dumps([{'id': f.get('id', ''), 'position': f.get('position')} for f in blackboard.available_frontiers if isinstance(f, dict)], indent=2)}
         
         Environment Scene Graph (Topological Layout):
         {blackboard.scene_graph_str}

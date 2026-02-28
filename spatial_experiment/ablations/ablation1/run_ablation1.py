@@ -458,6 +458,6 @@ if __name__ == "__main__":
     if dataset is None:
         dataset = click.prompt("Which dataset format to run?", type=click.Choice(["spatial", "grapheqa"]), default="spatial")
 
-    cfg = OmegaConf.load(Path(__file__).resolve().parent.parent / "cfg" / f"{args.cfg_file}.yaml")
+    cfg = OmegaConf.load(Path(__file__).resolve().parent.parent.parent / "cfg" / f"{args.cfg_file}.yaml")
     OmegaConf.resolve(cfg)
     main(cfg, dataset_type=dataset, skip=args.skip, max_steps=args.max_steps)

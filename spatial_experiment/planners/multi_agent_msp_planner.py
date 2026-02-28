@@ -142,6 +142,22 @@ class MultiAgentMSPPlanner:
             frontiers=frontiers
         )
         
+        def finalize_step(target_pose, target_id, is_conf, conf, extra):
+            """Helper to log trace and print final decision before returning."""
+            click.secho(f"\n[DECISION] Action: {extra.get('action_type')} | Target ID: {extra.get('chosen_id')} | Conf: {conf:.2f}", fg="yellow", bold=True)
+            if extra.get("thought"):
+                click.secho(f"[DECISION] Thought: {extra.get('thought')}", fg="yellow")
+            
+            trace_dump = {
+                "t": step_num,
+                "agent_pose": agent_pos_hab.tolist(),
+                "agent_yaw": agent_yaw_rad,
+                "ledger": self.blackboard.event_ledger,
+                "final_decision": extra
+            }
+            _write_json(self.out_path / f"trace_step_{step_num:03d}.json", trace_dump)
+            return target_pose, target_id, is_conf, conf, extra
+
         # =====================================================================
         # MCQ FAST PATH OVERRIDE
         # =====================================================================
@@ -191,21 +207,7 @@ class MultiAgentMSPPlanner:
         # 3. Agent 2: Ground
         ground_out = self.grounder.process(self.blackboard, orch_out)
         
-        def finalize_step(target_pose, target_id, is_conf, conf, extra):
-            """Helper to log trace and print final decision before returning."""
-            click.secho(f"\n[DECISION] Action: {extra.get('action_type')} | Target ID: {extra.get('chosen_id')} | Conf: {conf:.2f}", fg="yellow", bold=True)
-            if extra.get("thought"):
-                click.secho(f"[DECISION] Thought: {extra.get('thought')}", fg="yellow")
-            
-            trace_dump = {
-                "t": step_num,
-                "agent_pose": agent_pos_hab.tolist(),
-                "agent_yaw": agent_yaw_rad,
-                "ledger": self.blackboard.event_ledger,
-                "final_decision": extra
-            }
-            _write_json(self.out_path / f"trace_step_{step_num:03d}.json", trace_dump)
-            return target_pose, target_id, is_conf, conf, extra
+
 
         if ground_out.get("needs_exploration", False) or not ground_out.get("grounded_anchors"):
             anchor_in_view = False
