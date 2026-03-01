@@ -14,7 +14,7 @@ class QaOutput(BaseModel):
     answer: Literal["A", "B", "C", "D", "NONE"] = Field(description="If action_type is 'answer', provide EXACTLY the option symbol (A, B, C, or D) from the choices provided. Otherwise use 'NONE'.")
 
 class OpenAIQaAgent:
-    def __init__(self, model_name="gpt-4o"):
+    def __init__(self, model_name="gpt-5.2-chat-latest"):
         if "OPENAI_API_KEY" not in os.environ:
             raise RuntimeError("OPENAI_API_KEY must be set in the environment.")
         self.model_name = model_name
@@ -75,8 +75,7 @@ class OpenAIQaAgent:
             completion = self.client.beta.chat.completions.parse(
                 model=self.model_name,
                 messages=messages,
-                response_format=QaOutput,
-                temperature=0.1
+                response_format=QaOutput
             )
             parsed = completion.choices[0].message.parsed.model_dump()
             

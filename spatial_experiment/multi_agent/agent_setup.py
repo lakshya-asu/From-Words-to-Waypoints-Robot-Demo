@@ -24,12 +24,21 @@ class AgentFactory:
             return LogicalAgent(**kwargs)
             
         elif role == "grounding":
+            if provider == "openai":
+                from spatial_experiment.multi_agent.agents.openai_grounding_agent import OpenAIGroundingAgent
+                return OpenAIGroundingAgent(**kwargs)
             return GroundingAgent(**kwargs)
             
         elif role == "spatial":
+            if provider == "openai":
+                from spatial_experiment.multi_agent.agents.openai_spatial_agent import OpenAISpatialAgent
+                return OpenAISpatialAgent(**kwargs)
             return SpatialAgent(**kwargs)
             
         elif role == "verifier":
+            if provider == "openai":
+                from spatial_experiment.multi_agent.agents.openai_verifier_agent import OpenAIVerifierAgent
+                return OpenAIVerifierAgent(**kwargs)
             return VerifierAgent(**kwargs)
             
         elif role == "qa":

@@ -6,7 +6,7 @@ from typing import Dict, Any
 from ..blackboard import Blackboard
 
 class OrchestratorAgent:
-    def __init__(self, model_name="models/gemini-2.5-pro"):
+    def __init__(self, model_name="models/gemini-3-flash-preview"):
         if "GOOGLE_API_KEY" not in os.environ:
             raise RuntimeError("GOOGLE_API_KEY must be set in the environment.")
         genai.configure(api_key=os.environ["GOOGLE_API_KEY"])

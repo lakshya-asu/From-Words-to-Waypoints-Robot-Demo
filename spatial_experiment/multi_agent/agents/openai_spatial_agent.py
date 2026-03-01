@@ -3,31 +3,31 @@ import json
 import math
 import base64
 import mimetypes
-import google.generativeai as genai
 from typing import Dict, Any
 
-from ..blackboard import Blackboard
+from pydantic import BaseModel, Field
+from openai import OpenAI
+from spatial_experiment.multi_agent.blackboard import Blackboard
 
 def encode_image(image_path: str) -> str:
     with open(image_path, "rb") as f:
         return base64.b64encode(f.read()).decode("utf-8")
 
-class SpatialAgent:
-    def __init__(self, model_name="models/gemini-3-flash-preview"):
-        self.model = genai.GenerativeModel(model_name=model_name)
-        self.schema = genai.protos.Schema(
-            type=genai.protos.Type.OBJECT,
-            properties={
-                "reasoning": genai.protos.Schema(type=genai.protos.Type.STRING),
-                "theta_radians": genai.protos.Schema(type=genai.protos.Type.NUMBER),
-                "phi_radians": genai.protos.Schema(type=genai.protos.Type.NUMBER),
-            },
-            required=["reasoning", "theta_radians", "phi_radians"],
-        )
+class SpatialOutput(BaseModel):
+    reasoning: str
+    theta_radians: float = Field(description="Egocentric Azimuth of the intrinsic front vector")
+    phi_radians: float = Field(description="Elevation of the intrinsic front vector. 0.0 rad = Up. 1.57 rad = Level. 3.14 rad = Down.")
+
+class OpenAISpatialAgent:
+    def __init__(self, model_name="gpt-5.2-chat-latest"):
+        if "OPENAI_API_KEY" not in os.environ:
+            raise RuntimeError("OPENAI_API_KEY must be set in the environment.")
+        self.model_name = model_name
+        self.client = OpenAI(api_key=os.environ["OPENAI_API_KEY"])
 
     def process(self, blackboard: Blackboard, anchor_obj: Dict[str, Any]) -> Dict[str, Any]:
         if not blackboard.current_image_path or not os.path.exists(blackboard.current_image_path):
-            blackboard.append_event("Spatial", "Error", "No image for spatial kernel", "FAIL")
+            blackboard.append_event("Spatial(OpenAI)", "Error", "No image for spatial kernel", "FAIL")
             return {"ok": False, "error": "No image available."}
 
         sys_prompt = """
@@ -36,7 +36,7 @@ class SpatialAgent:
         CRITICAL RULES:
         1. Output only face orientation (functional front) of the object.
         2. IGNORE DISTANCE.
-        3. Check GLOBAL FAILURE HISTORY. If your previous theta/phi values resulted in a rejection, provide an alternative orientation (e.g., perhaps the 'front' is actually a different side).
+        3. Check GLOBAL FAILURE HISTORY. If your previous theta/phi values resulted in a rejection, provide an alternative orientation.
         
         CAMERA COORDINATES (Egocentric, top-down):
         THETA (azimuth):
@@ -55,9 +55,8 @@ class SpatialAgent:
         """
         
         prompt = f"""
-        {sys_prompt}
         Reference Object: {anchor_obj.get("name", "object")} (ID: {anchor_obj.get("id")})
-        Task: Where is the intrinsic front of this object in the provided image?
+        Task: Where is the intrinsic front of this object in the provided image? Output ONLY the egocentric angles for its functional front face relative to the camera view.
         
         Agent Exact Position: {blackboard.agent_pose_hab}
         Agent Yaw (rad): {blackboard.agent_yaw_rad}
@@ -73,39 +72,41 @@ class SpatialAgent:
         """
         
         mime = mimetypes.guess_type(blackboard.current_image_path)[0] or "image/png"
+        b64_img = encode_image(blackboard.current_image_path)
+        
+        content = [
+            {"type": "text", "text": prompt},
+            {"type": "image_url", "image_url": {"url": f"data:{mime};base64,{b64_img}"}}
+        ]
+        
         messages = [
-            {
-                "role": "user",
-                "parts": [
-                    {"text": prompt},
-                    {"inline_data": {"mime_type": mime, "data": encode_image(blackboard.current_image_path)}},
-                ],
-            }
+            {"role": "system", "content": sys_prompt},
+            {"role": "user", "content": content}
         ]
         
         try:
-            resp = self.model.generate_content(
-                messages,
-                generation_config=genai.GenerationConfig(response_mime_type="application/json", temperature=0.2, response_schema=self.schema)
+            completion = self.client.beta.chat.completions.parse(
+                model=self.model_name,
+                messages=messages,
+                response_format=SpatialOutput
             )
-            d = json.loads(resp.text)
+            parsed = completion.choices[0].message.parsed.model_dump()
             
             # Convert camera theta to world theta
-            theta_cam = float(d["theta_radians"])
+            theta_cam = float(parsed["theta_radians"])
             two_pi = 2.0 * math.pi
             theta_world = (blackboard.agent_yaw_rad + theta_cam) % two_pi
             
             out = {
                 "ok": True,
-                "theta": theta_world,         # World coordinate
-                "theta_cam": theta_cam,       # Egocentric coordinate
+                "theta": theta_world,         
+                "theta_cam": theta_cam,       
                 "agent_yaw": blackboard.agent_yaw_rad,
-                "phi": float(d["phi_radians"]),
-                "kappa": 0.0, # Placeholder, Engine calculates this
-                "reasoning": d["reasoning"]
+                "phi": float(parsed["phi_radians"]),
+                "kappa": 0.0, 
+                "reasoning": parsed["reasoning"]
             }
-            blackboard.append_event("Spatial", "KernelParams", out, "PASS")
             return out
         except Exception as e:
-            blackboard.append_event("Spatial", "Error", str(e), "FAIL")
+            blackboard.append_event("Spatial(OpenAI)", "Error", str(e), "FAIL")
             return {"ok": False, "error": str(e)}

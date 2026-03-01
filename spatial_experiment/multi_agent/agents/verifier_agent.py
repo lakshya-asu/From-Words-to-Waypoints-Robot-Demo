@@ -7,7 +7,7 @@ import mimetypes
 from ..blackboard import Blackboard
 
 class VerifierAgent:
-    def __init__(self, model_name="models/gemini-2.5-pro"):
+    def __init__(self, model_name="models/gemini-3-flash-preview"):
         self.model = genai.GenerativeModel(model_name=model_name)
         self.schema = genai.protos.Schema(
             type=genai.protos.Type.OBJECT,

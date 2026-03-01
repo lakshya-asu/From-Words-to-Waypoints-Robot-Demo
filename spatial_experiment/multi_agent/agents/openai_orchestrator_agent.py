@@ -29,7 +29,7 @@ class OrchestratorOutput(BaseModel):
     requires_logical_reasoning: bool = Field(description="Set to true if the question asks for a specific factual answer/complex deduction beyond just a target navigation location.")
 
 class OpenAIOrchestratorAgent:
-    def __init__(self, model_name="gpt-4o"):
+    def __init__(self, model_name="gpt-5.2-chat-latest"):
         if "OPENAI_API_KEY" not in os.environ:
             raise RuntimeError("OPENAI_API_KEY must be set in the environment.")
         self.model_name = model_name
@@ -80,8 +80,7 @@ class OpenAIOrchestratorAgent:
             completion = self.client.beta.chat.completions.parse(
                 model=self.model_name,
                 messages=messages,
-                response_format=OrchestratorOutput,
-                temperature=0.1
+                response_format=OrchestratorOutput
             )
             parsed = completion.choices[0].message.parsed.model_dump()
             

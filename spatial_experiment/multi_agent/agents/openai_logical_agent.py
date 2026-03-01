@@ -11,7 +11,7 @@ class LogicalOutput(BaseModel):
     target_frontier_id: str = Field(description="The Scene Graph node ID of the chosen frontier. Must be exactly one of the IDs provided in Available Frontiers.")
 
 class OpenAILogicalAgent:
-    def __init__(self, model_name="gpt-4o"):
+    def __init__(self, model_name="gpt-5.2-chat-latest"):
         if "OPENAI_API_KEY" not in os.environ:
             raise RuntimeError("OPENAI_API_KEY must be set in the environment.")
         self.model_name = model_name
@@ -64,8 +64,7 @@ class OpenAILogicalAgent:
             completion = self.client.beta.chat.completions.parse(
                 model=self.model_name,
                 messages=messages,
-                response_format=LogicalOutput,
-                temperature=0.1
+                response_format=LogicalOutput
             )
             parsed = completion.choices[0].message.parsed.model_dump()
             

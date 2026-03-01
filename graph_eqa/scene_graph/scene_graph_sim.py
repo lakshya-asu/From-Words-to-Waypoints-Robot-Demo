@@ -294,37 +294,87 @@ class SceneGraphSim:
                 object_names = np.unique([self.filtered_netx_graph.nodes[object_id]['name'] for object_id in object_ids])
                 
                 start = time.time()
-                completion = client.beta.chat.completions.parse(
-                    model="gpt-4o-mini",
-                    messages=[
-                        {"role": "user", "content": f"Given the list of objects: {object_names}. Which room are these objects most likely found in? Keep explanation very brief."}
-                    ],
-                    response_format=Room_response,
-                )
+                start = time.time()
+                try:
+                    import google.generativeai as genai
+                    import os
+                    if "GOOGLE_API_KEY" not in os.environ:
+                        raise RuntimeError("GOOGLE_API_KEY not set")
+                    genai.configure(api_key=os.environ["GOOGLE_API_KEY"])
+                    model = genai.GenerativeModel("models/gemini-3-flash-preview")
+                    
+                    schema = genai.protos.Schema(
+                        type=genai.protos.Type.OBJECT,
+                        properties={
+                            "room": genai.protos.Schema(type=genai.protos.Type.STRING)
+                        },
+                        required=["room"]
+                    )
+                    
+                    response = model.generate_content(
+                        f"Given the list of objects: {object_names}. Which room are these objects most likely found in? Keep explanation very brief.",
+                        generation_config=genai.GenerationConfig(
+                            response_mime_type="application/json",
+                            response_schema=schema,
+                            temperature=0.1
+                        )
+                    )
+                    
+                    import json
+                    parsed_response = json.loads(response.text)
+                    room_val = parsed_response.get("room", "unknown_room")
+                except Exception as e:
+                    print(f"Gemini Room Name Generation failed for {room_id}: {e}")
+                    room_val = "unknown_room"
                 print(f" ======== time for room {room_id} enrichment: {time.time()-start}")
-                self.filtered_netx_graph.nodes[room_id]['name'] = completion.choices[0].message.parsed.room.value
-                self._room_names.append(completion.choices[0].message.parsed.room.value)
+                self.filtered_netx_graph.nodes[room_id]['name'] = room_val
+                self._room_names.append(room_val)
         else:
             # If no room nodes exist, add room_0 to graph and egdes to regions 
             self._room_ids = ['room_0']
             object_names = np.unique([self.filtered_netx_graph.nodes[object_id]['name'] for object_id in self._object_node_ids])
             start = time.time()
-            completion = client.beta.chat.completions.parse(
-                model="gpt-4o-mini",
-                messages=[
-                    {"role": "user", "content": f"Given the list of objects: {object_names}. Which room are these objects most likely found in? Keep explanation very brief."}
-                ],
-                response_format=Room_response,
-            )
+            start = time.time()
+            try:
+                import google.generativeai as genai
+                import os
+                if "GOOGLE_API_KEY" not in os.environ:
+                    raise RuntimeError("GOOGLE_API_KEY not set")
+                genai.configure(api_key=os.environ["GOOGLE_API_KEY"])
+                model = genai.GenerativeModel("models/gemini-3-flash-preview")
+                
+                schema = genai.protos.Schema(
+                    type=genai.protos.Type.OBJECT,
+                    properties={
+                        "room": genai.protos.Schema(type=genai.protos.Type.STRING)
+                    },
+                    required=["room"]
+                )
+                
+                response = model.generate_content(
+                    f"Given the list of objects: {object_names}. Which room are these objects most likely found in? Keep explanation very brief.",
+                    generation_config=genai.GenerationConfig(
+                        response_mime_type="application/json",
+                        response_schema=schema,
+                        temperature=0.1
+                    )
+                )
+                
+                import json
+                parsed_response = json.loads(response.text)
+                room_val = parsed_response.get("room", "unknown_room")
+            except Exception as e:
+                print(f"Gemini Room Name Generation failed: {e}")
+                room_val = "unknown_room"
             print(f" ======== time for room enrichment: {time.time()-start}")
 
             # Add node to graph
             attr={
-                'name': completion.choices[0].message.parsed.room.value,
+                'name': room_val,
                 'layer': 4
             }
             self.filtered_netx_graph.add_nodes_from([('room_0', attr)])
-            self._room_names.append(completion.choices[0].message.parsed.room.value)
+            self._room_names.append(room_val)
 
             # Add edges from room to region
             edge_type = 'room-to-region'
