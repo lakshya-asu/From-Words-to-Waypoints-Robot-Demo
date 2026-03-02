@@ -13,7 +13,7 @@ def encode_image(image_path: str) -> str:
         return base64.b64encode(f.read()).decode("utf-8")
 
 class SpatialAgent:
-    def __init__(self, model_name="models/gemini-3-flash-preview"):
+    def __init__(self, model_name="models/gemini-3-pro-preview"):
         self.model = genai.GenerativeModel(model_name=model_name)
         self.schema = genai.protos.Schema(
             type=genai.protos.Type.OBJECT,

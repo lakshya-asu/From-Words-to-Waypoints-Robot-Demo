@@ -12,7 +12,7 @@ def encode_image(image_path: str) -> str:
         return base64.b64encode(f.read()).decode("utf-8")
 
 class QaAgent:
-    def __init__(self, model_name="models/gemini-3-flash-preview"):
+    def __init__(self, model_name="models/gemini-3-pro-preview"):
         self.model = genai.GenerativeModel(model_name=model_name)
 
     def process(self, blackboard: Blackboard) -> Dict[str, Any]:
@@ -76,10 +76,12 @@ class QaAgent:
         When faced with a question (especially a multiple choice one):
         1. Parse the query to figure out what object or area is being referred to.
         2. Break down the answer choices into variables/symbols (A, B, C...).
-        3. If you do not see the required object in the environment to confidently answer the question, output `action_type="goto_frontier"` and choose the most logical frontier ID to explore.
-        4. If you see the object in the Scene Graph but need a better visual angle, output `action_type="goto_object"`.
-        5. If you have enough visual and semantic context to answer the query definitively, output `action_type="answer"`, and provide EXACTLY the option symbol (A, B, C, or D) in the `answer` field. Never guess options that are not provided. Use 'NONE' for answer if not ready.
-        6. Check the GLOBAL FAILURE HISTORY to avoid repeating mistakes or looping between the same frontiers.
+        3. STRICT RULE: If an option contains the text "(DO NOT SELECT THIS OPTION)", you MUST NOT select it under any circumstances. It is a trap.
+        4. If you have enough visual and semantic context to answer the query definitively, or if you have gathered partial evidence and can make a highly probable educated guess, output `action_type="answer"`, and provide EXACTLY the option symbol (A, B, C, or D) in the `answer` field. 
+        5. DO NOT be overly conservative. If you have explored multiple rooms and have a good idea of the layout, make your best guess instead of wandering endlessly.
+        6. If you genuinely have no idea and need to see more of the environment to eliminate options, output `action_type="goto_frontier"` and choose the most logical frontier ID to explore.
+        7. If you see the object in the Scene Graph but need a better visual angle to be distinct, output `action_type="goto_object"`.
+        8. Check the GLOBAL FAILURE HISTORY to avoid repeating mistakes or looping between the same frontiers.
         """
         
         prompt = f"""

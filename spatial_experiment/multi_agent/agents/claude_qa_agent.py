@@ -1,9 +1,10 @@
 import os
 import json
+import re
+import anthropic
 from typing import Dict, Any, Literal
 from pydantic import BaseModel, Field
 
-from openai import OpenAI
 from spatial_experiment.multi_agent.blackboard import Blackboard
 
 class QaOutput(BaseModel):
@@ -13,12 +14,12 @@ class QaOutput(BaseModel):
     confidence: float = Field(description="Confidence score between 0.0 and 1.0 of the chosen action or answer.")
     answer: Literal["A", "B", "C", "D", "NONE"] = Field(description="If action_type is 'answer', provide EXACTLY the option symbol (A, B, C, or D) from the choices provided. Otherwise use 'NONE'.")
 
-class OpenAIQaAgent:
-    def __init__(self, model_name="gpt-5.2-chat-latest"):
-        if "OPENAI_API_KEY" not in os.environ:
-            raise RuntimeError("OPENAI_API_KEY must be set in the environment.")
+class ClaudeQaAgent:
+    def __init__(self, model_name="claude-opus-4-6"):
+        if "CLAUDE_API_KEY" not in os.environ:
+            raise RuntimeError("CLAUDE_API_KEY must be set in the environment.")
         self.model_name = model_name
-        self.client = OpenAI(api_key=os.environ["OPENAI_API_KEY"])
+        self.client = anthropic.Anthropic(api_key=os.environ["CLAUDE_API_KEY"])
 
     def process(self, blackboard: Blackboard) -> Dict[str, Any]:
         frontier_ids = [str(f.get("id")) for f in blackboard.available_frontiers]
@@ -29,7 +30,7 @@ class OpenAIQaAgent:
         if not object_ids:
             object_ids = ["NONE"]
 
-        sys_prompt = """
+        sys_prompt = f"""
         SYSTEM: You are an End-to-End QA and Navigation Agent.
         YOUR GOAL: You are tasked with answering the user's explicit question based on visual input and the topological scene graph.
         
@@ -42,6 +43,10 @@ class OpenAIQaAgent:
         6. If you genuinely have no idea and need to see more of the environment to eliminate options, output `action_type="goto_frontier"` and choose the most logical frontier ID to explore.
         7. If you see the object in the Scene Graph but need a better visual angle, output `action_type="goto_object"`.
         8. Check the GLOBAL FAILURE HISTORY to avoid repeating mistakes or looping between the same frontiers.
+        
+        CRITICAL INSTRUCTION: You MUST output exactly ONE valid JSON object matching the schema below. Do not include any other text.
+        Schema:
+        {json.dumps(QaOutput.model_json_schema(), indent=2)}
         """
         
         prompt = f"""
@@ -53,10 +58,10 @@ class OpenAIQaAgent:
         Agent Yaw (rad): {blackboard.agent_yaw_rad}
         
         Scene Graph Candidates (with exact positions):
-        {json.dumps([{'id': o.get('id', ''), 'name': o.get('name', ''), 'position': o.get('position')} for o in blackboard.available_objects if isinstance(o, dict)], indent=2)}
+        {json.dumps([{{'id': o.get('id', ''), 'name': o.get('name', ''), 'position': o.get('position')}} for o in blackboard.available_objects if isinstance(o, dict)], indent=2)}
         
         Available Frontiers:
-        {json.dumps([{'id': f.get('id', ''), 'position': f.get('position')} for f in blackboard.available_frontiers if isinstance(f, dict)], indent=2)}
+        {json.dumps([{{'id': f.get('id', ''), 'position': f.get('position')}} for f in blackboard.available_frontiers if isinstance(f, dict)], indent=2)}
         
         Environment Scene Graph (Topological Layout):
         {blackboard.scene_graph_str}
@@ -68,18 +73,22 @@ class OpenAIQaAgent:
         {blackboard.global_history}
         """
         
-        messages = [
-            {"role": "system", "content": sys_prompt},
-            {"role": "user", "content": prompt}
-        ]
-        
         try:
-            completion = self.client.beta.chat.completions.parse(
+            response = self.client.messages.create(
                 model=self.model_name,
-                messages=messages,
-                response_format=QaOutput
+                max_tokens=2048,
+                system=sys_prompt,
+                messages=[
+                    {"role": "user", "content": [{"type": "text", "text": prompt}]}
+                ]
             )
-            parsed = completion.choices[0].message.parsed.model_dump()
+            text = response.content[0].text.strip()
+            if "```json" in text:
+                text = text.split("```json")[-1].split("```")[0].strip()
+            elif "```" in text:
+                text = text.split("```")[-1].split("```")[0].strip()
+                
+            parsed = json.loads(text)
             
             out = {
                 "ok": True,
@@ -90,9 +99,9 @@ class OpenAIQaAgent:
                 "reasoning": parsed.get("reasoning", "")
             }
             
-            blackboard.append_event("QA(OpenAI)", out["action_type"], out, "PASS")
+            blackboard.append_event("QA(Claude)", out["action_type"], out, "PASS")
             return out
         except Exception as e:
-            error_msg = f"Failed to infer MCQ QA (OpenAI): {e}"
-            blackboard.append_event("QA(OpenAI)", "Error", error_msg, "FAIL")
+            error_msg = f"Failed to infer MCQ QA (Claude): {e}"
+            blackboard.append_event("QA(Claude)", "Error", error_msg, "FAIL")
             return {"ok": False, "error": error_msg}

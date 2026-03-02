@@ -301,7 +301,7 @@ class SceneGraphSim:
                     if "GOOGLE_API_KEY" not in os.environ:
                         raise RuntimeError("GOOGLE_API_KEY not set")
                     genai.configure(api_key=os.environ["GOOGLE_API_KEY"])
-                    model = genai.GenerativeModel("models/gemini-3-flash-preview")
+                    model = genai.GenerativeModel("models/gemini-3-pro-preview")
                     
                     schema = genai.protos.Schema(
                         type=genai.protos.Type.OBJECT,
@@ -341,7 +341,7 @@ class SceneGraphSim:
                 if "GOOGLE_API_KEY" not in os.environ:
                     raise RuntimeError("GOOGLE_API_KEY not set")
                 genai.configure(api_key=os.environ["GOOGLE_API_KEY"])
-                model = genai.GenerativeModel("models/gemini-3-flash-preview")
+                model = genai.GenerativeModel("models/gemini-3-pro-preview")
                 
                 schema = genai.protos.Schema(
                     type=genai.protos.Type.OBJECT,

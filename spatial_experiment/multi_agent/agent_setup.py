@@ -15,36 +15,54 @@ class AgentFactory:
             if provider == "openai":
                 from spatial_experiment.multi_agent.agents.openai_orchestrator_agent import OpenAIOrchestratorAgent
                 return OpenAIOrchestratorAgent(**kwargs)
+            elif provider == "claude":
+                from spatial_experiment.multi_agent.agents.claude_orchestrator_agent import ClaudeOrchestratorAgent
+                return ClaudeOrchestratorAgent(**kwargs)
             return OrchestratorAgent(**kwargs)
             
         elif role == "logical":
             if provider == "openai":
                 from spatial_experiment.multi_agent.agents.openai_logical_agent import OpenAILogicalAgent
                 return OpenAILogicalAgent(**kwargs)
+            elif provider == "claude":
+                from spatial_experiment.multi_agent.agents.claude_logical_agent import ClaudeLogicalAgent
+                return ClaudeLogicalAgent(**kwargs)
             return LogicalAgent(**kwargs)
             
         elif role == "grounding":
             if provider == "openai":
                 from spatial_experiment.multi_agent.agents.openai_grounding_agent import OpenAIGroundingAgent
                 return OpenAIGroundingAgent(**kwargs)
+            elif provider == "claude":
+                from spatial_experiment.multi_agent.agents.claude_grounding_agent import ClaudeGroundingAgent
+                return ClaudeGroundingAgent(**kwargs)
             return GroundingAgent(**kwargs)
             
         elif role == "spatial":
             if provider == "openai":
                 from spatial_experiment.multi_agent.agents.openai_spatial_agent import OpenAISpatialAgent
                 return OpenAISpatialAgent(**kwargs)
+            elif provider == "claude":
+                from spatial_experiment.multi_agent.agents.claude_spatial_agent import ClaudeSpatialAgent
+                return ClaudeSpatialAgent(**kwargs)
             return SpatialAgent(**kwargs)
             
         elif role == "verifier":
             if provider == "openai":
                 from spatial_experiment.multi_agent.agents.openai_verifier_agent import OpenAIVerifierAgent
                 return OpenAIVerifierAgent(**kwargs)
+            elif provider == "claude":
+                from spatial_experiment.multi_agent.agents.claude_verifier_agent import ClaudeVerifierAgent
+                return ClaudeVerifierAgent(**kwargs)
             return VerifierAgent(**kwargs)
             
         elif role == "qa":
             if provider == "openai":
                 from spatial_experiment.multi_agent.agents.openai_qa_agent import OpenAIQaAgent
                 return OpenAIQaAgent(**kwargs)
+            elif provider == "claude":
+                from spatial_experiment.multi_agent.agents.claude_qa_agent import ClaudeQaAgent
+                return ClaudeQaAgent(**kwargs)
             return QaAgent(**kwargs)
             
         else:
