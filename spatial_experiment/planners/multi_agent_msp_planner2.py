@@ -253,6 +253,15 @@ class MultiAgentMSPPlanner:
 
         # 4. Agent 3: Spatial Geometry
         spatial_out = self.spatial.process(self.blackboard, primary_anchor_obj)
+        
+        target_frontier_id = spatial_out.get("target_frontier_id", "NONE")
+        if target_frontier_id and target_frontier_id != "NONE":
+            return finalize_step(self.sg_sim.get_position_from_id(target_frontier_id), target_frontier_id, False, 0.0, {
+                "action_type": "goto_frontier",
+                "chosen_id": target_frontier_id,
+                "thought": f"Spatial agent requested to explore frontier {target_frontier_id} towards the object."
+            })
+            
         if not spatial_out.get("ok", False):
             return finalize_step(self.sg_sim.get_position_from_id(primary_anchor_id), primary_anchor_id, False, 0.0, {"action_type": "goto_object", "chosen_id": primary_anchor_id, "thought": "Spatial failed (likely occluded). Moving closer to object."})
 

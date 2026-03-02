@@ -1,15 +1,15 @@
 # General
 seed: 42
 exp_name: msp${vlm.msp_nobnn.mode}
-output_path: outputs_msp_multiagent_exp_openai/${exp_name}
+output_path: outputs_msp_multiagent_exp_openai_above/${exp_name}
 results_filename: results_${vlm.msp_nobnn.mode}
 gpu: 0
 sim_gpu: 0
 
 data:
-  question_data_path: '/datasets/explore-eqa/questions_msp_sample_1.csv'
+  question_data_path: '/datasets/explore-eqa/questions_msp_sample_2.csv'
   question_data_path_choice: '/datasets/explore-eqa/eqa-questions.csv'
-  init_pose_data_path: '/datasets/explore-eqa/scene_init_poses_semantic_only.csv'
+  init_pose_data_path: '/datasets/explore-eqa/scene_init_poses_semantic_only_2.csv'
   init_pose_data_path_choice: '/datasets/explore-eqa/scene_init_poses.csv'
   semantic_annot_data_path: '/datasets/hm3d/train'
   scene_data_path: '/datasets/hm3d/train'

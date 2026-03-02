@@ -21,8 +21,9 @@ class SpatialAgent:
                 "reasoning": genai.protos.Schema(type=genai.protos.Type.STRING),
                 "theta_radians": genai.protos.Schema(type=genai.protos.Type.NUMBER),
                 "phi_radians": genai.protos.Schema(type=genai.protos.Type.NUMBER),
+                "target_frontier_id": genai.protos.Schema(type=genai.protos.Type.STRING),
             },
-            required=["reasoning", "theta_radians", "phi_radians"],
+            required=["reasoning", "theta_radians", "phi_radians", "target_frontier_id"],
         )
 
     def process(self, blackboard: Blackboard, anchor_obj: Dict[str, Any]) -> Dict[str, Any]:
@@ -37,6 +38,7 @@ class SpatialAgent:
         1. Output only face orientation (functional front) of the object.
         2. IGNORE DISTANCE.
         3. Check GLOBAL FAILURE HISTORY. If your previous theta/phi values resulted in a rejection, provide an alternative orientation (e.g., perhaps the 'front' is actually a different side).
+        4. IF the object is visible in the scene and the grounding agent is not able to ground it, select a frontier towards the object and then check the scene graph. Output this in 'target_frontier_id'. Use 'NONE' if no frontier is needed.
         
         CAMERA COORDINATES (Egocentric, top-down):
         THETA (azimuth):
@@ -64,6 +66,8 @@ class SpatialAgent:
         
         Anchor Exact Position: {anchor_obj.get("position")}
         Anchor Exact Size: {anchor_obj.get("size")}
+        
+        Available Frontiers: {blackboard.available_frontiers}
         
         Environment Scene Graph (Topological Layout):
         {blackboard.scene_graph_str}
@@ -102,6 +106,7 @@ class SpatialAgent:
                 "agent_yaw": blackboard.agent_yaw_rad,
                 "phi": float(d["phi_radians"]),
                 "kappa": 0.0, # Placeholder, Engine calculates this
+                "target_frontier_id": d.get("target_frontier_id", "NONE"),
                 "reasoning": d["reasoning"]
             }
             blackboard.append_event("Spatial", "KernelParams", out, "PASS")

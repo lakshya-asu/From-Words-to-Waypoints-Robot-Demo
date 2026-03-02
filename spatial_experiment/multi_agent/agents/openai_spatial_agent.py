@@ -17,6 +17,7 @@ class SpatialOutput(BaseModel):
     reasoning: str
     theta_radians: float = Field(description="Egocentric Azimuth of the intrinsic front vector")
     phi_radians: float = Field(description="Elevation of the intrinsic front vector. 0.0 rad = Up. 1.57 rad = Level. 3.14 rad = Down.")
+    target_frontier_id: str = Field(description="If the object is visible but not grounded, output a frontier id towards the object. Otherwise 'NONE'.")
 
 class OpenAISpatialAgent:
     def __init__(self, model_name="gpt-5.2-chat-latest"):
@@ -37,6 +38,7 @@ class OpenAISpatialAgent:
         1. Output only face orientation (functional front) of the object.
         2. IGNORE DISTANCE.
         3. Check GLOBAL FAILURE HISTORY. If your previous theta/phi values resulted in a rejection, provide an alternative orientation.
+        4. IF the object is visible in the scene and the grounding agent is not able to ground it, select a frontier towards the object and then check the scene graph. Output this in 'target_frontier_id'. Use 'NONE' if no frontier is needed.
         
         CAMERA COORDINATES (Egocentric, top-down):
         THETA (azimuth):
@@ -63,6 +65,8 @@ class OpenAISpatialAgent:
         
         Anchor Exact Position: {anchor_obj.get("position")}
         Anchor Exact Size: {anchor_obj.get("size")}
+        
+        Available Frontiers: {blackboard.available_frontiers}
         
         Environment Scene Graph (Topological Layout):
         {blackboard.scene_graph_str}
@@ -97,13 +101,22 @@ class OpenAISpatialAgent:
             two_pi = 2.0 * math.pi
             theta_world = (blackboard.agent_yaw_rad + theta_cam) % two_pi
             
+            q_lower = blackboard.question.lower()
+            if "above" in q_lower:
+                phi_val = 0.0
+            elif "below" in q_lower:
+                phi_val = 3.14
+            else:
+                phi_val = 1.57
+            
             out = {
                 "ok": True,
                 "theta": theta_world,         
                 "theta_cam": theta_cam,       
                 "agent_yaw": blackboard.agent_yaw_rad,
-                "phi": float(parsed["phi_radians"]),
+                "phi": phi_val,
                 "kappa": 0.0, 
+                "target_frontier_id": parsed.get("target_frontier_id", "NONE"),
                 "reasoning": parsed["reasoning"]
             }
             return out

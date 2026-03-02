@@ -443,8 +443,8 @@ class MSPEngineSmart:
 
         theta0 = float(kernel_params["theta"])
         phi0 = float(kernel_params["phi"])
-        if planar:
-            phi0 = float(math.pi / 2.0)
+        # Removed forcible phi0 override so "above"/"below" logic works properly even in planar mode
+
 
         # Kappa is the concentration parameter (inverse of spread variance).
         # We want the spread to scale with the object's size.
@@ -513,7 +513,8 @@ class MSPEngineSmart:
         theta_samples = theta0 + rng.normal(0.0, theta_std, size=(num_samples,)).astype(np.float32)
 
         if planar:
-            phi_samples = np.full((num_samples,), np.float32(math.pi / 2.0), dtype=np.float32)
+            # Planar just forces the sample variance to 0 so all rays shoot straight along phi0
+            phi_samples = np.full((num_samples,), np.float32(phi0), dtype=np.float32)
         else:
             phi_std = theta_std
             phi_samples = phi0 + rng.normal(0.0, phi_std, size=(num_samples,)).astype(np.float32)
