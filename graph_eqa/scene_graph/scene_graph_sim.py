@@ -36,11 +36,12 @@ class Room_response(BaseModel):
     room: Rooms
 
 class SceneGraphSim:
-    def __init__(self, cfg, output_path, pipeline, rr_logger=None, device='cpu', clean_ques_ans=' ', enrich_object_labels=None):
+    def __init__(self, cfg, output_path, pipeline, rr_logger=None, device='cpu', clean_ques_ans=' ', enrich_object_labels=None, enrich_provider: str = 'qwen'):
         self.sg_cfg = cfg.scene_graph_sim
         self.device = device
         self.enrich_rooms = self.sg_cfg.enrich_rooms
         self.enrich_object_labels = enrich_object_labels
+        self.enrich_provider = enrich_provider
 
         self.save_image = self.sg_cfg.save_image
         self.include_regions = self.sg_cfg.include_regions
@@ -285,6 +286,33 @@ class SceneGraphSim:
                         if self.rr_logger is not None:
                             self.rr_logger.log_hydra_graph(is_node=False, edge_type=edge_type, edgeid=edgeid, node_pos_source=frontier_nodes[i], node_pos_target=obj_pos)
 
+    def _infer_room_name(self, object_names):
+        try:
+            import os, json
+            import anthropic
+            client_claude = anthropic.Anthropic(api_key=os.environ["CLAUDE_API_KEY"])
+            
+            sys_prompt = "You are a spatial reasoning AI. Output JSON containing a single key 'room' with the most likely room name in lowercase."
+            prompt = f"Given the list of objects: {object_names}. Which room are these objects most likely found in? Keep explanation very brief."
+            
+            response = client_claude.messages.create(
+                model="claude-4.6-opus",
+                max_tokens=256,
+                system=sys_prompt,
+                messages=[{"role": "user", "content": prompt}]
+            )
+            text = response.content[0].text
+            
+            import re
+            match = re.search(r'\{.*\}', text, re.DOTALL)
+            if match:
+                parsed = json.loads(match.group(0))
+                return parsed.get("room", "unknown_room")
+            return "unknown_room"
+        except Exception as e:
+            print(f"Room Name Generation failed (claude-4.6-opus): {e}")
+            return "unknown_room"
+
     def add_room_labels_to_sg(self):
         self._room_names = []
         if len(self._room_ids)>0:
@@ -294,38 +322,7 @@ class SceneGraphSim:
                 object_names = np.unique([self.filtered_netx_graph.nodes[object_id]['name'] for object_id in object_ids])
                 
                 start = time.time()
-                start = time.time()
-                try:
-                    import google.generativeai as genai
-                    import os
-                    if "GOOGLE_API_KEY" not in os.environ:
-                        raise RuntimeError("GOOGLE_API_KEY not set")
-                    genai.configure(api_key=os.environ["GOOGLE_API_KEY"])
-                    model = genai.GenerativeModel("models/gemini-3-pro-preview")
-                    
-                    schema = genai.protos.Schema(
-                        type=genai.protos.Type.OBJECT,
-                        properties={
-                            "room": genai.protos.Schema(type=genai.protos.Type.STRING)
-                        },
-                        required=["room"]
-                    )
-                    
-                    response = model.generate_content(
-                        f"Given the list of objects: {object_names}. Which room are these objects most likely found in? Keep explanation very brief.",
-                        generation_config=genai.GenerationConfig(
-                            response_mime_type="application/json",
-                            response_schema=schema,
-                            temperature=0.1
-                        )
-                    )
-                    
-                    import json
-                    parsed_response = json.loads(response.text)
-                    room_val = parsed_response.get("room", "unknown_room")
-                except Exception as e:
-                    print(f"Gemini Room Name Generation failed for {room_id}: {e}")
-                    room_val = "unknown_room"
+                room_val = self._infer_room_name(object_names)
                 print(f" ======== time for room {room_id} enrichment: {time.time()-start}")
                 self.filtered_netx_graph.nodes[room_id]['name'] = room_val
                 self._room_names.append(room_val)
@@ -334,38 +331,7 @@ class SceneGraphSim:
             self._room_ids = ['room_0']
             object_names = np.unique([self.filtered_netx_graph.nodes[object_id]['name'] for object_id in self._object_node_ids])
             start = time.time()
-            start = time.time()
-            try:
-                import google.generativeai as genai
-                import os
-                if "GOOGLE_API_KEY" not in os.environ:
-                    raise RuntimeError("GOOGLE_API_KEY not set")
-                genai.configure(api_key=os.environ["GOOGLE_API_KEY"])
-                model = genai.GenerativeModel("models/gemini-3-pro-preview")
-                
-                schema = genai.protos.Schema(
-                    type=genai.protos.Type.OBJECT,
-                    properties={
-                        "room": genai.protos.Schema(type=genai.protos.Type.STRING)
-                    },
-                    required=["room"]
-                )
-                
-                response = model.generate_content(
-                    f"Given the list of objects: {object_names}. Which room are these objects most likely found in? Keep explanation very brief.",
-                    generation_config=genai.GenerationConfig(
-                        response_mime_type="application/json",
-                        response_schema=schema,
-                        temperature=0.1
-                    )
-                )
-                
-                import json
-                parsed_response = json.loads(response.text)
-                room_val = parsed_response.get("room", "unknown_room")
-            except Exception as e:
-                print(f"Gemini Room Name Generation failed: {e}")
-                room_val = "unknown_room"
+            room_val = self._infer_room_name(object_names)
             print(f" ======== time for room enrichment: {time.time()-start}")
 
             # Add node to graph

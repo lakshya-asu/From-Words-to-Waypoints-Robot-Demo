@@ -1,0 +1,222 @@
+enable_lcd: false
+timing_disabled: false
+disable_timer_output: true
+enable_pgmo_logging: true
+default_verbosity: 1
+default_num_threads: -1
+store_visualization_details: false
+map_window:
+  type: spatial
+  max_radius_m: 8
+label_names:
+  - label: 0
+    name: unknown
+  - label: 1
+    name: sky
+  - label: 2
+    name: tree
+  - label: 3
+    name: water
+  - label: 4
+    name: ground
+  - label: 5
+    name: grass
+  - label: 6
+    name: sand
+  - label: 7
+    name: sidewalk
+  - label: 8
+    name: dock
+  - label: 9
+    name: road
+  - label: 10
+    name: path
+  - label: 11
+    name: vehicle
+  - label: 12
+    name: building
+  - label: 13
+    name: shelter
+  - label: 14
+    name: signal
+  - label: 15
+    name: rock
+  - label: 16
+    name: fence
+  - label: 17
+    name: boat
+  - label: 18
+    name: sign
+  - label: 19
+    name: hill
+  - label: 20
+    name: bridge
+  - label: 21
+    name: wall
+  - label: 22
+    name: floor
+  - label: 23
+    name: ceiling
+  - label: 24
+    name: door
+  - label: 25
+    name: stairs
+  - label: 26
+    name: pole
+  - label: 27
+    name: rail
+  - label: 28
+    name: structure
+  - label: 29
+    name: window
+  - label: 30
+    name: surface
+  - label: 31
+    name: flora
+  - label: 32
+    name: flower
+  - label: 33
+    name: bed
+  - label: 34
+    name: box
+  - label: 35
+    name: storage
+  - label: 36
+    name: barrel
+  - label: 37
+    name: bag
+  - label: 38
+    name: basket
+  - label: 39
+    name: seating
+  - label: 40
+    name: flag
+  - label: 41
+    name: decor
+  - label: 42
+    name: light
+  - label: 43
+    name: appliance
+  - label: 44
+    name: trash
+  - label: 45
+    name: bicycle
+  - label: 46
+    name: food
+  - label: 47
+    name: clothes
+  - label: 48
+    name: thing
+  - label: 49
+    name: animal
+  - label: 50
+    name: human
+robot_frame: zed_camera_link
+odom_frame: odom
+map_frame: map
+layers:
+  AGENTS:
+    layer: 2
+    partition: 0
+  BUILDINGS:
+    layer: 5
+    partition: 0
+  MESH_PLACES:
+    layer: 3
+    partition: 1
+  OBJECTS:
+    layer: 2
+    partition: 0
+  PLACES:
+    layer: 3
+    partition: 0
+  ROOMS:
+    layer: 4
+    partition: 0
+total_semantic_labels: 51
+semantic_colormap_file: ""
+semantic_label_remap_filepath: ""
+dynamic_labels:
+  - 49
+  - 50
+invalid_labels:
+  - 0
+  - 1
+  - 48
+object_labels:
+  - 2
+  - 11
+  - 14
+  - 15
+  - 16
+  - 17
+  - 18
+  - 24
+  - 26
+  - 27
+  - 29
+  - 32
+  - 33
+  - 34
+  - 35
+  - 36
+  - 37
+  - 38
+  - 39
+  - 40
+  - 41
+  - 42
+  - 43
+  - 44
+  - 45
+  - 46
+  - 47
+surface_places_labels:
+  - 3
+  - 4
+  - 5
+  - 6
+  - 7
+  - 8
+  - 9
+  - 10
+  - 19
+  - 20
+  - 22
+  - 25
+  - 28
+  - 30
+  - 31
+ground_labels:
+  - 4
+  - 5
+  - 7
+  - 9
+semantic_layers:
+  - OBJECTS
+  - MESH_PLACES
+mesh:
+  with_colors: true
+  with_first_seen_stamps: true
+  with_labels: true
+sensors:
+  frontleft:
+    min_range: 0.40000000000000002
+    max_range: 5
+    extrinsics:
+      type: param
+      body_R_sensor:
+        w: 0.50000000000000011
+        x: -0.5
+        y: 0.49999999999999989
+        z: -0.5
+      body_p_sensor:
+        - 0
+        - 0.0315
+        - 0.01325
+    width: 672
+    height: 376
+    cx: 328.084717
+    cy: 182.040817
+    fx: 335.966919
+    fy: 335.966919

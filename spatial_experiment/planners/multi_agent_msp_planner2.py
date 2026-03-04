@@ -41,12 +41,12 @@ class MultiAgentMSPPlanner:
         
         # Determine providers
         providers = kwargs.get("agent_providers", {})
-        o_prov = providers.get("orchestrator", "gemini")
-        g_prov = providers.get("grounding", "gemini")
-        s_prov = providers.get("spatial", "gemini")
-        v_prov = providers.get("verifier", "gemini")
-        l_prov = providers.get("logical", "gemini")
-        q_prov = providers.get("qa", "gemini")
+        o_prov = providers.get("orchestrator", "claude")
+        g_prov = providers.get("grounding", "claude")
+        s_prov = providers.get("spatial", "claude")
+        v_prov = providers.get("verifier", "claude")
+        l_prov = providers.get("logical", "claude")
+        q_prov = providers.get("qa", "claude")
         
         click.secho(f"Providers: Orch={o_prov}, Ground={g_prov}, Spatial={s_prov}, Verif={v_prov}, Logic={l_prov}, QA={q_prov}", fg="yellow")
         

@@ -48,7 +48,7 @@ class ClaudeLogicalAgent:
         Agent Yaw (rad): {blackboard.agent_yaw_rad}
         
         Available Frontiers (CHOOSE ONE ID FROM HERE):
-        {json.dumps([{{'id': f['id'], 'position': f.get('position')}} for f in blackboard.available_frontiers], indent=2)}
+        {json.dumps([{"id": f["id"], "position": f.get("position")} for f in blackboard.available_frontiers], indent=2)}
         
         Environment Scene Graph (Topological Layout):
         {blackboard.scene_graph_str}

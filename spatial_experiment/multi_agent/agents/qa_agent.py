@@ -31,6 +31,15 @@ class QaAgent:
         is_mcq = bool(getattr(blackboard, "choices", None))
         
         properties = {
+            "prior_hypothesis": genai.protos.Schema(
+                type=genai.protos.Type.STRING, 
+                description="Based on the question, formulate a prior hypothesis of what the expected answer or target location should be."
+            ),
+            "hypothesis_likelihood": genai.protos.Schema(
+                type=genai.protos.Type.STRING, 
+                enum=["low", "medium", "high"],
+                description="Given the current evidence in the scene graph and visual input, how likely is your prior hypothesis to be correct?"
+            ),
             "reasoning": genai.protos.Schema(
                 type=genai.protos.Type.STRING, 
                 description="Break down the query to identify the required target object, map the answer choices to symbols, and deduce the logical next step."
@@ -66,22 +75,26 @@ class QaAgent:
         schema = genai.protos.Schema(
             type=genai.protos.Type.OBJECT,
             properties=properties,
-            required=["reasoning", "action_type", "chosen_id", "confidence", "answer"]
+            required=["prior_hypothesis", "hypothesis_likelihood", "reasoning", "action_type", "chosen_id", "confidence", "answer"]
         )
 
         sys_prompt = """
-        SYSTEM: You are an End-to-End QA and Navigation Agent.
-        YOUR GOAL: You are tasked with answering the user's explicit question based on visual input and the topological scene graph.
+        SYSTEM: You are an excellent hierarchical graph planning agent. 
+        Your goal is to navigate an unseen environment to confidently answer a multiple-choice question about the environment.
+        As you explore the environment, your sensors are building a scene graph representation (in json format) and you have access to that scene graph.
         
-        When faced with a question (especially a multiple choice one):
+        CRITICAL RULES:
         1. Parse the query to figure out what object or area is being referred to.
         2. Break down the answer choices into variables/symbols (A, B, C...).
         3. STRICT RULE: If an option contains the text "(DO NOT SELECT THIS OPTION)", you MUST NOT select it under any circumstances. It is a trap.
-        4. If you have enough visual and semantic context to answer the query definitively, or if you have gathered partial evidence and can make a highly probable educated guess, output `action_type="answer"`, and provide EXACTLY the option symbol (A, B, C, or D) in the `answer` field. 
-        5. DO NOT be overly conservative. If you have explored multiple rooms and have a good idea of the layout, make your best guess instead of wandering endlessly.
-        6. If you genuinely have no idea and need to see more of the environment to eliminate options, output `action_type="goto_frontier"` and choose the most logical frontier ID to explore.
-        7. If you see the object in the Scene Graph but need a better visual angle to be distinct, output `action_type="goto_object"`.
-        8. Check the GLOBAL FAILURE HISTORY to avoid repeating mistakes or looping between the same frontiers.
+        4. Formulate a prior hypothesis for the question. What do you expect the answer to be based on the choices and current environment? Explain it in the `prior_hypothesis` field.
+        5. Evaluate the evidence collected so far. In the `reasoning` field, explicitly discuss your prior hypothesis and its likelihood of being correct given the current scene graph and visual input.
+        6. Set `hypothesis_likelihood` to "high" if you have a strong educated guess (even without absolute certainty), "medium" if you have some evidence, or "low" if you are completely guessing.
+        7. If `hypothesis_likelihood` is "high", choose `action_type="answer"` right there. Provide EXACTLY the option symbol (A, B, C, or D) in the `answer` field.
+        8. If you are uncertain (`hypothesis_likelihood` is not "high") and should explore more to ground your answer, set `action_type` to something else and `answer` to "NONE". You can take two kinds of steps: `goto_object` or `goto_frontier`.
+        9. `action_type="goto_object"`: Navigates near a certain object in the scene graph. Choose this action to get a good view of the region around this object, if you think going near this object will help verify your hypothesis. Put its ID in `chosen_id`.
+        10. `action_type="goto_frontier"`: If you think that going near any of the object nodes in the current scene graph will not provide you with any useful information to verify your hypothesis, choose this action to expand the scene graph. Put its ID in `chosen_id`.
+        11. Report your numerical confidence (0.0 to 1.0) in the `confidence` field. Pay close attention to the GLOBAL FAILURE HISTORY to avoid repeating mistakes.
         """
         
         prompt = f"""
@@ -130,6 +143,8 @@ class QaAgent:
             
             out = {
                 "ok": True,
+                "prior_hypothesis": parsed.get("prior_hypothesis", ""),
+                "hypothesis_likelihood": parsed.get("hypothesis_likelihood", "low"),
                 "action_type": parsed.get("action_type", "lookaround"),
                 "chosen_id": parsed.get("chosen_id", "NONE"),
                 "answer": parsed.get("answer", ""),

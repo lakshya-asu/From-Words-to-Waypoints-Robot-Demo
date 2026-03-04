@@ -242,6 +242,9 @@ def main(cfg, dataset_type: str = "spatial", skip: int = 0, max_steps: int = 25)
                 pass
 
             # Initialize Multi-Agent Planner
+            # Set the SceneGraphSim's room naming inference provider to match the Orchestrator
+            sg_sim.enrich_provider = cfg.vlm.msp_nobnn.get("agent_providers", {}).get("orchestrator", "gemini")
+            
             vlm_planner = MultiAgentMSPPlanner(
                 cfg.vlm,
                 sg_sim,
@@ -451,7 +454,7 @@ if __name__ == "__main__":
     parser.add_argument("--dataset", type=str, choices=["spatial", "grapheqa"], default=None, 
                         help="Which dataset format to load. Prompted interactively if left blank.")
     parser.add_argument("--skip", type=int, default=0, help="Number of queries to skip before starting.")
-    parser.add_argument("--max_steps", type=int, default=25, help="Limit number of steps per agent episode.")
+    parser.add_argument("--max_steps", type=int, default=10, help="Limit number of steps per agent episode.")
     args = parser.parse_args()
     
     dataset = args.dataset

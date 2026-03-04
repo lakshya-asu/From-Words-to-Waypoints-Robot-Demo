@@ -211,7 +211,11 @@ def main(cfg, dataset_type: str = "spatial", skip: int = 0, max_steps: int = 25)
             if should_skip_experiment(experiment_id, filename=results_filename):
                 continue
 
-            question_path = hydra_python.resolve_output_path(output_path / experiment_id)
+            question_path = output_path / experiment_id
+            if question_path.exists():
+                question_path = output_path / f"{experiment_id}_1"
+            os.makedirs(str(question_path), exist_ok=True)
+            question_path = Path(question_path)
             if cfg.data.use_semantic_data and not scene_has_semantics(scene_id):
                 continue
 
@@ -242,6 +246,9 @@ def main(cfg, dataset_type: str = "spatial", skip: int = 0, max_steps: int = 25)
                 pass
 
             # Initialize Multi-Agent Planner
+            # Set the SceneGraphSim's room naming inference provider to match the Orchestrator
+            sg_sim.enrich_provider = cfg.vlm.msp_nobnn.get("agent_providers", {}).get("orchestrator", "gemini")
+            
             vlm_planner = MultiAgentMSPPlanner(
                 cfg.vlm,
                 sg_sim,
@@ -250,15 +257,7 @@ def main(cfg, dataset_type: str = "spatial", skip: int = 0, max_steps: int = 25)
                 anchor_label=anchor_label,
                 anchor_center_hab=anchor_center_hab,
                 anchor_front_yaw_world=float(q["ann_yaw_rad"]) if q.get("ann_yaw_rad", None) not in [None, ""] else None,
-                choices=q.get("choices", []),
-                agent_providers={
-                    "orchestrator": "gemini",
-                    "logical": "gemini",
-                    "grounding": "gemini",
-                    "spatial": "gemini",
-                    "verifier": "gemini",
-                    "qa": "gemini"
-                }
+                choices=q.get("choices", [])
             )
 
             succ = False
