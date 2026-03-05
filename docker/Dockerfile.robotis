@@ -1,0 +1,64 @@
+# Use the official Stereolabs ZED image with CUDA 12.1 and Ubuntu 22.04
+# This guarantees ZED SDK compatibility and GPU hardware acceleration.
+FROM stereolabs/zed:4.1-devel-cuda12.1-ubuntu22.04
+
+# Environment variables to keep apt non-interactive
+ENV DEBIAN_FRONTEND=noninteractive
+ENV ROS_DISTRO=humble
+
+# 1. Install ROS 2 Humble
+RUN apt-get update && apt-get install -y locales curl gnupg2 lsb-release \
+    && locale-gen en_US en_US.UTF-8 \
+    && update-locale LC_ALL=en_US.UTF-8 LANG=en_US.UTF-8 \
+    && curl -sSL https://raw.githubusercontent.com/ros/rosdistro/master/ros.key -o /usr/share/keyrings/ros-archive-keyring.gpg \
+    && echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/ros-archive-keyring.gpg] http://packages.ros.org/ros2/ubuntu $(lsb_release -cs) main" | tee /etc/apt/sources.list.d/ros2.list > /dev/null \
+    && apt-get update && apt-get install -y \
+    ros-humble-desktop-full \
+    ros-humble-navigation2 \
+    ros-humble-nav2-bringup \
+    python3-colcon-common-extensions \
+    python3-rosdep \
+    python3-pip \
+    git \
+    wget \
+    unzip \
+    libgl1-mesa-glx \
+    && rm -rf /var/lib/apt/lists/*
+
+# Initialize rosdep
+RUN rosdep init && rosdep update
+
+# 2. Python Packages for Spatial Experiment
+RUN pip3 install --upgrade pip
+
+# Core ML and LLM Providers
+RUN pip3 install --ignore-installed sympy mpmath
+RUN pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121
+
+RUN pip3 install \
+    transformers \
+    accelerate \
+    anthropic
+
+# Spatial Data / Graph Processing / Visuals
+RUN pip3 install \
+    networkx \
+    rerun-sdk \
+    hydra-core \
+    spark-dsg \
+    omegaconf \
+    click \
+    imageio \
+    opencv-python-headless \
+    pydantic
+
+# Clone and install the Stretch core API (used by spatial_experiment for SparseVoxelMap logic)
+RUN git clone https://github.com/hello-robot/stretch_ai.git /opt/stretch_ai \
+    && cd /opt/stretch_ai \
+    && pip3 install -e .
+
+# Setup entrypoint environment
+RUN echo "source /opt/ros/humble/setup.bash" >> /root/.bashrc
+
+WORKDIR /opt/mapg_real_demo
+CMD ["/bin/bash"]

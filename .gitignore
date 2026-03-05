@@ -60,3 +60,13 @@ datasets/
 # ignore experiment outputs
 spatial_experiment/*.zip
 *.zip
+
+# Rerun logs & Large Datasets
+*.rrd
+*.pt
+*.pth
+*.mp4
+*.mkv
+evals/
+.DS_Store
+core.*

@@ -1,24 +1,21 @@
 # General
 seed: 42
-exp_name: msp${vlm.msp_nobnn.mode}_ablation
-output_path: outputs_msp_multiagent_occlusion_claude/${exp_name}
-results_filename: results_${vlm.msp_nobnn.mode}
-gpu: 0
+exp_name: mapg_eqa_agent
+output_path: outputs_eqa_final/${exp_name}_test_run
+results_filename: ${vlm.name}_images_${vlm.use_image}
+gpu: 0 
 sim_gpu: 0
 
 data:
-  # The unified test dataset for ablations
-  question_data_path: '/datasets/explore-eqa/questions_msp_eval_var.csv'
-  question_data_path_choice: '/datasets/explore-eqa/questions_msp_sample_1.csv'
-  init_pose_data_path: '/datasets/explore-eqa/scene_init_poses_semantic_only.csv'
-  init_pose_data_path_choice: '/datasets/explore-eqa/scene_init_poses.csv'
+  question_data_path: '/datasets/explore-eqa/eqa-questions.csv'
+  init_pose_data_path: '/datasets/explore-eqa/scene_init_poses.csv'
   semantic_annot_data_path: '/datasets/hm3d/train'
   scene_data_path: '/datasets/hm3d/train'
-  explore_eqa_dataset_enrich_labels: '/cfg/explore_eqa_dataset_enrich_labels.yaml'
+  explore_eqa_dataset_enrich_labels: 'cfg/explore_eqa_dataset_enrich_labels.yaml'
   use_semantic_data: True
 
 logging:
-  output_parent_dir: results
+  output_parent_dir: results_eqa_final
   save_obs: true
   save_freq: 10
 
@@ -29,7 +26,7 @@ scene_graph_sim:
   enrich_frontiers: True
   enrich_objects: False
   include_regions: False
-  no_scene_graph: False
+  no_scene_graph: False 
   key_frame_selection:
     use_clip_for_images: False
     use_siglip_for_images: True
@@ -37,40 +34,17 @@ scene_graph_sim:
     visualize_best_image: False
     choose_final_image: True
   img_subsample_freq: 2
-
+  
 vlm:
-  # We keep these fields because graph_eqa expects them,
-  # but our MSP No-BNN planner does not call VLM directly here.
-  name: "gemini"
+  name: "claude-4.6-opus" # The agent explicitly checks for "mapg" or "claude" and defaults to 4.6 inside the agent code.
   use_image: True
   use_done_action: False
   early_exit: True
-  add_history: False
-  answer_mode: "msp_point"
-
-  # >>> MSP No-BNN final config
-  msp_nobnn:
-    mode: "where"          # "which" or "where"
-    top_k: 5
-    confidence_threshold: 0.80
-
-    # scoring options
-    semantic_mode: "neutral"   # "neutral" or "candidate"
-    sigma_s_scale: 0.50        # used only if semantic_mode=candidate
-    sigma_m_scale: 0.30
-
-    # where mode options
-    where_top_frac: 0.02
-    region_grid:
-      half_extent_x: 3.0
-      half_extent_y: 1.5
-      half_extent_z: 3.0
-      resolution: 28
-      slice_dy: 0.25
+  add_history: True
 
 planner:
   max_step_room_size_ratio: 3
-  break_at_done: True
+  break_at_done: False
 
 habitat:
   scene_type: 'hm3d'
@@ -85,7 +59,7 @@ habitat:
   hfov: 120
   z_offset: 0
   use_semantic_data: ${data.use_semantic_data}
-
+  
 hydra:
   glog_level: 0
   verbosity: 0
@@ -99,7 +73,7 @@ frontier_mapping:
   img_height: ${habitat.img_height}
   margin_w_ratio: 0.25
   margin_h_ratio: 0.3
-  height_offset: 0.2
+  height_offset: 0.2 
   range_height: [-0.2, 0.2]
   visual_prompt:
     cluster_threshold: 1.0

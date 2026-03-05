@@ -296,7 +296,7 @@ class SceneGraphSim:
             prompt = f"Given the list of objects: {object_names}. Which room are these objects most likely found in? Keep explanation very brief."
             
             response = client_claude.messages.create(
-                model="claude-4.6-opus",
+                model="claude-opus-4-6",
                 max_tokens=256,
                 system=sys_prompt,
                 messages=[{"role": "user", "content": prompt}]
@@ -310,7 +310,7 @@ class SceneGraphSim:
                 return parsed.get("room", "unknown_room")
             return "unknown_room"
         except Exception as e:
-            print(f"Room Name Generation failed (claude-4.6-opus): {e}")
+            print(f"Room Name Generation failed (claude-opus-4-6): {e}")
             return "unknown_room"
 
     def add_room_labels_to_sg(self):
