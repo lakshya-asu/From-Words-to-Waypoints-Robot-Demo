@@ -1,0 +1,5 @@
+<library path="ffw_robot_manager">
+  <class name="ffw_robot_manager/FfwRobotManager" type="ffw_robot_manager::FfwRobotManager" base_class_type="controller_interface::ControllerInterface">
+    <description>Logs GPIO Error Code and Hardware Error Status for all GPIO devices.</description>
+  </class>
+</library>

@@ -1,0 +1,26 @@
+moveit_setup_assistant_config:
+  urdf:
+    package: ffw_description
+    relative_path: urdf/ffw.urdf.xacro
+  srdf:
+    package: ffw_moveit_config
+    relative_path: config/ffw.srdf
+  package_settings:
+    author_name: Woojin Wie
+    author_email: wwj@robotis.com
+    generated_timestamp: 1742432524
+  control_xacro:
+    command:
+      - position
+    state:
+      - position
+      - velocity
+  modified_urdf:
+    xacros:
+      - control_xacro
+  control_xacro:
+    command:
+      - position
+    state:
+      - position
+      - velocity

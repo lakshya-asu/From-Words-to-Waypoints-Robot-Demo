@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<library path="joystick_controller">
+  <class name="joystick_controller/JoystickController" type="joystick_controller::JoystickController" base_class_type="controller_interface::ControllerInterface">
+    <description>
+      A controller that reads JOYSTICK X VALUE and JOYSTICK Y VALUE values from hardware interfaces and publishes them.
+    </description>
+  </class>
+</library>

@@ -1,0 +1,100 @@
+joystick_controller:
+  joystick_sensors: {
+    type: string_array,
+    default_value: [],
+    description: "Joystick sensor names to read from",
+    read_only: true,
+    validation: {
+      unique<>: null,
+    }
+  }
+  state_interfaces: {
+    type: string_array,
+    default_value: ["JOYSTICK X VALUE", "JOYSTICK Y VALUE", "JOYSTICK TACT SWITCH"],
+    description: "State interfaces provided by the hardware for Joystick sensors",
+    read_only: true,
+  }
+  sensorxel_l_joy_reverse_interfaces: {
+    type: string_array,
+    default_value: [],
+    description: "List of state interfaces to reverse after normalization",
+    read_only: true,
+  }
+  sensorxel_r_joy_reverse_interfaces: {
+    type: string_array,
+    default_value: [],
+    description: "List of state interfaces to reverse after normalization",
+    read_only: true,
+  }
+  joystick_calibration_min: {
+    type: double,
+    default_value: 0.0,
+    description: "Minimum ADC value (0)",
+    read_only: true
+  }
+  joystick_calibration_center: {
+    type: double,
+    default_value: 2048.0,
+    description: "Center ADC value (2048)",
+    read_only: true
+  }
+  joystick_calibration_max: {
+    type: double,
+    default_value: 4096.0,
+    description: "Maximum ADC value (4096)",
+    read_only: true
+  }
+  sensorxel_l_joy_controlled_joints: {
+    type: string_array,
+    default_value: [],
+    description: "List of joints to control with Joystick",
+    read_only: true
+  }
+  sensorxel_r_joy_controlled_joints: {
+    type: string_array,
+    default_value: [],
+    description: "List of joints to control with Joystick",
+    read_only: true
+  }
+  joint_states_topic: {
+    type: string,
+    default_value: "/joint_states",
+    description: "Topic to subscribe for joint states",
+    read_only: true
+  }
+  sensorxel_l_joy_joint_trajectory_topic: {
+    type: string,
+    default_value: "~/joint_trajectory",
+    description: "Topic to publish joint trajectory commands",
+    read_only: true
+  }
+  sensorxel_r_joy_joint_trajectory_topic: {
+    type: string,
+    default_value: "~/joint_trajectory",
+    description: "Topic to publish joint trajectory commands",
+    read_only: true
+  }
+  sensorxel_l_joy_jog_scale: {
+    type: double,
+    default_value: 0.1,
+    description: "Scale factor for jog commands",
+    read_only: true
+  }
+  sensorxel_r_joy_jog_scale: {
+    type: double,
+    default_value: 0.1,
+    description: "Scale factor for jog commands",
+    read_only: true
+  }
+  deadzone: {
+    type: double,
+    default_value: 0.05,
+    description: "Deadzone around center position (0.0 to 1.0)",
+    read_only: true
+  }
+  long_press_duration: {
+    type: double,
+    default_value: 2.0,
+    description: "Duration in seconds to trigger long press event",
+    read_only: true
+  }

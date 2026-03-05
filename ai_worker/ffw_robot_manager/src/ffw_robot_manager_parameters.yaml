@@ -1,0 +1,16 @@
+ffw_robot_manager:
+  disable_torque_on_error: {
+    type: bool,
+    default_value: true,
+    description: "Whether to disable Dynamixel torque when hardware errors are detected. If true, torque will be disabled for all Dynamixels when any error is detected. If false, torque will remain enabled even when errors occur."
+  }
+  set_led_error_on_error: {
+    type: bool,
+    default_value: true,
+    description: "Whether to set LED to red color when hardware errors are detected. If true, LED will be set to red blinking mode when any error is detected. If false, LED will remain unchanged."
+  }
+  ffw_type: {
+    type: string,
+    default_value: "",
+    description: "FFW robot type (e.g., 'ffw_sg2_rev1'). Used to determine battery monitoring configuration."
+  }

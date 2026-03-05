@@ -1,0 +1,28 @@
+services:
+  ai_worker:
+    container_name: ai_worker
+    image: robotis/ai-worker:latest
+    tty: true
+    restart: always
+    cap_add:
+      - SYS_NICE
+    ulimits:
+      rtprio: 99
+      rttime: -1
+      memlock: 8428281856
+    network_mode: host
+    ipc: host
+    environment:
+     - DISPLAY=${DISPLAY}
+     - QT_X11_NO_MITSHM=1
+    volumes:
+      - /dev:/dev
+      - /dev/shm:/dev/shm
+      - /usr/local/zed/resources/:/usr/local/zed/resources/
+      - /usr/local/zed/settings/:/usr/local/zed/settings/
+      - /tmp/.X11-unix:/tmp/.X11-unix:rw
+      - /tmp/.docker.xauth:/tmp/.docker.xauth:rw
+      - ./workspace:/workspace
+      - ../:/root/ros2_ws/src/ai_worker/
+      - /var/run/robotis/agent_sockets/ai_worker:/var/run/agent
+    privileged: true

@@ -1,0 +1,117 @@
+FROM robotis/ros:jazzy-ros-base-librealsense AS librealsense
+
+FROM ros:jazzy-ros-base AS ai-worker
+
+ARG TARGETARCH
+ARG S6_OVERLAY_VERSION=3.2.1.0
+
+# Install s6-overlay
+ADD https://github.com/just-containers/s6-overlay/releases/download/v${S6_OVERLAY_VERSION}/s6-overlay-noarch.tar.xz /tmp
+RUN tar -C / -Jxpf /tmp/s6-overlay-noarch.tar.xz
+ADD https://github.com/just-containers/s6-overlay/releases/download/v${S6_OVERLAY_VERSION}/s6-overlay-x86_64.tar.xz /tmp
+RUN tar -C / -Jxpf /tmp/s6-overlay-x86_64.tar.xz
+
+RUN apt-get update && \
+    apt-get install -y xz-utils && \
+    rm -rf /var/lib/apt/lists/*
+
+# Copy binaries from builder stage
+COPY --from=librealsense /opt/librealsense /usr/local/
+COPY --from=librealsense /usr/local/lib/python3.12/dist-packages/pyrealsense2 /usr/local/lib/python3.12/dist-packages/pyrealsense2
+COPY --from=librealsense /usr/src/librealsense/config/99-realsense-libusb.rules /etc/udev/rules.d/
+COPY --from=librealsense /usr/src/librealsense/config/99-realsense-d4xx-mipi-dfu.rules /etc/udev/rules.d/
+ENV PYTHONPATH=$PYTHONPATH:/usr/local/lib
+
+# Set environment variables
+ENV DEBIAN_FRONTEND=noninteractive
+
+# Install realsense dependencies and Python packages for agent
+RUN apt-get update && apt-get install -y \
+    libusb-1.0-0-dev \
+    libglfw3-dev \
+    ffmpeg \
+    vim \
+    nano \
+    python3-pip \
+    && rm -rf /var/lib/apt/lists/*
+
+ENV COLCON_WS=/root/ros2_ws
+WORKDIR ${COLCON_WS}
+
+RUN mkdir -p ${COLCON_WS}/src && \
+    cd ${COLCON_WS}/src && \
+    git clone -b jazzy https://github.com/ROBOTIS-GIT/dual_laser_merger.git && \
+    git clone -b jazzy https://github.com/ROBOTIS-GIT/dynamixel_hardware_interface.git && \
+    git clone -b jazzy https://github.com/ROBOTIS-GIT/dynamixel_interfaces.git && \
+    git clone -b jazzy https://github.com/ROBOTIS-GIT/DynamixelSDK.git && \
+    git clone -b jazzy https://github.com/ROBOTIS-GIT/ai_worker.git && \
+    git clone -b r/4.56.4 https://github.com/IntelRealSense/realsense-ros.git && \
+    cd realsense-ros && git checkout cbd8b8487d4c0126bb590822db9469414496e62a
+
+RUN cd ${COLCON_WS} && \
+    apt-get update && \
+    apt-get install -y ros-${ROS_DISTRO}-rmw-zenoh-cpp && \
+    rosdep update && \
+    rosdep install -i --from-path src --rosdistro $ROS_DISTRO --skip-keys="librealsense2" -y && \
+    rm -rf /var/lib/apt/lists/*
+
+RUN bash -c "source /opt/ros/${ROS_DISTRO}/setup.bash && \
+    cd ${COLCON_WS} && \
+    colcon build --symlink-install --cmake-args -DCMAKE_BUILD_TYPE=Release"
+
+RUN echo "source /opt/ros/${ROS_DISTRO}/setup.bash" >> ~/.bashrc  && \
+    echo "source ${COLCON_WS}/install/setup.bash" >> ~/.bashrc  && \
+    echo "alias cb='colcon build --symlink-install --cmake-args -DCMAKE_BUILD_TYPE=Release'" >> ~/.bashrc && \
+    echo "alias ffw_lg2_leader_ai='ros2 launch ffw_bringup ffw_lg2_leader_ai.launch.py'" >> ~/.bashrc && \
+    echo "export ROS_DOMAIN_ID=30" >> ~/.bashrc
+
+# Create directory for agent Unix Domain Socket
+RUN mkdir -p /var/run/agent && \
+    chmod 777 /var/run/agent
+
+RUN git clone https://github.com/ROBOTIS-GIT/talos.git /opt/talos
+
+ENV PYTHONPATH=/opt/talos:${PYTHONPATH}
+
+RUN pip config set global.break-system-packages true
+
+# Install requirements.txt. tqdm (transitive dep e.g. from zenoh-ros2-sdk) is already installed by ros-jazzy-rmw-zenoh-cpp; pip reuses it.
+RUN pip install --no-cache-dir --ignore-installed -r /opt/talos/requirements.txt
+
+# New-style s6-rc services (recommended in s6-overlay v3 docs)
+# Define services under /etc/s6-overlay/s6-rc.d and add them to the user bundle.
+
+# Agent service (longrun)
+COPY docker/s6-agent /etc/s6-overlay/s6-rc.d/s6-agent
+
+# Define ROS2 services
+ARG ROS2_SERVICES="ffw_bg2_follower_ai ffw_lg2_leader_ai ffw_sg2_follower_ai"
+
+# Copy all ROS2 service directories directly to s6-rc.d
+COPY docker/s6-services/ /etc/s6-overlay/s6-rc.d/
+
+# Setup ROS2 services with logging pipeline and permissions
+RUN for service in ${ROS2_SERVICES}; do \
+    chmod +x /etc/s6-overlay/s6-rc.d/${service}/run /etc/s6-overlay/s6-rc.d/${service}/finish && \
+    chmod +x /etc/s6-overlay/s6-rc.d/${service}-log/run && \
+    mkdir -p /var/log/${service} && \
+    chown nobody:nogroup /var/log/${service} && \
+    chmod 02755 /var/log/${service}; \
+    done && \
+    # Remove common directory from s6-rc.d (it's copied separately below)
+    rm -rf /etc/s6-overlay/s6-rc.d/common
+
+# Copy reusable ROS2 service scripts to a location outside s6-rc.d
+# This prevents s6-rc-compile from treating them as services
+RUN mkdir -p /usr/local/lib/s6-services
+COPY docker/s6-services/common/ros2_service_run.sh /usr/local/lib/s6-services/ros2_service_run.sh
+COPY docker/s6-services/common/ros2_service_finish.sh /usr/local/lib/s6-services/ros2_service_finish.sh
+RUN chmod +x /usr/local/lib/s6-services/ros2_service_run.sh /usr/local/lib/s6-services/ros2_service_finish.sh
+
+# Add services to the user bundle so they start at container boot
+# Note: ROS2 services are NOT in the user bundle - they must be started manually
+RUN mkdir -p /etc/s6-overlay/s6-rc.d/user/contents.d && \
+    touch /etc/s6-overlay/s6-rc.d/user/contents.d/s6-agent
+
+# Set s6-overlay as entrypoint
+ENTRYPOINT ["/init"]

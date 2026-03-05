@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>ffw</name>
+  <version>1.1.18</version>
+  <description>
+    ROS 2 meta package for FFW
+  </description>
+  <maintainer email="pyo@robotis.com">Pyo</maintainer>
+  <license>Apache 2.0</license>
+  <author email="wsh@robotis.com">Sungho Woo</author>
+  <author email="wwj@robotis.com">Woojin Wie</author>
+  <author email="ywh@robotis.com">Wonho Yun</author>
+  <author email="pyo@robotis.com">Pyo</author>
+  <author email="lgh@robotis.com">Geonhee Lee</author>
+  <buildtool_depend>ament_cmake</buildtool_depend>
+  <exec_depend>ffw_bringup</exec_depend>
+  <exec_depend>ffw_description</exec_depend>
+  <exec_depend>ffw_joint_trajectory_command_broadcaster</exec_depend>
+  <exec_depend>ffw_joystick_controller</exec_depend>
+  <exec_depend>ffw_moveit_config</exec_depend>
+  <exec_depend>ffw_robot_manager</exec_depend>
+  <exec_depend>ffw_spring_actuator_controller</exec_depend>
+  <exec_depend>ffw_swerve_drive_controller</exec_depend>
+  <exec_depend>ffw_teleop</exec_depend>
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>
