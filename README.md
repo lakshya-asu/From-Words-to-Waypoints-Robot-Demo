@@ -8,12 +8,15 @@ This guide details exactly how to run the multi-agent AI brain (`spatial_experim
 
 Ensure you have cloned this repository onto the robot's main compute unit (or a tethered laptop with a strong GPU). You will need CUDA/NVIDIA drivers installed on the host.
 
-Download any necessary LLM/VLM weights if you are running models locally (like Qwen). If using an API provider (Gemini, Claude, OpenAI), ensure your environment variables are set in your bash profile:
+```bash
+gh repo clone lakshya-asu/From-Words-to-Waypoints-Robot-Demo
+cd From-Words-to-Waypoints-Robot-Demo
+```
+
+Download any necessary LLM/VLM weights if you are running models locally. If using an API provider (Gemini, Claude, OpenAI), ensure your environment variables are set in your bash profile:
 
 ```bash
-export GEMINI_API_KEY="your_key"
 export CLAUDE_API_KEY="your_key"
-export OPENAI_API_KEY="your_key"
 ```
 
 ---
@@ -22,8 +25,14 @@ export OPENAI_API_KEY="your_key"
 
 To ensure dependency isolation between the ROS 2 physical drivers and the heavily Python-dependent AI brain, we use a unified Docker container.
 
-### Build the Image
-Navigate to the `docker` directory and run the build script:
+### Pre-built Image (Quickstart)
+If you don't want to build from scratch, you can pull the ready-to-used image directly from Docker Hub:
+```bash
+docker pull flux04/grapheqa_for_robotis:0.0.1
+```
+
+### Build the Image (From Scratch)
+If you modify the Python dependencies or source code, navigate to the `docker` directory and run the build script:
 ```bash
 cd mapg_real_demo/docker
 ./docker_build_robotis.sh
